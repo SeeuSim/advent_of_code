@@ -1,9 +1,13 @@
 // Trebuchet?! Part 2
+
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 
 use std::path::Path;
 
+/**
+ * Credits to @ChristopherBiscardi
+ */
 fn process_line(line: &str) -> u32 {
   let mut it = (0..line.len()).filter_map(|index| {
       let reduced_line = &line[index..];
