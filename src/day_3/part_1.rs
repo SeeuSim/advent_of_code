@@ -24,7 +24,7 @@ pub fn gear_ratio(file_name: &String) {
     let reader = BufReader::new(file);
     let results: Vec<Result<String, Error>> = reader.lines().into_iter().collect();
     let mut sm = 0;
-    for line_num in (0..results.len()) {
+    for line_num in 0..results.len() {
         let line = &results[line_num];
         if let Ok(line_content) = line {
             let line_len = line_content.len();
