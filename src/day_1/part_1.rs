@@ -1,25 +1,12 @@
 // Trebuchet?!
 
 use regex::Regex;
-use std::fs::File;
-use std::io::{BufRead, BufReader};
+use std::io::BufRead;
 
-use std::path::Path;
+use crate::utils::extract_file;
 
 pub fn trebuchet(file_name: &String) {
-    let path = Path::new(file_name);
-    let display = path.display();
-
-    let file = match File::open(path) {
-        Ok(f) => f,
-        Err(e) => {
-            eprintln!("Error opening the file: {}", e);
-            eprintln!("Fpath: {}", display);
-            return;
-        }
-    };
-
-    let reader = BufReader::new(file);
+    let reader = extract_file(file_name).expect("An error occurred while reading the file.");
 
     let re = Regex::new(r"\d").unwrap();
 

@@ -3,26 +3,15 @@
 use regex::Regex;
 use std::cmp::{max, min};
 use std::collections::HashMap;
-use std::fs::File;
-use std::io::{BufRead, BufReader, Error};
-use std::path::Path;
+use std::io::{BufRead, Error};
+
+use crate::utils::extract_file;
 
 pub fn gear_ratio_two(file_name: &String) {
-    let path = Path::new(file_name);
-    let display = path.display();
-
-    let file = match File::open(path) {
-        Ok(f) => f,
-        Err(e) => {
-            eprintln!("Error opening the file: {}", e);
-            eprintln!("Fpath: {}", display);
-            return;
-        }
-    };
+    let reader = extract_file(file_name).expect("An error occurred while reading the file");
 
     let re = Regex::new(r"(\d+)").unwrap();
 
-    let reader = BufReader::new(file);
     let results: Vec<Result<String, Error>> = reader.lines().into_iter().collect();
 
     let mut coords: HashMap<(usize, usize), Vec<u32>> = HashMap::new();

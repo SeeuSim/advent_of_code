@@ -2,10 +2,9 @@
 
 use std::cmp::max;
 use std::collections::HashMap;
-use std::fs::File;
-use std::io::{BufRead, BufReader};
+use std::io::BufRead;
 
-use std::path::Path;
+use crate::utils::extract_file;
 
 fn process_game_val(game_val: &str) -> i32 {
     game_val
@@ -60,19 +59,7 @@ fn process_line(line: &String) -> i32 {
 }
 
 pub fn cube_conundrum_part_two(file_name: &String) {
-    let path = Path::new(file_name);
-    let display = path.display();
-
-    let file = match File::open(path) {
-        Ok(f) => f,
-        Err(e) => {
-            eprintln!("Error opening the file: {}", e);
-            eprintln!("Fpath: {}", display);
-            return;
-        }
-    };
-
-    let reader = BufReader::new(file);
+    let reader = extract_file(file_name).expect("An error occurred while reading the file");
 
     let out: i32 = reader
         .lines()

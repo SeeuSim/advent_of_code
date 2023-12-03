@@ -1,9 +1,7 @@
 //Cube Conundrum
 
-use std::fs::File;
-use std::io::{BufRead, BufReader};
-
-use std::path::Path;
+use crate::utils::extract_file;
+use std::io::BufRead;
 
 fn process_line(line: &String) -> bool {
     let actl_line = line.split(": ").into_iter().nth(1).unwrap();
@@ -14,7 +12,8 @@ fn process_line(line: &String) -> bool {
             let _green_limit = 13;
             let _blue_limit = 14;
 
-            let is_pos = game.split(", ")
+            let is_pos = game
+                .split(", ")
                 .map(|val| {
                     if val.ends_with("red") {
                         val.split(" ")
@@ -45,28 +44,16 @@ fn process_line(line: &String) -> bool {
                     }
                 })
                 .all(|v| v);
-              
-              println!("Possible: {}", is_pos);
 
-              is_pos
+            println!("Possible: {}", is_pos);
+
+            is_pos
         })
         .all(|v| v)
 }
 
 pub fn cube_conundrum(file_name: &String) {
-    let path = Path::new(file_name);
-    let display = path.display();
-
-    let file = match File::open(path) {
-        Ok(f) => f,
-        Err(e) => {
-            eprintln!("Error opening the file: {}", e);
-            eprintln!("Fpath: {}", display);
-            return;
-        }
-    };
-
-    let reader = BufReader::new(file);
+    let reader = extract_file(file_name).expect("An error occurred while opening the file");
 
     let out = reader
         .lines()
