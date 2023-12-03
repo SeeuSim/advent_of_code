@@ -1,14 +1,16 @@
+pub mod day_1;
+pub mod day_2;
+pub mod day_3;
+
 use clap::{Arg, Command};
+use std::collections::HashMap;
 
 use crate::day_1::part_1::trebuchet;
 use crate::day_1::part_2::trebuchet_part_two;
 use crate::day_2::part_1::cube_conundrum;
 use crate::day_2::part_2::cube_conundrum_part_two;
-
-use std::collections::HashMap;
-
-pub mod day_1;
-pub mod day_2;
+use crate::day_3::part_1::place_holder;
+use crate::day_3::part_2::place_holder_two;
 
 type FnWithFNameParam = fn(&String);
 
@@ -52,6 +54,13 @@ fn main() {
             HashMap::from([
                 ("1".to_string(), cube_conundrum as FnWithFNameParam),
                 ("2".to_string(), cube_conundrum_part_two as FnWithFNameParam),
+            ]),
+        ),
+        (
+            "3".to_string(),
+            HashMap::from([
+                ("1".to_string(), place_holder as FnWithFNameParam),
+                ("2".to_string(), place_holder_two as FnWithFNameParam),
             ]),
         ),
     ]);
