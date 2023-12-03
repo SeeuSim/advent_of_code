@@ -42,7 +42,7 @@ pub fn gear_ratio_two(file_name: &String) {
                 if l > 0 && content[l - 1] == '*' {
                     let key = (line_num, l - 1);
                     let new_val = match coords.get(&key) {
-                        Some(nv) => [nv.clone(), [val].to_vec()].concat(),
+                        Some(nv) => [nv.clone(), vec![val]].concat(),
                         None => {
                             vec![val]
                         }
@@ -53,7 +53,7 @@ pub fn gear_ratio_two(file_name: &String) {
                 if r < line_len - 1 && content[r + 1] == '*' {
                     let key = (line_num, r + 1);
                     let new_val = match coords.get(&key) {
-                        Some(nv) => [nv.clone(), [val].to_vec()].concat(),
+                        Some(nv) => [nv.clone(), vec![val]].concat(),
                         None => {
                             vec![val]
                         }
@@ -69,7 +69,7 @@ pub fn gear_ratio_two(file_name: &String) {
                             if top_chars[i] == '*' {
                                 let key = (line_num - 1, i);
                                 let new_val = match coords.get(&key) {
-                                    Some(nv) => [nv.clone(), [val].to_vec()].concat(),
+                                    Some(nv) => [nv.clone(), vec![val]].concat(),
                                     None => {
                                         vec![val]
                                     }
@@ -91,7 +91,7 @@ pub fn gear_ratio_two(file_name: &String) {
                             if bottom_chars[i] == '*' {
                                 let key = (line_num + 1, i);
                                 let new_val = match coords.get(&key) {
-                                    Some(nv) => [nv.clone(), [val].to_vec()].concat(),
+                                    Some(nv) => [nv.clone(), vec![val]].concat(),
                                     None => {
                                         vec![val]
                                     }
