@@ -9,8 +9,8 @@ use crate::day_1::part_1::trebuchet;
 use crate::day_1::part_2::trebuchet_part_two;
 use crate::day_2::part_1::cube_conundrum;
 use crate::day_2::part_2::cube_conundrum_part_two;
-use crate::day_3::part_1::place_holder;
-use crate::day_3::part_2::place_holder_two;
+use crate::day_3::part_1::gear_ratio;
+use crate::day_3::part_2::gear_ratio_two;
 
 type FnWithFNameParam = fn(&String);
 
@@ -59,8 +59,8 @@ fn main() {
         (
             "3".to_string(),
             HashMap::from([
-                ("1".to_string(), place_holder as FnWithFNameParam),
-                ("2".to_string(), place_holder_two as FnWithFNameParam),
+                ("1".to_string(), gear_ratio as FnWithFNameParam),
+                ("2".to_string(), gear_ratio_two as FnWithFNameParam),
             ]),
         ),
     ]);
