@@ -20,7 +20,7 @@ fn process_game_val(game_val: &str) -> i32 {
 fn process_line(line: &String) -> i32 {
     let actl_line = line.split(": ").into_iter().nth(1).unwrap();
 
-    let data = actl_line
+    actl_line
         .split("; ")
         .map(|game| {
             let mut out = game
@@ -37,22 +37,26 @@ fn process_line(line: &String) -> i32 {
                     }
                 })
                 .into_iter()
-                .map(|inner| (inner[0], inner[1]))
+                .map(|entry| (entry[0], entry[1]))
                 .collect::<HashMap<i32, i32>>();
-            out.entry(0).or_insert(0);
-            out.entry(1).or_insert(0);
-            out.entry(2).or_insert(0);
+            for i in 0..3 {
+                out.entry(i).or_insert(0);
+            }
             out
         })
         .reduce(|acc, e| {
-            HashMap::from([
-                (0, *max(acc.get(&0), e.get(&0)).unwrap_or(&0)),
-                (1, *max(acc.get(&1), e.get(&1)).unwrap_or(&0)),
-                (2, *max(acc.get(&2), e.get(&2)).unwrap_or(&0)),
-            ])
+            HashMap::from_iter(
+                (0..3)
+                    .map(|v| (v, *max(acc.get(&v).unwrap_or(&0), e.get(&v).unwrap_or(&0))))
+                    .into_iter(),
+            )
         })
-        .unwrap();
-    data.get(&0).unwrap() * data.get(&1).unwrap() * data.get(&2).unwrap()
+        .unwrap()
+        .values()
+        .into_iter()
+        .map(|v| v.to_owned())
+        .reduce(|acc, e| acc * e)
+        .unwrap_or(0)
 }
 
 pub fn cube_conundrum_part_two(file_name: &String) {
