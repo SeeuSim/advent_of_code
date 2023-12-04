@@ -2,27 +2,22 @@
 
 use crate::utils::extract_file;
 
-use counter::Counter;
-use std::cmp::{max, min};
-use std::collections::{BTreeMap, HashMap, HashSet};
+use std::collections::{BTreeMap, HashSet};
 use std::io::BufRead;
 
 fn process_line(line: String) -> u32 {
-    if line.len() == 0 {
+    if line.is_empty() {
         return 0;
     }
     let mut line_parts = line.split(": ");
     let _actual = line_parts.nth(1);
 
-    let data = match _actual {
-        Some(card_ct) => card_ct,
-        None => &"",
-    };
-    if data.len() == 0 {
+    let data = _actual.unwrap_or("");
+    if data.is_empty() {
         return 0;
     }
 
-    let mut left_right = data.split(" | ").into_iter();
+    let mut left_right = data.split(" | ");
 
     let _left = left_right.next();
 
@@ -33,10 +28,9 @@ fn process_line(line: String) -> u32 {
     let winning_set: HashSet<String> = HashSet::from_iter(
         _left
             .unwrap()
-            .split(" ")
+            .split(' ')
             .map(|x| x.trim().to_string())
-            .filter(|x| x.len() > 0)
-            .into_iter(),
+            .filter(|x| !x.is_empty()),
     );
 
     let _right = left_right.next();
@@ -45,9 +39,9 @@ fn process_line(line: String) -> u32 {
     }
     let count = _right
         .unwrap()
-        .split(" ")
+        .split(' ')
         .map(|x| x.trim().to_string())
-        .filter(|x| x.len() > 0 && winning_set.contains(x))
+        .filter(|x| !x.is_empty() && winning_set.contains(x))
         .fold(0, |acc, _e| acc + 1);
 
     count

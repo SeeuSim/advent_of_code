@@ -4,7 +4,7 @@ use crate::utils::extract_file;
 use std::io::BufRead;
 
 fn process_line(line: &String) -> bool {
-    let actl_line = line.split(": ").into_iter().nth(1).unwrap();
+    let actl_line = line.split(": ").nth(1).unwrap();
     actl_line
         .split("; ")
         .map(|game| {
@@ -16,29 +16,11 @@ fn process_line(line: &String) -> bool {
                 .split(", ")
                 .map(|val| {
                     if val.ends_with("red") {
-                        val.split(" ")
-                            .into_iter()
-                            .nth(0)
-                            .unwrap()
-                            .parse::<i32>()
-                            .unwrap_or(0)
-                            <= _red_limit
+                        val.split(' ').next().unwrap().parse::<i32>().unwrap_or(0) <= _red_limit
                     } else if val.ends_with("blue") {
-                        val.split(" ")
-                            .into_iter()
-                            .nth(0)
-                            .unwrap()
-                            .parse::<i32>()
-                            .unwrap_or(0)
-                            <= _blue_limit
+                        val.split(' ').next().unwrap().parse::<i32>().unwrap_or(0) <= _blue_limit
                     } else if val.ends_with("green") {
-                        val.split(" ")
-                            .into_iter()
-                            .nth(0)
-                            .unwrap()
-                            .parse::<i32>()
-                            .unwrap_or(0)
-                            <= _green_limit
+                        val.split(' ').next().unwrap().parse::<i32>().unwrap_or(0) <= _green_limit
                     } else {
                         false
                     }
@@ -57,7 +39,6 @@ pub fn cube_conundrum(file_name: &String) {
 
     let out = reader
         .lines()
-        .into_iter()
         .map(|line| match line {
             Ok(line_content) => process_line(&line_content),
             Err(_err) => false,

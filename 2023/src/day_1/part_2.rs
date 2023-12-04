@@ -53,7 +53,7 @@ pub fn trebuchet_part_two(file_name: &String) {
     let mut sum = 0;
     for line in reader.lines() {
         if let Ok(line_content) = line {
-            sum += process_line(&line_content.as_str());
+            sum += process_line(line_content.as_str());
         }
     }
     println!("Sum: {}", sum);

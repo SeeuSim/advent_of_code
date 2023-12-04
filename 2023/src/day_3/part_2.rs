@@ -12,7 +12,7 @@ pub fn gear_ratio_two(file_name: &String) {
 
     let re = Regex::new(r"(\d+)").unwrap();
 
-    let results: Vec<Result<String, Error>> = reader.lines().into_iter().collect();
+    let results: Vec<Result<String, Error>> = reader.lines().collect();
 
     let mut coords: HashMap<(usize, usize), Vec<u32>> = HashMap::new();
 
@@ -20,7 +20,7 @@ pub fn gear_ratio_two(file_name: &String) {
         let line = &results[line_num];
         if let Ok(line_content) = line {
             let line_len = line_content.len();
-            let content = line_content.chars().into_iter().collect::<Vec<char>>();
+            let content = line_content.chars().collect::<Vec<char>>();
             re.captures_iter(line_content).for_each(|capture| {
                 let _match = capture.get(0).unwrap();
                 let l = _match.start();
@@ -53,7 +53,7 @@ pub fn gear_ratio_two(file_name: &String) {
                 if line_num > 0 {
                     let top_line = &results[line_num - 1];
                     if let Ok(top_line_content) = top_line {
-                        let top_chars = top_line_content.chars().into_iter().collect::<Vec<char>>();
+                        let top_chars = top_line_content.chars().collect::<Vec<char>>();
                         for i in max(l.saturating_sub(1), 0)..min(r.saturating_add(2), line_len) {
                             if top_chars[i] == '*' {
                                 let key = (line_num - 1, i);
@@ -72,10 +72,7 @@ pub fn gear_ratio_two(file_name: &String) {
                 if line_num < results.len() - 1 {
                     let bottom_line = &results[line_num + 1];
                     if let Ok(bottom_line_content) = bottom_line {
-                        let bottom_chars = bottom_line_content
-                            .chars()
-                            .into_iter()
-                            .collect::<Vec<char>>();
+                        let bottom_chars = bottom_line_content.chars().collect::<Vec<char>>();
                         for i in max(l.saturating_sub(1), 0)..min(r.saturating_add(2), line_len) {
                             if bottom_chars[i] == '*' {
                                 let key = (line_num + 1, i);
@@ -97,7 +94,7 @@ pub fn gear_ratio_two(file_name: &String) {
     let sm: u32 = coords
         .values()
         .map(|parts| match parts.len() {
-            2 => parts.iter().fold(1, |acc, &x| acc * x),
+            2 => parts.iter().product(),
             _ => 0,
         })
         .sum();

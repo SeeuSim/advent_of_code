@@ -17,7 +17,7 @@ pub fn trebuchet(file_name: &String) {
                 .find_iter(&line_content)
                 .map(|mat| mat.as_str())
                 .collect();
-            if numbers.len() > 0 {
+            if !numbers.is_empty() {
                 sum += (numbers[0].parse::<i32>().unwrap_or(0)) * 10;
                 sum += numbers[numbers.len() - 1].parse::<i32>().unwrap_or(0);
             }
