@@ -6,8 +6,6 @@ pub mod day_3;
 pub mod day_4;
 
 use clap::{Arg, Command};
-use day_4::part_1::placeholder;
-use day_4::part_2::placeholder_two;
 use std::collections::HashMap;
 
 use crate::day_1::part_1::trebuchet;
@@ -16,6 +14,8 @@ use crate::day_2::part_1::cube_conundrum;
 use crate::day_2::part_2::cube_conundrum_part_two;
 use crate::day_3::part_1::gear_ratio;
 use crate::day_3::part_2::gear_ratio_two;
+use crate::day_4::part_1::scratch_cards;
+use crate::day_4::part_2::scratch_cards_two;
 
 type FunctionWithParamFileName = fn(&String);
 
@@ -77,13 +77,23 @@ fn main() {
         (
             "4".to_string(),
             HashMap::from([
-                ("1".to_string(), placeholder as FunctionWithParamFileName),
+                ("1".to_string(), scratch_cards as FunctionWithParamFileName),
                 (
                     "2".to_string(),
-                    placeholder_two as FunctionWithParamFileName,
+                    scratch_cards_two as FunctionWithParamFileName,
                 ),
             ]),
         ),
+        // (
+        //     "5".to_string(),
+        //     HashMap::from([
+        //         ("1".to_string(), scratch_cards as FunctionWithParamFileName),
+        //         (
+        //             "2".to_string(),
+        //             placeholder_two as FunctionWithParamFileName,
+        //         ),
+        //     ]),
+        // ),
     ]);
 
     let file_name: &String = _matches
