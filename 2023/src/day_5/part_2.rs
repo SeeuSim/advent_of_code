@@ -119,6 +119,7 @@ pub fn auto_subtract(mut values: Vec<ValueRange>) -> Vec<ValueRange> {
         } else {
             vec![]
         };
+        // Inefficient, simply performing a recursive tail sort
         result.append(&mut auto_subtract(tail));
         result
     }
