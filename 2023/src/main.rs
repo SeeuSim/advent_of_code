@@ -4,6 +4,7 @@ pub mod day_1;
 pub mod day_2;
 pub mod day_3;
 pub mod day_4;
+pub mod day_5;
 
 use clap::{Arg, Command};
 use std::collections::HashMap;
@@ -16,6 +17,8 @@ use crate::day_3::part_1::gear_ratio;
 use crate::day_3::part_2::gear_ratio_two;
 use crate::day_4::part_1::scratch_cards;
 use crate::day_4::part_2::scratch_cards_two;
+use crate::day_5::part_1::seed_fertiliser;
+use crate::day_5::part_2::seed_fertiliser_two;
 
 type FunctionWithParamFileName = fn(&String);
 
@@ -84,16 +87,19 @@ fn main() {
                 ),
             ]),
         ),
-        // (
-        //     "5".to_string(),
-        //     HashMap::from([
-        //         ("1".to_string(), scratch_cards as FunctionWithParamFileName),
-        //         (
-        //             "2".to_string(),
-        //             placeholder_two as FunctionWithParamFileName,
-        //         ),
-        //     ]),
-        // ),
+        (
+            "5".to_string(),
+            HashMap::from([
+                (
+                    "1".to_string(),
+                    seed_fertiliser as FunctionWithParamFileName,
+                ),
+                (
+                    "2".to_string(),
+                    seed_fertiliser_two as FunctionWithParamFileName,
+                ),
+            ]),
+        ),
     ]);
 
     let file_name: &String = _matches
