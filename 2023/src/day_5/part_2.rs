@@ -23,11 +23,16 @@ impl ValueRange {
         }
         result
     }
+
+    /**
+     * Categorises a pair of ranges into the left, overlap and start ranges
+     */
     pub fn left_common_right(
         self,
         other: ValueRange,
     ) -> (Option<ValueRange>, Option<ValueRange>, Option<ValueRange>) {
         (
+            // If bottom range exists
             if other.start < self.start {
                 Some(ValueRange {
                     start: other.start,
@@ -36,6 +41,8 @@ impl ValueRange {
             } else {
                 None
             },
+
+            // If overlapping central
             if other.start <= self.end && other.end >= self.start {
                 Some(ValueRange {
                     start: other.start.max(self.start),
@@ -44,6 +51,8 @@ impl ValueRange {
             } else {
                 None
             },
+
+            // If top range exists
             if other.end > self.end {
                 Some(ValueRange {
                     start: other.start.max(self.end + 1),
@@ -54,11 +63,25 @@ impl ValueRange {
             },
         )
     }
+
+    // Deduplicate ranges to take the boundary values
+    // i.e. minimum range that adjacents do not overlap
     pub fn minus(self, other: ValueRange) -> Option<ValueRange> {
+        // Other is bigger, cannot minus
         if other.start <= self.start && other.end >= self.end {
             None
+
+        // No overlap, return self    
         } else if other.end < self.start || other.start > self.end {
             Some(self)
+
+        // Overlap, subtract
+        /*
+            |other_s |self_s        other_e|          self_e|
+                                            |other_e + 1    |
+            |self_s                |other_s     self_e| other_e|                                
+            |self_s    other_s - 1|
+         */
         } else {
             Some(ValueRange {
                 start: if other.start <= self.start {
@@ -75,6 +98,10 @@ impl ValueRange {
         }
     }
 }
+
+/**
+ * Deduplicates ranges in a sequence into separate ranges
+ */
 pub fn auto_subtract(mut values: Vec<ValueRange>) -> Vec<ValueRange> {
     if values.len() == 0 {
         vec![]
@@ -120,23 +147,32 @@ impl CategoryMap {
     }
 }
 impl CategoryMapper for CategoryMap {
+    // Will map valid values in the range, letting unmapped pass through
     fn map(&self, value: ValueRange) -> (Vec<ValueRange>, Vec<ValueRange>) {
         let mut unmapped: Vec<ValueRange> = Vec::<ValueRange>::new();
         let mut mapped: Vec<ValueRange> = Vec::<ValueRange>::new();
+
+        // Find a common region
         let (left, common, right) = self.source.left_common_right(value);
+        
+        // Can find a common range, that was mapped
         if let Some(common) = common {
             mapped.push(ValueRange {
                 start: self.destination - self.source.start + common.start,
                 end: self.destination - self.source.start + common.end,
             });
+
+            // Push the boundaries
             if let Some(left) = left {
                 unmapped.push(left);
             }
             if let Some(right) = right {
                 unmapped.push(right);
             }
+
             (unmapped, mapped)
         } else {
+            // No mapping found, for this range
             (vec![value], vec![])
         }
     }
@@ -145,9 +181,12 @@ impl CategoryMapper for Vec<CategoryMap> {
     fn map(&self, value: ValueRange) -> (Vec<ValueRange>, Vec<ValueRange>) {
         let mut unmapped: Vec<ValueRange> = vec![value];
         let mut mapped: Vec<ValueRange> = Vec::<ValueRange>::new();
+
         for category_map in self {
+            // Pass through each of the mappings to check if its mappable
             let (just_unmapped, mut just_mapped) = unmapped
                 .iter()
+                // For each submap
                 .map(|value_range| category_map.map(*value_range))
                 .fold(
                     (Vec::<ValueRange>::new(), Vec::<ValueRange>::new()),
@@ -157,7 +196,9 @@ impl CategoryMapper for Vec<CategoryMap> {
                         (unmapped, mapped)
                     },
                 );
+            // Compress the range tree to dedupe ranges
             unmapped = auto_subtract(just_unmapped);
+
             mapped.append(&mut just_mapped);
             mapped = auto_subtract(mapped);
         }
@@ -166,12 +207,17 @@ impl CategoryMapper for Vec<CategoryMap> {
 }
 impl CategoryMapper for Vec<Vec<CategoryMap>> {
     fn map(&self, value: ValueRange) -> (Vec<ValueRange>, Vec<ValueRange>) {
+        // Start with base range
         let mut unmapped: Vec<ValueRange> = vec![value];
-        let mut mapped: Vec<ValueRange> = Vec::<ValueRange>::new();
+
         unmapped.push(value);
+
         for category_map in self {
-            let (mut just_unmapped, mut just_mapped) = unmapped
+            // Pass the existing range through each of the map
+            // i.e. seed to soil, etc.
+            let (just_unmapped, just_mapped) = unmapped
                 .iter()
+                // Process for each map
                 .map(|value_range| category_map.map(*value_range))
                 .fold(
                     (Vec::<ValueRange>::new(), Vec::<ValueRange>::new()),
@@ -182,11 +228,14 @@ impl CategoryMapper for Vec<Vec<CategoryMap>> {
                     },
                 );
             unmapped.clear();
+
             unmapped.append(&mut just_mapped.clone());
             unmapped.append(&mut just_unmapped.clone());
+            // Compress the range tree to dedupe ranges
             unmapped = auto_subtract(unmapped);
         }
 
+        // All mapped
         (vec![], unmapped)
     }
 }
@@ -225,7 +274,9 @@ pub fn seed_fertiliser_two(file_name: &String) {
         "{:#?}",
         seeds
             .into_iter()
-            .flat_map(|seed| category_maps.map(seed).1)
+            // Deduped, return the source range
+            .flat_map(|seed_range| category_maps.map(seed_range).1)
+            // Need only return the start val
             .map(|range| range.start)
             .min()
     );
