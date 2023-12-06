@@ -145,3 +145,110 @@ form the ratio, and took the sum.
 Also, as I had to repeatedly access line character indices to check them across neighboring lines,
 I had to extract out the line characters from their iterators into memory to allow repeated access
 as opposed to using the `chars()` iterator, which only allows access to an index **once**.
+
+## Day 4 - Scratchcards
+
+### Part 1 - Points from winning sets
+
+Given a line in the below format:
+
+```text
+Card   1:  8 86 59 90 68 52 55 24 37 69 | 10 55  8 86  6 62 69 68 59 37 91 90 24 22 78 61 58 89 52 96 95 94 13 36 81
+```
+
+The task was to parse all the numbers on the left as a set of winning numbers, then for each line calculate:
+
+- How many cards on the right of the pipe ("|") lie in this set
+
+- For the number of winning cards, calculate the number of points, with:
+
+  - 0 getting no points,
+
+  - 1 onwards getting $2^{\text{count}-1}$ points.
+
+This was trivial enough to calculate, and obtain the sum of all points obtained. 
+
+### Part 2 - Number of cards won
+
+For each of the cards in part 1, each of the cards are already obtained by the player
+as 1 copy each.
+
+If, for instance, Card 1 wins 10 numbers, then the player gets 1 additional copy of
+the next 10 cards (Card 2 and so on).
+
+Since now we have 2 copies of Card 2, if Card 2 wins 2 numbers, then each of the 
+copies of Card 2 now win 2 copies of the next 2 cards (Cards 3 and 4), for a total
+of 4 additional cards.
+
+We are now tasked with calculating the number of cards the player ends up with.
+
+Taking inspiration from Christopher Biscardi again, we initialise the count
+of each card as 1 in a `BTreeMap` as we are guaranteed to traverse the indices
+from low to high always,
+
+and we use the cards won from part 1 to modify the counts in this counter map.
+
+We also increment each of the subsequent cards won by the number of cards the current card has (in the case of Card 2 above, 2).
+
+## Day 5 - Planting Seeds (Range Queries)
+
+### Part 1 - Mapping Singular Values and finding minimum
+
+Given a set of range maps each with a set of entries, like so (this is one range
+map):
+
+```text
+3305253869 1699909104 39566623
+3344820492 1130725752 384459310
+3244681427 1739475727 60572442
+951517531 1800048169 868898709
+1820416240 951517531 179208221
+1999624461 2668946878 219310925
+3729279802 1515185062 184724042
+2218935386 2898481077 1015522767
+3234458153 2888257803 10223274
+```
+For each line, it is formatted in the format (`dest_start`, `source_start`, `length`).
+
+This implies that the mapping of any value in the range $[\text{source\_start, source\_start+length})$ 
+will be mapped to the range $[\text{dest\_start, dest\_start+length})$ in a 1:1 mapping.
+
+For instance, if we have (2, 5, 3), we would have 5 mapped to 2, 6 mapped to 3 and 7
+mapped to 4 for a length of 3 elements. 
+
+Any elements that fall outside any of the source ranges will be mapped to themselves
+in the output.
+
+This constitutes one set of mappings, with each number from a **source** to a
+**destination**.
+
+---
+
+After a set of source-to-destination mappings, we arrive at our final mapped numbers
+and return the minimum value.
+
+This is trivial enough to perform the iterative mapping for each seed value.
+
+### Part 2 - Mapping a Set of Ranges and finding minimum value
+
+This adapts Part 1 by converting each pair of seeds into: $(\text{seed\_range\_start},\text{range\_length})$.
+
+Then, for each number in the range, find the mappings as per Part 1 and find the minimum
+output number.
+
+This is not practical as the ranges can number in the billions. Hence, an approach is needed where we process each set in the following manner, for each input seed range:
+
+- For each mapping in the set, find the intersection of the mapping with the
+  input seed range. This entire range can be mapped.
+
+- Find the portion of the input seed range that does not intersect. This range
+  maps to itself.
+
+- Take all the mapped ranges and dedupe them so that they do not intersect.
+
+We repeat this for all the sets of mappings, and then find the minimum range by
+start point.
+
+This was inspired by GitHub user @sergiocarvalho-soomacom.
+
+---
