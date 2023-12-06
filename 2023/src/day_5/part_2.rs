@@ -6,11 +6,13 @@ use std::io::BufRead;
 pub trait CategoryMapper {
     fn map(&self, value: ValueRange) -> (Vec<ValueRange>, Vec<ValueRange>);
 }
+
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Hash)]
 pub struct ValueRange {
     pub start: i64,
     pub end: i64,
 }
+
 impl ValueRange {
     pub fn from_vec(v: &mut Vec<i64>) -> Vec<ValueRange> {
         let mut result: Vec<ValueRange> = Vec::<ValueRange>::new();
@@ -41,7 +43,6 @@ impl ValueRange {
             } else {
                 None
             },
-
             // If overlapping central
             if other.start <= self.end && other.end >= self.start {
                 Some(ValueRange {
@@ -51,7 +52,6 @@ impl ValueRange {
             } else {
                 None
             },
-
             // If top range exists
             if other.end > self.end {
                 Some(ValueRange {
@@ -71,17 +71,17 @@ impl ValueRange {
         if other.start <= self.start && other.end >= self.end {
             None
 
-        // No overlap, return self    
+        // No overlap, return self
         } else if other.end < self.start || other.start > self.end {
             Some(self)
 
         // Overlap, subtract
         /*
-            |other_s |self_s        other_e|          self_e|
-                                            |other_e + 1    |
-            |self_s                |other_s     self_e| other_e|                                
-            |self_s    other_s - 1|
-         */
+           |other_s |self_s        other_e|          self_e|
+                                           |other_e + 1    |
+           |self_s                |other_s     self_e| other_e|
+           |self_s    other_s - 1|
+        */
         } else {
             Some(ValueRange {
                 start: if other.start <= self.start {
@@ -124,11 +124,13 @@ pub fn auto_subtract(mut values: Vec<ValueRange>) -> Vec<ValueRange> {
         result
     }
 }
+
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Hash)]
 struct CategoryMap {
     pub destination: i64,
     pub source: ValueRange,
 }
+
 impl CategoryMap {
     pub fn from_str(s: &str) -> CategoryMap {
         let mut iter = s.split(" ").flat_map(str::parse::<i64>);
@@ -143,10 +145,12 @@ impl CategoryMap {
             },
         }
     }
+
     pub fn maps(&self, value: i64) -> bool {
         value >= self.source.start && value <= self.source.end
     }
 }
+
 impl CategoryMapper for CategoryMap {
     // Will map valid values in the range, letting unmapped pass through
     fn map(&self, value: ValueRange) -> (Vec<ValueRange>, Vec<ValueRange>) {
@@ -155,7 +159,7 @@ impl CategoryMapper for CategoryMap {
 
         // Find a common region
         let (left, common, right) = self.source.left_common_right(value);
-        
+
         // Can find a common range, that was mapped
         if let Some(common) = common {
             mapped.push(ValueRange {
@@ -178,6 +182,7 @@ impl CategoryMapper for CategoryMap {
         }
     }
 }
+
 impl CategoryMapper for Vec<CategoryMap> {
     fn map(&self, value: ValueRange) -> (Vec<ValueRange>, Vec<ValueRange>) {
         let mut unmapped: Vec<ValueRange> = vec![value];
@@ -206,6 +211,7 @@ impl CategoryMapper for Vec<CategoryMap> {
         (unmapped, mapped)
     }
 }
+
 impl CategoryMapper for Vec<Vec<CategoryMap>> {
     fn map(&self, value: ValueRange) -> (Vec<ValueRange>, Vec<ValueRange>) {
         // Start with base range
