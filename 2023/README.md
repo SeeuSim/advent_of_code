@@ -251,4 +251,23 @@ start point.
 
 This was inspired by GitHub user @sergiocarvalho-soomacom.
 
----
+## Day 6
+
+### Part 1
+
+This simply maps for each time total, a range from 1 to the time, subtract 
+the index and multiply it by the remaining time for the distance travelled.
+
+As the input numbers are small, no optimisations are needed.
+
+### Part 2
+
+As the number is less than 1 billion, the same approach can be taken with
+little to no performance penalty.
+
+### Optimisations
+
+There can be optimisations, but they are only really necessary with larger
+numbers.
+
+[[ TO BE EXPANDED ]]

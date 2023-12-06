@@ -20,8 +20,8 @@ use crate::day_4::part_1::scratch_cards;
 use crate::day_4::part_2::scratch_cards_two;
 use crate::day_5::part_1::seed_fertiliser;
 use crate::day_5::part_2::seed_fertiliser_two;
-use crate::day_6::part_1::placeholder;
-use crate::day_6::part_2::placeholder_two;
+use crate::day_6::part_1::wait_for_it;
+use crate::day_6::part_2::wait_for_it_two;
 
 type FunctionWithParamFileName = fn(&String);
 
@@ -106,10 +106,10 @@ fn main() {
         (
             "6".to_string(),
             HashMap::from([
-                ("1".to_string(), placeholder as FunctionWithParamFileName),
+                ("1".to_string(), wait_for_it as FunctionWithParamFileName),
                 (
                     "2".to_string(),
-                    placeholder_two as FunctionWithParamFileName,
+                    wait_for_it_two as FunctionWithParamFileName,
                 ),
             ]),
         ),
