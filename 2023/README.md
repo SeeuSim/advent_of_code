@@ -25,6 +25,29 @@ I decided to attempt it in Rust, so all the source code here is in Rust 🤠
 
   - [Part 2 - Gears adjacent to two parts](#part-2---sum-of-all-gear-ratios-of-gears-adjacent-to-two-parts-only)
 
+- [Day 4 - Scratch Cards](#day-4---scratchcards)
+
+  - [Part 1 - Points from Winning Sets](#part-1---points-from-winning-sets)
+  
+  - [Part 2 - Number of Cards Won](#part-2---number-of-cards-won)
+
+- [Day 5 - Planting Seeds Range Queries](#day-5---planting-seeds-range-queries)
+
+  - [Part 1 - Mapping Singular Values and Finding Minimum](#part-1---mapping-singular-values-and-finding-minimum)
+  - [Part 2 - Mapping A Set Of Ranges and Finding Minimum value](#part-2---mapping-a-set-of-ranges-and-finding-minimum-value)
+
+- [Day 6 - Wait For It](#day-6---wait-for-it)
+  - [Part 1 - Basic Time Trial per Race](#part-1---basic-time-trial-per-race)
+  - [Part 2 - Accumulating all values into one](#part-2---accumulating-all-values-into-one)
+
+- [Day 7 - Camel Cards](#day-7---camel-cards)
+  - [Part 1 - Parsing of hands and comparing them](#part-1---parsing-of-hands-and-comparing-them)
+  - [Part 2 - Comparing hands with joker swaps](#part-2---comparing-hands-with-joker-swaps)
+
+- [](#day-x)
+  - [](#part-1)
+  - [](#part-2)
+
 ## Day 1 - Trebuchet
 
 ### Part 1 - Simple Digits
@@ -251,16 +274,16 @@ start point.
 
 This was inspired by GitHub user @sergiocarvalho-soomacom.
 
-## Day 6
+## Day 6 - Wait For It
 
-### Part 1
+### Part 1 - Basic time trial per race
 
 This simply maps for each time total, a range from 1 to the time, subtract 
 the index and multiply it by the remaining time for the distance travelled.
 
 As the input numbers are small, no optimisations are needed.
 
-### Part 2
+### Part 2 - Accumulating all values into one
 
 As the number is less than 1 billion, the same approach can be taken with
 little to no performance penalty.
@@ -269,5 +292,52 @@ little to no performance penalty.
 
 There can be optimisations, but they are only really necessary with larger
 numbers.
+
+## Day 7 - Camel Cards
+
+### Part 1 - Parsing of hands and comparing them
+
+This requires for hands to be parsed, and compared against one another.
+I opted to store the hands as a struct, containing:
+
+1. Their classified kind, for comparison
+
+2. Their raw hand values, for disputing
+
+3. Their bets, for calculating the sum.
+
+This now simply requires the implementation of the parsing logic,
+the comparison logic, as well as the collecting of results.
+
+#### Parsing Logic
+
+We need to parse the string, as well as classify it.
+
+We implement the `from_str` method to parse it, and depending
+on the different char counts, classify the hand type.
+
+#### Comparator Logic
+
+We simply compare the kind, and if the hand kind matches,
+we compare the character order index by index.
+
+### Part 2 - Comparing hands with Joker swaps
+
+This alters the parsing and classification logic, to classify
+the hand after taking the Joker, if any, to improve the hand
+value.
+
+We then modified the `from_str` method to take this hand kind
+classification into account.
+
+This also alters the comparison logic by reducing the index of the
+joker to the lowest. We simply swapped the order to prioritise
+Joker to the lowest value.
+
+## Day X - 
+
+### Part 1 - 
+
+### Part 2 - 
 
 [[ TO BE EXPANDED ]]
