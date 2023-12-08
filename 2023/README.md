@@ -8,31 +8,22 @@ I decided to attempt it in Rust, so all the source code here is in Rust 🤠
 ## 📚 Table of Contents
 
 - [Day 1 - Trebuchet](#day-1---trebuchet)
-
   - [Part 1 - Simple Digits](#part-1---simple-digits)
-
   - [Part 2 - Digits with Words](#part-2---digits-including-words-and-overlapping-ones)
 
 - [Day 2 - Cube Conundrum](#day-2---cube-conundrum)
-
   - [Part 1 - Valid Games](#part-1---indexes-of-valid-games)
-
   - [Part 2 - Sum of products of minimum cubes needed for a game](#part-2---product-of-minimum-cubes-needed-for-a-game)
 
 - [Day 3 - Gear Ratios](#day-3---gear-ratios)
-
   - [Part 1 - Parts adjacent to component](#part-1---sum-all-parts-adjacent-to-components)
-
   - [Part 2 - Gears adjacent to two parts](#part-2---sum-of-all-gear-ratios-of-gears-adjacent-to-two-parts-only)
 
 - [Day 4 - Scratch Cards](#day-4---scratchcards)
-
   - [Part 1 - Points from Winning Sets](#part-1---points-from-winning-sets)
-  
   - [Part 2 - Number of Cards Won](#part-2---number-of-cards-won)
 
 - [Day 5 - Planting Seeds Range Queries](#day-5---planting-seeds-range-queries)
-
   - [Part 1 - Mapping Singular Values and Finding Minimum](#part-1---mapping-singular-values-and-finding-minimum)
   - [Part 2 - Mapping A Set Of Ranges and Finding Minimum value](#part-2---mapping-a-set-of-ranges-and-finding-minimum-value)
 
@@ -43,6 +34,10 @@ I decided to attempt it in Rust, so all the source code here is in Rust 🤠
 - [Day 7 - Camel Cards](#day-7---camel-cards)
   - [Part 1 - Parsing of hands and comparing them](#part-1---parsing-of-hands-and-comparing-them)
   - [Part 2 - Comparing hands with joker swaps](#part-2---comparing-hands-with-joker-swaps)
+
+- [](#day-8---haunted-wasteland)
+  - [](#part-1---counting-steps-to-reach-zzz-from-aaa-for-a-single-node)
+  - [](#part-2---counting-steps-for-multiple-nodes-to-reach-destination-ending-with-z)
 
 - [](#day-x)
   - [](#part-1)
@@ -333,6 +328,32 @@ classification into account.
 This also alters the comparison logic by reducing the index of the
 joker to the lowest. We simply swapped the order to prioritise
 Joker to the lowest value.
+
+## Day 8 - Haunted Wasteland 
+
+### Part 1 - Counting steps to reach 'ZZZ' from 'AAA' for a single node 
+
+Given a graph with nodes containing 'left' and 'right' pointers, calculate
+the number of steps required, following a cyclic set of instructions
+'L' or 'R' to reach the 'ZZZ' node from 'AAA',
+
+This is a simple linked-list traversal that takes less than 2^15 steps.
+
+### Part 2 - Counting steps for multiple nodes to reach destination ending with 'Z' 
+
+As this changes the start node to all nodes ending with 'A', there are multiple nodes
+to take into consideration.
+
+As each node takes a different number of steps to reach the first destination node ending
+with 'Z', we can first investigate with two of the nodes.
+
+As it turns out, for the first two nodes, they both reach a node ending with 'Z' when the
+step count reaches the lowest common multiple of their individual step counts.
+
+Investigating this, combining the first node with each of the other nodes ending with 'A',
+we find that this relation holds true.
+
+Hence, we combine all the step counts into their LCM and obtain the answer.
 
 ## Day X - 
 
