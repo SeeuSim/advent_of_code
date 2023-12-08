@@ -7,6 +7,7 @@ pub mod day_4;
 pub mod day_5;
 pub mod day_6;
 pub mod day_7;
+pub mod day_8;
 
 use clap::{Arg, Command};
 use std::collections::HashMap;
@@ -24,7 +25,9 @@ use crate::day_5::part_2::seed_fertiliser_two;
 use crate::day_6::part_1::wait_for_it;
 use crate::day_6::part_2::wait_for_it_two;
 use crate::day_7::part_1::camel_cards;
-use crate::day_7::part_2::placeholder_two;
+use crate::day_7::part_2::camel_cards_two;
+use crate::day_8::part_1::placeholder;
+use crate::day_8::part_2::placeholder_two;
 
 type FunctionWithParamFileName = fn(&String);
 
@@ -120,6 +123,16 @@ fn main() {
             "7".to_string(),
             HashMap::from([
                 ("1".to_string(), camel_cards as FunctionWithParamFileName),
+                (
+                    "2".to_string(),
+                    camel_cards_two as FunctionWithParamFileName,
+                ),
+            ]),
+        ),
+        (
+            "8".to_string(),
+            HashMap::from([
+                ("1".to_string(), placeholder as FunctionWithParamFileName),
                 (
                     "2".to_string(),
                     placeholder_two as FunctionWithParamFileName,

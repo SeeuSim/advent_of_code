@@ -179,7 +179,7 @@ impl PartialOrd for CardBet {
     }
 }
 
-pub fn placeholder_two(file_name: &String) {
+pub fn camel_cards_two(file_name: &String) {
     let reader = extract_file(file_name).expect("An error occurred while reading the file");
 
     let lines = reader.lines().filter_map(std::io::Result::ok);
