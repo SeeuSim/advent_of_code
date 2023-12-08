@@ -1,11 +1,7 @@
 //Haunted Wasteland
 
 use crate::utils::extract_file;
-use std::{
-    collections::{BTreeMap, HashMap},
-    io::BufRead,
-    ops::Index,
-};
+use std::{collections::HashMap, io::BufRead, ops::Index};
 
 #[derive(Debug)]
 struct Node {
@@ -24,7 +20,7 @@ impl Node {
             }
         };
 
-        let mut next_nodes_strings = match label_next.next() {
+        let next_nodes_strings = match label_next.next() {
             Some(v) => v.to_string(),
             None => {
                 return None;
@@ -52,7 +48,7 @@ impl Node {
     }
 }
 
-pub fn placeholder(file_name: &String) {
+pub fn haunted_wasteland(file_name: &String) {
     let reader = extract_file(file_name).expect("An error occurred while reading the file");
     let mut it = reader
         .lines()

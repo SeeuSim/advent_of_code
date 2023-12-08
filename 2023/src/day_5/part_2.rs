@@ -146,9 +146,9 @@ impl CategoryMap {
         }
     }
 
-    pub fn maps(&self, value: i64) -> bool {
-        value >= self.source.start && value <= self.source.end
-    }
+    // pub fn maps(&self, value: i64) -> bool {
+    //     value >= self.source.start && value <= self.source.end
+    // }
 }
 
 impl CategoryMapper for CategoryMap {

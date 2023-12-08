@@ -26,8 +26,8 @@ use crate::day_6::part_1::wait_for_it;
 use crate::day_6::part_2::wait_for_it_two;
 use crate::day_7::part_1::camel_cards;
 use crate::day_7::part_2::camel_cards_two;
-use crate::day_8::part_1::placeholder;
-use crate::day_8::part_2::placeholder_two;
+use crate::day_8::part_1::haunted_wasteland;
+use crate::day_8::part_2::haunted_wasteland_part_two;
 
 type FunctionWithParamFileName = fn(&String);
 
@@ -132,10 +132,10 @@ fn main() {
         (
             "8".to_string(),
             HashMap::from([
-                ("1".to_string(), placeholder as FunctionWithParamFileName),
+                ("1".to_string(), haunted_wasteland as FunctionWithParamFileName),
                 (
                     "2".to_string(),
-                    placeholder_two as FunctionWithParamFileName,
+                    haunted_wasteland_part_two as FunctionWithParamFileName,
                 ),
             ]),
         ),
