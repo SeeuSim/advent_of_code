@@ -35,9 +35,9 @@ I decided to attempt it in Rust, so all the source code here is in Rust 🤠
   - [Part 1 - Parsing of hands and comparing them](#part-1---parsing-of-hands-and-comparing-them)
   - [Part 2 - Comparing hands with joker swaps](#part-2---comparing-hands-with-joker-swaps)
 
-- [](#day-8---haunted-wasteland)
-  - [](#part-1---counting-steps-to-reach-zzz-from-aaa-for-a-single-node)
-  - [](#part-2---counting-steps-for-multiple-nodes-to-reach-destination-ending-with-z-_simultaneously_)
+- [Day 8 = Haunted Wasteland](#day-8---haunted-wasteland)
+  - [Part 1 - Steps from AAA to ZZZ](#part-1---counting-steps-to-reach-zzz-from-aaa-for-a-single-node)
+  - [Part 2 - Synchronous Steps for all ending with 'A' to reach destination ending with 'Z'](#part-2---counting-steps-for-multiple-nodes-to-reach-destination-ending-with-z-simultaneously)
 
 - [](#day-x)
   - [](#part-1)
