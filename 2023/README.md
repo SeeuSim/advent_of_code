@@ -37,7 +37,7 @@ I decided to attempt it in Rust, so all the source code here is in Rust 🤠
 
 - [](#day-8---haunted-wasteland)
   - [](#part-1---counting-steps-to-reach-zzz-from-aaa-for-a-single-node)
-  - [](#part-2---counting-steps-for-multiple-nodes-to-reach-destination-ending-with-z)
+  - [](#part-2---counting-steps-for-multiple-nodes-to-reach-destination-ending-with-z-_simultaneously_)
 
 - [](#day-x)
   - [](#part-1)
@@ -339,7 +339,7 @@ the number of steps required, following a cyclic set of instructions
 
 This is a simple linked-list traversal that takes less than 2^15 steps.
 
-### Part 2 - Counting steps for multiple nodes to reach destination ending with 'Z' 
+### Part 2 - Counting steps for multiple nodes to reach destination ending with 'Z' _simultaneously_ 
 
 As this changes the start node to all nodes ending with 'A', there are multiple nodes
 to take into consideration.
