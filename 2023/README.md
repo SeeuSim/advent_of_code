@@ -39,9 +39,13 @@ I decided to attempt it in Rust, so all the source code here is in Rust 🤠
   - [Part 1 - Steps from AAA to ZZZ](#part-1---counting-steps-to-reach-zzz-from-aaa-for-a-single-node)
   - [Part 2 - Synchronous Steps for all ending with 'A' to reach destination ending with 'Z'](#part-2---counting-steps-for-multiple-nodes-to-reach-destination-ending-with-z-simultaneously)
 
-- [](#day-x)
+- [](#day-9---mirage-maintenance)
+  - [](#part-1---extrapolate-forwards)
+  - [](#part-2---extrapolate-backwards)
+
+<!-- - [](#day-x)
   - [](#part-1)
-  - [](#part-2)
+  - [](#part-2) -->
 
 ## Day 1 - Trebuchet
 
@@ -355,10 +359,53 @@ we find that this relation holds true.
 
 Hence, we combine all the step counts into their LCM and obtain the answer.
 
+## Day 9 - Mirage Maintenance
+
+### Part 1 - Extrapolate forwards
+
+For this part, the goal was to take each line,
+a sequence of numbers, and generate new lines
+each made up of the pairwise difference of 
+adjacent elements of the line above, like so:
+
+```text
+1 2 3 4 5
+ 1 1 1 1
+  0 0 0
+```
+
+In this case, the original line is the first,
+and the desired extrapolated values can
+be obtained by summing the entire right edge 
+formed by '5', '1' and '0'.
+
+This was easily doable with iterators and vector
+operations.
+
+The answer was the sum of all extrapolated values.
+
+### Part 2 - Extrapolate backwards
+
+This extends from part 1 by extrapolating backwards
+and predicting the value preceding the first.
+
+In the example in Part 1, it is clear that the 
+extrapolated value is 0.
+
+The adjustment made was to take a rightwards fold
+of all sequences generated, subtracting the accumulated
+value from the next.
+
+Using the above diagram in Part 1 as an example,
+it would start from the first element of the last line
+('0'), taking $1 - 0 = 1$ for the next line, and $1 - 1 = 0$ for the
+initial line to obtain the final value of 0.
+
+<!-- 
 ## Day X - 
 
 ### Part 1 - 
 
-### Part 2 - 
+### Part 2 -  -->
 
 [[ TO BE EXPANDED ]]
