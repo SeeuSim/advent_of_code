@@ -9,6 +9,7 @@ pub mod day_6;
 pub mod day_7;
 pub mod day_8;
 pub mod day_9;
+pub mod day_10;
 
 use clap::{Arg, Command};
 use std::collections::HashMap;
@@ -31,6 +32,8 @@ use crate::day_8::part_1::haunted_wasteland;
 use crate::day_8::part_2::haunted_wasteland_part_two;
 use crate::day_9::part_1::mirage_maintenance;
 use crate::day_9::part_2::mirage_maintenance_two;
+use crate::day_10::part_1::placeholder;
+use crate::day_10::part_2::placeholder_two;
 
 type FunctionWithParamFileName = fn(&String);
 
@@ -158,16 +161,16 @@ fn main() {
                 ),
             ]),
         ),
-        // (
-        //     "9".to_string(),
-        //     HashMap::from([
-        //         ("1".to_string(), placeholder as FunctionWithParamFileName),
-        //         (
-        //             "2".to_string(),
-        //             placeholder_two as FunctionWithParamFileName,
-        //         ),
-        //     ]),
-        // ),
+        (
+            "10".to_string(),
+            HashMap::from([
+                ("1".to_string(), placeholder as FunctionWithParamFileName),
+                (
+                    "2".to_string(),
+                    placeholder_two as FunctionWithParamFileName,
+                ),
+            ]),
+        ),
         // (
         //     "9".to_string(),
         //     HashMap::from([
