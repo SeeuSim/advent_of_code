@@ -8,6 +8,7 @@ pub mod day_5;
 pub mod day_6;
 pub mod day_7;
 pub mod day_8;
+pub mod day_9;
 
 use clap::{Arg, Command};
 use std::collections::HashMap;
@@ -28,6 +29,8 @@ use crate::day_7::part_1::camel_cards;
 use crate::day_7::part_2::camel_cards_two;
 use crate::day_8::part_1::haunted_wasteland;
 use crate::day_8::part_2::haunted_wasteland_part_two;
+use crate::day_9::part_1::mirage_maintenance;
+use crate::day_9::part_2::placeholder_two;
 
 type FunctionWithParamFileName = fn(&String);
 
@@ -132,13 +135,49 @@ fn main() {
         (
             "8".to_string(),
             HashMap::from([
-                ("1".to_string(), haunted_wasteland as FunctionWithParamFileName),
+                (
+                    "1".to_string(),
+                    haunted_wasteland as FunctionWithParamFileName,
+                ),
                 (
                     "2".to_string(),
                     haunted_wasteland_part_two as FunctionWithParamFileName,
                 ),
             ]),
         ),
+        (
+            "9".to_string(),
+            HashMap::from([
+                (
+                    "1".to_string(),
+                    mirage_maintenance as FunctionWithParamFileName,
+                ),
+                (
+                    "2".to_string(),
+                    placeholder_two as FunctionWithParamFileName,
+                ),
+            ]),
+        ),
+        // (
+        //     "9".to_string(),
+        //     HashMap::from([
+        //         ("1".to_string(), placeholder as FunctionWithParamFileName),
+        //         (
+        //             "2".to_string(),
+        //             placeholder_two as FunctionWithParamFileName,
+        //         ),
+        //     ]),
+        // ),
+        // (
+        //     "9".to_string(),
+        //     HashMap::from([
+        //         ("1".to_string(), placeholder as FunctionWithParamFileName),
+        //         (
+        //             "2".to_string(),
+        //             placeholder_two as FunctionWithParamFileName,
+        //         ),
+        //     ]),
+        // ),
     ]);
 
     let file_name: &String = _matches
