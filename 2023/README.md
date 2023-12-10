@@ -39,10 +39,14 @@ I decided to attempt it in Rust, so all the source code here is in Rust 🤠
   - [Part 1 - Steps from AAA to ZZZ](#part-1---counting-steps-to-reach-zzz-from-aaa-for-a-single-node)
   - [Part 2 - Synchronous Steps for all ending with 'A' to reach destination ending with 'Z'](#part-2---counting-steps-for-multiple-nodes-to-reach-destination-ending-with-z-simultaneously)
 
-- [](#day-9---mirage-maintenance)
-  - [](#part-1---extrapolate-forwards)
-  - [](#part-2---extrapolate-backwards)
+- [Day 9 - Mirage Maintenance](#day-9---mirage-maintenance)
+  - [Part 1 - Extrapolate Forwards](#part-1---extrapolate-forwards)
+  - [Part 2 - Extrapolate Backwards](#part-2---extrapolate-backwards)
 
+- [](#day-x)
+  - [](#part-1)
+  - [](#part-2)
+  
 <!-- - [](#day-x)
   - [](#part-1)
   - [](#part-2) -->
@@ -401,6 +405,12 @@ it would start from the first element of the last line
 ('0'), taking $1 - 0 = 1$ for the next line, and $1 - 1 = 0$ for the
 initial line to obtain the final value of 0.
 
+
+## Day X - 
+
+### Part 1 - 
+
+### Part 2 - 
 <!-- 
 ## Day X - 
 
