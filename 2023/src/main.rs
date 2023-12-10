@@ -30,7 +30,7 @@ use crate::day_7::part_2::camel_cards_two;
 use crate::day_8::part_1::haunted_wasteland;
 use crate::day_8::part_2::haunted_wasteland_part_two;
 use crate::day_9::part_1::mirage_maintenance;
-use crate::day_9::part_2::placeholder_two;
+use crate::day_9::part_2::mirage_maintenance_two;
 
 type FunctionWithParamFileName = fn(&String);
 
@@ -154,7 +154,7 @@ fn main() {
                 ),
                 (
                     "2".to_string(),
-                    placeholder_two as FunctionWithParamFileName,
+                    mirage_maintenance_two as FunctionWithParamFileName,
                 ),
             ]),
         ),
