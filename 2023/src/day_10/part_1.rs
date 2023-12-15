@@ -1,6 +1,5 @@
 use crate::utils::extract_file;
 use std::{
-    collections::{HashMap, HashSet, VecDeque},
     io::BufRead,
 };
 
@@ -15,7 +14,7 @@ enum Dir {
 pub fn placeholder(file_name: &String) {
     let reader = extract_file(file_name).expect("An error occurred while reading the file");
 
-    let mut s_loc = (usize::MAX, usize::MAX);
+    let _s_loc = (usize::MAX, usize::MAX);
 
     let maze = reader
         .lines()
