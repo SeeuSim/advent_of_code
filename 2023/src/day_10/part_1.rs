@@ -1,10 +1,16 @@
-use num::Float;
-
 use crate::utils::extract_file;
 use std::{
-    collections::{HashMap, VecDeque},
+    collections::{HashMap, HashSet, VecDeque},
     io::BufRead,
 };
+
+#[derive(Debug, Clone, Copy)]
+enum Dir {
+    Up,
+    Down,
+    Left,
+    Right,
+}
 
 pub fn placeholder(file_name: &String) {
     let reader = extract_file(file_name).expect("An error occurred while reading the file");
@@ -13,81 +19,69 @@ pub fn placeholder(file_name: &String) {
 
     let maze = reader
         .lines()
-        .enumerate()
-        .filter_map(|(lnum, v)| match v.ok() {
-            None => None,
-            Some(line) => {
-                let out = line;
-
-                let f_s = out
-                    .clone()
-                    .chars()
-                    .enumerate()
-                    .filter(|(_, v)| v.eq(&'S'))
-                    .next()
-                    .unwrap_or((usize::MAX, 'v'));
-
-                if f_s.0 < usize::MAX {
-                    s_loc = (lnum, f_s.0);
-                }
-
-                Some(out.chars().collect::<Vec<_>>())
-            }
+        .filter_map(std::result::Result::ok)
+        .fold("".to_string(), |mut acc, e| {
+            acc.push_str(e.as_str());
+            acc.push_str("\n");
+            acc
         })
+        .chars()
         .collect::<Vec<_>>();
 
-    let mut visited: HashMap<(usize, usize), i32> = HashMap::from([(s_loc, 0)]);
+    // println!("{:?}", maze);
 
-    let mut queue: VecDeque<(usize, usize)> = VecDeque::from([s_loc]);
+    let width = maze.clone().into_iter().position(|x| x == '\n').unwrap();
+    let start = maze.clone().into_iter().position(|x| x == 'S').unwrap();
 
-    let north_chars = vec!['F', '7', '|'];
-    let south_chars = vec!['L', 'J', '|'];
-    let west_chars = vec!['-', 'F', 'L'];
-    let east_chars = vec!['-', 'J', '7'];
-
-    /*
-    The pipes are arranged in a two-dimensional grid of tiles:
-
-    | is a vertical pipe connecting north and south.
-    - is a horizontal pipe connecting east and west.
-    L is a 90-degree bend connecting north and east.
-    J is a 90-degree bend connecting north and west.
-    7 is a 90-degree bend connecting south and west.
-    F is a 90-degree bend connecting south and east.
-    . is ground; there is no pipe in this tile.
-    S is the starting position of the animal; there is a pipe on this tile, but your sketch doesn't show what shape the pipe has.
-    */
-    while queue.len() > 0 {
-        let pos = queue.pop_front().unwrap();
-
-        let (r, c) = pos;
-        let d = visited.get(&pos).unwrap();
-
-        // Top
-        // F, 7, J, |
-        if r > 0 && north_chars.contains(&maze[r - 1][c]) {
-            let next = (r - 1, c);
-            let c_dist =  visited.entry(next).or_insert(i32::MAX);
-            *c_dist = *c_dist.min(&mut (*d + 1));
-            queue.push_back(next);
+    let (mut pos, mut dir) = {
+        // Above, eliminating the newline char
+        if matches!(maze[start - width - 1], '|' | '7' | 'F') {
+            (start - width - 1, Dir::Up)
+            // Below, skipping the newline char
+        } else if matches!(maze[start + width + 1], '|' | 'L' | 'J') {
+            (start + width + 1, Dir::Down)
+            // Default to left, which shouldn't be the case
+        } else {
+            (start - 1, Dir::Left)
         }
+    };
 
-        // Bottom
-        if r < maze.len() - 1 && south_chars.contains(&maze[r + 1][c]) {
-            let next = (r + 1, c);
-            queue.push_back(next);
-        }
+    // Finds the largest cycle to reach S, and then divides that by 2.
+    let ans = (1 + std::iter::repeat(())
+        .position(|_| unsafe {
+            match (maze.get_unchecked(pos), dir) {
+                ('|', Dir::Down) => pos += width + 1,
+                ('|', Dir::Up) => pos -= width + 1,
+                ('-', Dir::Left) => pos -= 1,
+                ('-', Dir::Right) => pos += 1,
+                // Going down or up, hit a right branch
+                ('L', Dir::Down) | ('F', Dir::Up) => {
+                    pos += 1;
+                    dir = Dir::Right;
+                }
+                // Going Left or Right, hit an Up branch
+                ('L', Dir::Left) | ('J', Dir::Right) => {
+                    pos -= width + 1;
+                    dir = Dir::Up;
+                }
+                // Going Up or Down, hit a Left branch
+                ('7', Dir::Up) | ('J', Dir::Down) => {
+                    pos -= 1;
+                    dir = Dir::Left;
+                }
+                // Going Right or Left, hit a down branch
+                ('7', Dir::Right) | ('F', Dir::Left) => {
+                    pos += width + 1;
+                    dir = Dir::Down;
+                }
+                // Returned to the start, end the loop
+                ('S', _) => return true,
+                (_, _) => unreachable!(),
+            }
+            false
+        })
+        .unwrap())
+        / 2;
 
-        // Left
-        if c > 0 && west_chars.contains(&maze[r][c - 1]) {
-            let next = (r, c - 1);
-            queue.push_back(next);
-        }
-
-        // Right
-        if c < maze[0].len() - 1 && east_chars.contains(&maze[r][c + 1]) {
-            let next = (r, c + 1);
-            queue.push_back(next);
-        }
-    }
+    println!("Answer: {}", ans);
 }

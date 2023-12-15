@@ -34,10 +34,13 @@ pub fn wait_for_it_two(file_name: &String) {
         .parse::<u64>()
         .unwrap();
 
-    let count_records = (1..time).map(move |x| {
-        let dist = (time - x) * x;
-        dist
-    }).filter(move |&x| x > record).count();
+    let count_records = (1..time)
+        .map(move |x| {
+            let dist = (time - x) * x;
+            dist
+        })
+        .filter(move |&x| x > record)
+        .count();
 
     println!("Count: {}", count_records);
 }

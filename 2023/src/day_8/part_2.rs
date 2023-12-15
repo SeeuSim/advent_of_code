@@ -89,7 +89,7 @@ pub fn haunted_wasteland_part_two(file_name: &String) {
             }
             step_ct
         })
-        // After wrapping around the instructions this many times, 
+        // After wrapping around the instructions this many times,
         // all will land on nodes ending w 'Z'.
         .fold(1, num::integer::lcm);
     println!("Steps: {}", n_steps);

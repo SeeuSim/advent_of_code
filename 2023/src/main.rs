@@ -1,6 +1,7 @@
 pub mod utils;
 
 pub mod day_1;
+pub mod day_10;
 pub mod day_2;
 pub mod day_3;
 pub mod day_4;
@@ -9,13 +10,14 @@ pub mod day_6;
 pub mod day_7;
 pub mod day_8;
 pub mod day_9;
-pub mod day_10;
 
 use clap::{Arg, Command};
 use std::collections::HashMap;
 
 use crate::day_1::part_1::trebuchet;
 use crate::day_1::part_2::trebuchet_part_two;
+use crate::day_10::part_1::placeholder;
+use crate::day_10::part_2::placeholder_two;
 use crate::day_2::part_1::cube_conundrum;
 use crate::day_2::part_2::cube_conundrum_part_two;
 use crate::day_3::part_1::gear_ratio;
@@ -32,8 +34,6 @@ use crate::day_8::part_1::haunted_wasteland;
 use crate::day_8::part_2::haunted_wasteland_part_two;
 use crate::day_9::part_1::mirage_maintenance;
 use crate::day_9::part_2::mirage_maintenance_two;
-use crate::day_10::part_1::placeholder;
-use crate::day_10::part_2::placeholder_two;
 
 type FunctionWithParamFileName = fn(&String);
 

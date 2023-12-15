@@ -18,12 +18,16 @@ enum HandKind {
     // One pair, where two cards share one label, and the other three cards have a different label from the pair and each other: A23A4
     OnePair = 2,
     // High card, where all cards' labels are distinct: 23456
-    HighCard = 1
+    HighCard = 1,
 }
 
 fn get_ord_val(c: char) -> i8 {
     let vals = "AKQJT98765432".to_string();
-    vals.chars().rev().position(|chr| chr == c).map(|x| x as i8).unwrap_or(-1)
+    vals.chars()
+        .rev()
+        .position(|chr| chr == c)
+        .map(|x| x as i8)
+        .unwrap_or(-1)
 }
 
 fn comp_chars(c_1: char, c_2: char) -> std::cmp::Ordering {
@@ -41,10 +45,9 @@ impl Ord for CardBet {
     fn cmp(&self, other: &Self) -> std::cmp::Ordering {
         let self_val = &self.hand;
         let other_val = &other.hand;
-        
+
         let self_kind = &self.kind;
         let other_kind = &other.kind;
-
 
         match self_kind.cmp(&other_kind) {
             std::cmp::Ordering::Less => {
@@ -54,18 +57,17 @@ impl Ord for CardBet {
                 return std::cmp::Ordering::Greater;
             }
             std::cmp::Ordering::Equal => {
-                let mut v = self_val.chars().zip(other_val.chars())
-                    .map(|(c_1, c_2)| {
-                        comp_chars(c_1, c_2)
-                    }).filter(|&x| x != std::cmp::Ordering::Equal);
+                let mut v = self_val
+                    .chars()
+                    .zip(other_val.chars())
+                    .map(|(c_1, c_2)| comp_chars(c_1, c_2))
+                    .filter(|&x| x != std::cmp::Ordering::Equal);
 
                 match v.clone().count() {
                     0 => {
                         return std::cmp::Ordering::Equal;
-                    },
-                    _ => {
-                        v.next().unwrap()
                     }
+                    _ => v.next().unwrap(),
                 }
             }
         }
@@ -99,9 +101,9 @@ impl CardBet {
                 }
                 match out {
                     Some(val) => val,
-                    None => HandKind::FullHouse
+                    None => HandKind::FullHouse,
                 }
-            },
+            }
             3 => {
                 let mut out: Option<HandKind> = None;
                 for (_, count) in vals.clone() {
@@ -112,9 +114,9 @@ impl CardBet {
                 }
                 match out {
                     Some(val) => val,
-                    None => HandKind::TwoPair
+                    None => HandKind::TwoPair,
                 }
-            },
+            }
             4 => HandKind::OnePair,
             _ => HandKind::HighCard,
         };
