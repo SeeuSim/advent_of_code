@@ -1,7 +1,7 @@
 use crate::utils::extract_file;
 
 use std::{
-    collections::{BTreeMap, HashSet},
+    collections::HashSet,
     io::BufRead,
 };
 
