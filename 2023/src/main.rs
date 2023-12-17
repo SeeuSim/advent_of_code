@@ -16,8 +16,8 @@ use std::collections::HashMap;
 
 use crate::day_1::part_1::trebuchet;
 use crate::day_1::part_2::trebuchet_part_two;
-use crate::day_10::part_1::placeholder;
-use crate::day_10::part_2::placeholder_two;
+use crate::day_10::part_1::pipe_maze;
+use crate::day_10::part_2::pipe_maze_two;
 use crate::day_2::part_1::cube_conundrum;
 use crate::day_2::part_2::cube_conundrum_part_two;
 use crate::day_3::part_1::gear_ratio;
@@ -164,11 +164,8 @@ fn main() {
         (
             "10".to_string(),
             HashMap::from([
-                ("1".to_string(), placeholder as FunctionWithParamFileName),
-                (
-                    "2".to_string(),
-                    placeholder_two as FunctionWithParamFileName,
-                ),
+                ("1".to_string(), pipe_maze as FunctionWithParamFileName),
+                ("2".to_string(), pipe_maze_two as FunctionWithParamFileName),
             ]),
         ),
         // (

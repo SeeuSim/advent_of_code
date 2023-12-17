@@ -1,7 +1,7 @@
+// Pipe Maze
+
 use crate::utils::extract_file;
-use std::{
-    io::BufRead,
-};
+use std::io::BufRead;
 
 #[derive(Debug, Clone, Copy)]
 enum Dir {
@@ -11,10 +11,8 @@ enum Dir {
     Right,
 }
 
-pub fn placeholder(file_name: &String) {
+pub fn pipe_maze(file_name: &String) {
     let reader = extract_file(file_name).expect("An error occurred while reading the file");
-
-    let _s_loc = (usize::MAX, usize::MAX);
 
     let maze = reader
         .lines()
@@ -26,8 +24,6 @@ pub fn placeholder(file_name: &String) {
         })
         .chars()
         .collect::<Vec<_>>();
-
-    // println!("{:?}", maze);
 
     let width = maze.clone().into_iter().position(|x| x == '\n').unwrap();
     let start = maze.clone().into_iter().position(|x| x == 'S').unwrap();
