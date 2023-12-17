@@ -1,7 +1,6 @@
 pub mod utils;
 
 pub mod day_1;
-pub mod day_10;
 pub mod day_2;
 pub mod day_3;
 pub mod day_4;
@@ -11,13 +10,14 @@ pub mod day_7;
 pub mod day_8;
 pub mod day_9;
 
+pub mod day_10;
+pub mod day_11;
+
 use clap::{Arg, Command};
 use std::collections::HashMap;
 
 use crate::day_1::part_1::trebuchet;
 use crate::day_1::part_2::trebuchet_part_two;
-use crate::day_10::part_1::pipe_maze;
-use crate::day_10::part_2::pipe_maze_two;
 use crate::day_2::part_1::cube_conundrum;
 use crate::day_2::part_2::cube_conundrum_part_two;
 use crate::day_3::part_1::gear_ratio;
@@ -34,6 +34,11 @@ use crate::day_8::part_1::haunted_wasteland;
 use crate::day_8::part_2::haunted_wasteland_part_two;
 use crate::day_9::part_1::mirage_maintenance;
 use crate::day_9::part_2::mirage_maintenance_two;
+
+use crate::day_10::part_1::pipe_maze;
+use crate::day_10::part_2::pipe_maze_two;
+use crate::day_11::part_1::cosmic_expansion;
+use crate::day_11::part_2::cosmic_expansion_two;
 
 type FunctionWithParamFileName = fn(&String);
 
@@ -168,8 +173,21 @@ fn main() {
                 ("2".to_string(), pipe_maze_two as FunctionWithParamFileName),
             ]),
         ),
+        (
+            "11".to_string(),
+            HashMap::from([
+                (
+                    "1".to_string(),
+                    cosmic_expansion as FunctionWithParamFileName,
+                ),
+                (
+                    "2".to_string(),
+                    cosmic_expansion_two as FunctionWithParamFileName,
+                ),
+            ]),
+        ),
         // (
-        //     "9".to_string(),
+        //     "day".to_string(),
         //     HashMap::from([
         //         ("1".to_string(), placeholder as FunctionWithParamFileName),
         //         (
