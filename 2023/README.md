@@ -47,6 +47,10 @@ I decided to attempt it in Rust, so all the source code here is in Rust 🤠
   - [Part 1 - Furthest Point](#part-1---furthest-point)
   - [Part 2 - Area Within](#part-2---area-within)
   
+- [Day 11 - Cosmic Expansion](#day-11---cosmic-expansion)
+  - [Part 1 - Expanding Manually](#part-1---expanding-manually-and-sum-of-all-pairs-shortest-paths)
+  - [Part 2 - Expanding using Math](#part-2---expanding-using-math-and-sum-of-all-pairs-shortest-paths)
+
 - [](#day-x)
   - [](#part-1)
   - [](#part-2)
@@ -438,13 +442,29 @@ online, like this one: [link](https://github.com/hyper-neutrino/advent-of-code/b
 
 TODO: Fix overcounting
 
+## Day 11 - Cosmic Expansion
+
+### Part 1 - Expanding manually and sum of all pairs shortest paths
+
+Simply iterate through each line, doubling the rows where needed and
+doubling columns (from reverse to keep indices intact) where needed as well.
+
+Then, I iteratively used pairings of each galaxy to calculate the row and
+column difference between their indices for the shortest path sum.
+
+### Part 2 - Expanding using math and sum of all pairs shortest paths
+
+Since the row expansion factor was by a million, this could potentially
+slow the calculations down.
+
+Hence, I used manual calculations to calculate and insert a million
+rows/columns for each expanded row/column per path sum.
+
 ## Day X -
 
 ### Part 1 -
 
 ### Part 2 -
-
-
 <!-- ## Day X -
 
 ### Part 1 -
