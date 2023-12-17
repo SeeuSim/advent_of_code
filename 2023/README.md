@@ -43,10 +43,13 @@ I decided to attempt it in Rust, so all the source code here is in Rust 🤠
   - [Part 1 - Extrapolate Forwards](#part-1---extrapolate-forwards)
   - [Part 2 - Extrapolate Backwards](#part-2---extrapolate-backwards)
 
+- [Day 10 - Pipe Maze](#day-10---pipe-maze)
+  - [Part 1 - Furthest Point](#part-1---furthest-point)
+  - [Part 2 - Area Within](#part-2---area-within)
+  
 - [](#day-x)
   - [](#part-1)
   - [](#part-2)
-  
 <!-- - [](#day-x)
   - [](#part-1)
   - [](#part-2) -->
@@ -406,16 +409,39 @@ it would start from the first element of the last line
 initial line to obtain the final value of 0.
 
 
-## Day X - 
+## Day 10 - Pipe Maze 
 
-### Part 1 - 
+### Part 1 - Furthest Point 
 
-### Part 2 - 
-<!-- 
-## Day X - 
+Using a loop and the direction pointers, I looped around until
+I ended up back at 'S'.
 
-### Part 1 - 
+Using the total iteration count divided by 2, would obtain the furthest
+distance along the loop from 'S'.
 
-### Part 2 -  -->
+### Part 2 - Area Within 
+
+This was slightly more involved.
+
+Using the same logic as earlier, I kept track of all visited positions
+along the loop.
+
+Then, I iterated over each character, to iterate from the beginning,
+how many inversions of the loop there were.
+
+An inversion occurs when a vertical pipe is encountered, or a 'J' or 'L' is encountered.
+These signify either exiting a west-north bend, entering the loop, or entering a
+north-east bend, going along a straight and possibly out of the loop.
+
+This gives some slight over-counting by 6. I verified this using other solutions
+online, like this one: [link](https://github.com/hyper-neutrino/advent-of-code/blob/main/2023/day10p2.py)
+
+TODO: Fix overcounting
+
+## Day X -
+
+### Part 1 -
+
+### Part 2 -
 
 [[ TO BE EXPANDED ]]

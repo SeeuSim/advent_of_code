@@ -48,8 +48,6 @@ pub fn pipe_maze_two(file_name: &String) {
 
         pipes.insert(pos);
 
-        let (r, c) = pos;
-
         match (curr_p, dir) {
             ('|', Dir::Down) => pos = (pos.0 + 1, pos.1),
             ('|', Dir::Up) => pos = (pos.0 - 1, pos.1),
