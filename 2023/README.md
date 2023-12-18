@@ -439,9 +439,32 @@ north-east bend, going along a straight and possibly out of the loop.
 
 This gives some slight over-counting by 6. I verified this using other solutions
 online, like this one: [link](https://github.com/hyper-neutrino/advent-of-code/blob/main/2023/day10p2.py),
-and implemented that logic in the function `pipe_maze_two`. 
+and implemented that logic in the function `pipe_maze_two`, which I will explain [below](#working-solution).
 
 I left the original, broken, solution in the function `broken_pipe_maze_two`.
+
+#### Working Solution
+
+It functions largely similarly to the original, just replacing the 'S' with its possible characters,
+and replacing all non-loop characters with '.' to minimise confusion.
+
+Then, to count inversions by crossing the vertical characters, it iterates over each row, finding
+vertical characters and marking as within/not-within the loop.
+
+It also avoids the 'L----J' and 'L-----7' branches by setting a flag if a 'L' or 'F' pipe has first
+been encountered, to count if the ending character of the bend is a 'J' or a '7', and hence if to
+count the crossing of the last character as an inversion or not.
+
+If for instance it is an 'L----J', then effectively two inversions have been made and nothing changes.
+Else, only one inversion has been made, and the state storing if the chars are within the loop can
+be inverted.
+
+Any time it is not within the loop, the characters are added to the 'outside' set, and the union
+of the 'outside' set with the pipe loop set gives the total number of characters that are pipes
+or not in the loop.
+
+Subtracting the total number of characters from this union gives the total number of characters
+that are within the loop.
 
 ## Day 11 - Cosmic Expansion
 
