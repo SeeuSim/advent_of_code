@@ -41,7 +41,7 @@ use crate::day_10::part_2::pipe_maze_two;
 use crate::day_11::part_1::cosmic_expansion;
 use crate::day_11::part_2::cosmic_expansion_two;
 use crate::day_12::part_1::hot_springs;
-use crate::day_12::part_2::placeholder_two;
+use crate::day_12::part_2::hot_springs_two;
 
 type FunctionWithParamFileName = fn(&String);
 
@@ -195,7 +195,7 @@ fn main() {
                 ("1".to_string(), hot_springs as FunctionWithParamFileName),
                 (
                     "2".to_string(),
-                    placeholder_two as FunctionWithParamFileName,
+                    hot_springs_two as FunctionWithParamFileName,
                 ),
             ]),
         ),
