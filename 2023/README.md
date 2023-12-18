@@ -438,9 +438,10 @@ These signify either exiting a west-north bend, entering the loop, or entering a
 north-east bend, going along a straight and possibly out of the loop.
 
 This gives some slight over-counting by 6. I verified this using other solutions
-online, like this one: [link](https://github.com/hyper-neutrino/advent-of-code/blob/main/2023/day10p2.py)
+online, like this one: [link](https://github.com/hyper-neutrino/advent-of-code/blob/main/2023/day10p2.py),
+and implemented that logic in the function `pipe_maze_two`. 
 
-TODO: Fix overcounting
+I left the original, broken, solution in the function `broken_pipe_maze_two`.
 
 ## Day 11 - Cosmic Expansion
 
