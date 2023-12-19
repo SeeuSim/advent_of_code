@@ -66,28 +66,34 @@ pub fn point_of_incidence(file_name: &String) {
     let reader = extract_file(file_name).expect("An error occurred while reading the file");
 
     let pat_1 = vec![
-        "#.##..##.".chars().collect::<Vec<_>>(),
-        "..#.##.#.".chars().collect::<Vec<_>>(),
-        "##......#".chars().collect::<Vec<_>>(),
-        "##......#".chars().collect::<Vec<_>>(),
-        "..#.##.#.".chars().collect::<Vec<_>>(),
-        "..##..##.".chars().collect::<Vec<_>>(),
-        "#.#.##.#.".chars().collect::<Vec<_>>(),
-    ];
+        "#.##..##.",
+        "..#.##.#.",
+        "##......#",
+        "##......#",
+        "..#.##.#.",
+        "..##..##.",
+        "#.#.##.#.",
+    ]
+    .iter()
+    .map(|&v| v.chars().collect())
+    .collect();
 
     assert!(get_pattern_score(&pat_1) == 5);
 
     let pat_2 = vec![
-        "#...##..#".chars().collect::<Vec<_>>(),
-        "#....#..#".chars().collect::<Vec<_>>(),
-        "..##..###".chars().collect::<Vec<_>>(),
-        "#####.##.".chars().collect::<Vec<_>>(),
-        "#####.##.".chars().collect::<Vec<_>>(),
-        "..##..###".chars().collect::<Vec<_>>(),
-        "#....#..#".chars().collect::<Vec<_>>(),
-    ];
+        "#...##..#",
+        "#....#..#",
+        "..##..###",
+        "#####.##.",
+        "#####.##.",
+        "..##..###",
+        "#....#..#",
+    ]
+    .iter()
+    .map(|&v| v.chars().collect())
+    .collect();
     assert!(get_pattern_score(&pat_2) == 400);
-    
+
     // Array of patterns
     // Each pattern is an array of strings
     let mut patterns: Vec<Vec<Vec<char>>> = Vec::new();
@@ -107,9 +113,10 @@ pub fn point_of_incidence(file_name: &String) {
             acc
         });
 
-    let ans = patterns.iter().map(|pat| {
-        get_pattern_score(pat)
-    }).sum::<i32>();
+    let ans = patterns
+        .iter()
+        .map(|pat| get_pattern_score(pat))
+        .sum::<i32>();
 
     println!("Answer: {}", ans);
 }

@@ -44,7 +44,7 @@ use crate::day_11::part_2::cosmic_expansion_two;
 use crate::day_12::part_1::hot_springs;
 use crate::day_12::part_2::hot_springs_two;
 use crate::day_13::part_1::point_of_incidence;
-use crate::day_13::part_2::placeholder_two;
+use crate::day_13::part_2::point_of_incidence_two;
 
 // use crate::day_x::part_1::placeholder;
 // use crate::day_x::part_2::placeholder_two;
@@ -214,7 +214,7 @@ fn main() {
                 ),
                 (
                     "2".to_string(),
-                    placeholder_two as FunctionWithParamFileName,
+                    point_of_incidence_two as FunctionWithParamFileName,
                 ),
             ]),
         ),
