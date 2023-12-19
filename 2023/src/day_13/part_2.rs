@@ -1,8 +1,6 @@
 use crate::utils::extract_file;
 use std::io::BufRead;
 
-use super::part_1;
-
 fn get_hori_line(pattern: &Vec<Vec<char>>, start_row: i32) -> bool {
     let r_max = pattern.len() as i32;
     let c_max = pattern[0].len() as i32;

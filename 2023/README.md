@@ -55,6 +55,10 @@ I decided to attempt it in Rust, so all the source code here is in Rust 🤠
   - [Part 1 - Number of ways to fit configuration into springs](#part-1---number-of-ways-to-fit-configuration-into-springs)
   - [Part 2 - Increasing pattern length](#part-2---increasing-pattern-length)
 
+- [Day 13 - Point Of Incidence](#day-13---point-of-incidence)
+  - [Part 1 - Find horizontal or vertical line of reflection](#part-1---find-horizontal-or-vertical-line-of-reflection)
+  - [Part 2 - Find line with one replacement](#part-2---find-line-with-one-replacement)
+
 - [](#day-x)
   - [](#part-1)
   - [](#part-2)
@@ -62,6 +66,7 @@ I decided to attempt it in Rust, so all the source code here is in Rust 🤠
 <!-- - [](#day-x)
   - [](#part-1)
   - [](#part-2) -->
+
 
 ## Day 1 - Trebuchet
 
@@ -493,17 +498,46 @@ rows/columns for each expanded row/column per path sum.
 
 ### Part 1 - Number of ways to fit configuration into springs
 
+This involved iterating down each line with pointers across two iterators,
+the first being the line itself, and the second being the groups of springs.
+
 ### Part 2 - Increasing pattern length
+
+This involved simply repeating the pattern from part 1 5 times, and increasing
+the output range from i32 to i64.
+
+## Day 13 - Point of Incidence
+
+### Part 1 - Find horizontal or vertical line of reflection
+
+Iterating through the pattern, starting from different start columns or rows,
+for vertical and horizontal reflections respectively, we compare each character
+with its reflection about the line of reflection.
+
+If we find a line index which causes a valid reflection, then that line index is
+taken as the line of reflection, and the score is as such.
+
+### Part 2 - Find line with one replacement
+
+This iterates from the previous part by first obtaining the original score,
+and using the coordinates from the previous part as a banned set of positions,
+to iterate through each row and column, replacing each character and finding the
+first alternate line of reflection.
+
+This uses a sort of 'backtracking' approach to make the modification and backtrack
+once the calculation is made.
 
 ## Day X -
 
 ### Part 1 -
 
 ### Part 2 -
+
 <!-- ## Day X -
 
 ### Part 1 -
 
 ### Part 2 - -->
+
 
 [[ TO BE EXPANDED ]]
