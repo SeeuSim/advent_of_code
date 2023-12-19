@@ -13,6 +13,7 @@ pub mod day_9;
 pub mod day_10;
 pub mod day_11;
 pub mod day_12;
+pub mod day_13;
 
 use clap::{Arg, Command};
 use std::collections::HashMap;
@@ -42,6 +43,11 @@ use crate::day_11::part_1::cosmic_expansion;
 use crate::day_11::part_2::cosmic_expansion_two;
 use crate::day_12::part_1::hot_springs;
 use crate::day_12::part_2::hot_springs_two;
+use crate::day_13::part_1::point_of_incidence;
+use crate::day_13::part_2::placeholder_two;
+
+// use crate::day_x::part_1::placeholder;
+// use crate::day_x::part_2::placeholder_two;
 
 type FunctionWithParamFileName = fn(&String);
 
@@ -196,6 +202,19 @@ fn main() {
                 (
                     "2".to_string(),
                     hot_springs_two as FunctionWithParamFileName,
+                ),
+            ]),
+        ),
+        (
+            "13".to_string(),
+            HashMap::from([
+                (
+                    "1".to_string(),
+                    point_of_incidence as FunctionWithParamFileName,
+                ),
+                (
+                    "2".to_string(),
+                    placeholder_two as FunctionWithParamFileName,
                 ),
             ]),
         ),

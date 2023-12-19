@@ -51,9 +51,14 @@ I decided to attempt it in Rust, so all the source code here is in Rust 🤠
   - [Part 1 - Expanding Manually](#part-1---expanding-manually-and-sum-of-all-pairs-shortest-paths)
   - [Part 2 - Expanding using Math](#part-2---expanding-using-math-and-sum-of-all-pairs-shortest-paths)
 
+- [Day 12 - Hot Springs](#day-12---hot-springs)
+  - [Part 1 - Number of ways to fit configuration into springs](#part-1---number-of-ways-to-fit-configuration-into-springs)
+  - [Part 2 - Increasing pattern length](#part-2---increasing-pattern-length)
+
 - [](#day-x)
   - [](#part-1)
   - [](#part-2)
+
 <!-- - [](#day-x)
   - [](#part-1)
   - [](#part-2) -->
@@ -483,6 +488,12 @@ slow the calculations down.
 
 Hence, I used manual calculations to calculate and insert a million
 rows/columns for each expanded row/column per path sum.
+
+## Day 12 - Hot Springs
+
+### Part 1 - Number of ways to fit configuration into springs
+
+### Part 2 - Increasing pattern length
 
 ## Day X -
 
