@@ -15,7 +15,7 @@ fn process_line(line: Vec<char>, groups: Vec<u8>) -> u32 {
         }
         return 1;
     }
-    
+
     let f_c = line[0];
     let f_g = groups[0] as usize;
     let mut res = 0;
@@ -31,7 +31,7 @@ fn process_line(line: Vec<char>, groups: Vec<u8>) -> u32 {
     {
         let next_line = match f_g + 1 >= line.len() {
             true => vec![],
-            _ => line[(f_g + 1)..].to_vec()
+            _ => line[(f_g + 1)..].to_vec(),
         };
         res += process_line(next_line, groups[1..].to_vec())
     }
@@ -78,7 +78,7 @@ pub fn hot_springs(file_name: &String) {
 
             process_line(line_actual, groups)
         })
-    .sum::<u32>();
+        .sum::<u32>();
 
     println!("Answer: {}", ans);
 }

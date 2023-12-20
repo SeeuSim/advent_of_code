@@ -60,11 +60,11 @@ pub fn cosmic_expansion(file_name: &String) {
                     let col = galaxies[end_index].1 as i32 - galaxies[start_index].1 as i32;
                     let ro = match ro < 0 {
                         true => -ro,
-                        false => ro
+                        false => ro,
                     };
                     let col = match col < 0 {
                         true => -col,
-                        false => col
+                        false => col,
                     };
                     ro + col
                 })

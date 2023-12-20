@@ -45,7 +45,7 @@ fn get_pattern_score(pattern: &Vec<Vec<char>>, avoid: Option<(i32, i32)>) -> (i3
     let c_max = pattern[0].len() as i32;
     let (avoid_r, avoid_c) = match avoid {
         Some(v) => v,
-        None => (-1, -1)
+        None => (-1, -1),
     };
 
     let mut hori_line = -1;
@@ -63,15 +63,15 @@ fn get_pattern_score(pattern: &Vec<Vec<char>>, avoid: Option<(i32, i32)>) -> (i3
             break;
         }
     }
-    
+
     (hori_line, vert_line)
 }
 
 fn get_pattern_score_two(pattern: &Vec<Vec<char>>) -> i32 {
     let mut pattern = pattern.clone();
-    
+
     let original_score = get_pattern_score(&pattern, None);
-    
+
     for r in 0..pattern.len() {
         for c in 0..pattern[0].len() {
             let need_modify = pattern[r][c] == '#';
@@ -91,10 +91,9 @@ fn get_pattern_score_two(pattern: &Vec<Vec<char>>) -> i32 {
             if need_modify {
                 pattern[r][c] = '#';
             }
-            
         }
     }
-    0    
+    0
 }
 
 pub fn point_of_incidence_two(file_name: &String) {
@@ -129,26 +128,28 @@ pub fn point_of_incidence_two(file_name: &String) {
     .collect();
     assert!(get_pattern_score_two(&mut pat_2) == 100);
 
-
     let mut patterns = Vec::new();
 
-    reader.lines().filter_map(std::result::Result::ok).fold(&mut patterns, |acc, e| {
-        let nline = e.trim();
-        if acc.len() == 0 && e.len() > 0 {
-            acc.push(vec![nline.chars().collect::<Vec<_>>()]);
-        } else if e.len() > 0 {
-            let last_idx = acc.len() - 1;
-            acc[last_idx].push(nline.chars().collect::<Vec<_>>())
-        } else {
-            acc.push(vec![]);
-        }
-        acc
-    });
+    reader
+        .lines()
+        .filter_map(std::result::Result::ok)
+        .fold(&mut patterns, |acc, e| {
+            let nline = e.trim();
+            if acc.len() == 0 && e.len() > 0 {
+                acc.push(vec![nline.chars().collect::<Vec<_>>()]);
+            } else if e.len() > 0 {
+                let last_idx = acc.len() - 1;
+                acc[last_idx].push(nline.chars().collect::<Vec<_>>())
+            } else {
+                acc.push(vec![]);
+            }
+            acc
+        });
 
-    let ans = patterns.iter().map(|x| {
-        get_pattern_score_two(x)
-    }).sum::<i32>();
+    let ans = patterns
+        .iter()
+        .map(|x| get_pattern_score_two(x))
+        .sum::<i32>();
 
     println!("Answer: {ans}");
-
 }
