@@ -63,9 +63,9 @@ I decided to attempt it in Rust, so all the source code here is in Rust 🤠
   - [Part 1 - Tilting North and Counting score](#part-1---tilting-north-and-counting-score)
   - [Part 2 - Tilting in all directions, for 1,000,000,000 times](#part-2---tilting-in-all-directions-for-1000000000-times)
 
-- [](#day-x)
-  - [](#part-1)
-  - [](#part-2)
+- [](#day-15---lens-library)
+  - [](#part-1---obtain-hash-codes)
+  - [](#part-2---place-lens-filters-and-calculate-scores)
 
 <!-- - [](#day-x)
   - [](#part-1)
@@ -548,11 +548,19 @@ TO BE IMPLEMENTED
 Disclaimer: I used hyperneutrino's solution for this, and am still not entirely
 sure how to obtain the actual correct solution using Rust.
 
-## Day X -
+## Day 15 - Lens Library
 
-### Part 1 -
+### Part 1 - Obtain Hash Codes
 
-### Part 2 -
+For this, all that was needed was some folding logic to calculate the hash
+score according to specifications.
+
+### Part 2 - Place Lens Filters and Calculate scores
+
+For this, a bit more iteration was needed, but by simply pre-allocating
+the vector of boxes and inserting/updating/removing the lenses as specified,
+the score is obtained by multiplying the box index with the refractive index
+of each lens, their position within the box, and summing them all up.
 
 <!-- ## Day X -
 
