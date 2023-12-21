@@ -59,6 +59,10 @@ I decided to attempt it in Rust, so all the source code here is in Rust 🤠
   - [Part 1 - Find horizontal or vertical line of reflection](#part-1---find-horizontal-or-vertical-line-of-reflection)
   - [Part 2 - Find line with one replacement](#part-2---find-line-with-one-replacement)
 
+- [Day 14 - Parabolic Reflector Dish](#day-14---parabolic-reflector-dish)
+  - [Part 1 - Tilting North and Counting score](#part-1---tilting-north-and-counting-score)
+  - [Part 2 - Tilting in all directions, for 1,000,000,000 times](#part-2---tilting-in-all-directions-for-1000000000-times)
+
 - [](#day-x)
   - [](#part-1)
   - [](#part-2)
@@ -526,6 +530,23 @@ first alternate line of reflection.
 
 This uses a sort of 'backtracking' approach to make the modification and backtrack
 once the calculation is made.
+
+## Day 14 - Parabolic Reflector Dish
+
+### Part 1 - Tilting North and Counting score
+
+For this part, I took inspiration from hyper neutrino again, and implemented a
+simple function to tilt the grid north.
+
+Then, I used another function to simply count the number of 'O's in each row
+and get the total score for that row, summing up the scores from all the rows.
+
+### Part 2 - Tilting in all directions, for 1,000,000,000 times
+
+TO BE IMPLEMENTED
+
+Disclaimer: I used hyperneutrino's solution for this, and am still not entirely
+sure how to obtain the actual correct solution using Rust.
 
 ## Day X -
 
