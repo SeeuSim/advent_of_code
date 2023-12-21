@@ -61,6 +61,7 @@ if [ -d "src/day_${day}/" ]; then
 else
   cp -r "src/day_$latest_day/" "src/day_$day/"
   if [ -d "src/day_${day}/" ]; then
+    touch "src/day_$day/input.txt"
     echo "Directory created successfully: $(pwd)/src/day_$day"
   else
     rm "src/day_$day.rs"

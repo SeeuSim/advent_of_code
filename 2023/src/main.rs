@@ -15,6 +15,7 @@ pub mod day_11;
 pub mod day_12;
 pub mod day_13;
 pub mod day_14;
+pub mod day_15;
 
 use clap::{Arg, Command};
 use std::collections::HashMap;
@@ -46,9 +47,11 @@ use crate::day_12::part_1::hot_springs;
 use crate::day_12::part_2::hot_springs_two;
 use crate::day_13::part_1::point_of_incidence;
 use crate::day_13::part_2::point_of_incidence_two;
+use crate::day_14::part_1::parabolic_reflector_dish;
+use crate::day_14::part_2::parabolic_reflector_dish_two;
+use crate::day_15::part_1::lens_library;
+use crate::day_15::part_2::lens_library_two;
 
-use crate::day_14::part_1::placeholder;
-use crate::day_14::part_2::placeholder_two;
 // use crate::day_x::part_1::placeholder;
 // use crate::day_x::part_2::placeholder_two;
 
@@ -224,10 +227,23 @@ fn main() {
         (
             "14".to_string(),
             HashMap::from([
-                ("1".to_string(), placeholder as FunctionWithParamFileName),
+                (
+                    "1".to_string(),
+                    parabolic_reflector_dish as FunctionWithParamFileName,
+                ),
                 (
                     "2".to_string(),
-                    placeholder_two as FunctionWithParamFileName,
+                    parabolic_reflector_dish_two as FunctionWithParamFileName,
+                ),
+            ]),
+        ),
+        (
+            "15".to_string(),
+            HashMap::from([
+                ("1".to_string(), lens_library as FunctionWithParamFileName),
+                (
+                    "2".to_string(),
+                    lens_library_two as FunctionWithParamFileName,
                 ),
             ]),
         ),

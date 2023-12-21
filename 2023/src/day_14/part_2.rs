@@ -1,9 +1,5 @@
 use crate::utils::extract_file;
-use std::{
-    collections::{HashMap, HashSet},
-    io::BufRead,
-    iter::zip, ops::Index,
-};
+use std::{collections::HashSet, io::BufRead};
 
 fn cycle(pat: &mut Vec<String>) {
     for _ in 0..4 {
@@ -27,15 +23,14 @@ fn cycle(pat: &mut Vec<String>) {
                 .chars()
                 .collect();
         }
-    
+
         // Reverse each row
-        pat.iter_mut().for_each(|row| {
-            *row = row.chars().rev().collect::<String>()
-        });
+        pat.iter_mut()
+            .for_each(|row| *row = row.chars().rev().collect::<String>());
     }
 }
 
-pub fn placeholder_two(file_name: &String) {
+pub fn parabolic_reflector_dish_two(file_name: &String) {
     let reader = extract_file(file_name).expect("An error occurred while reading the file");
 
     let mut pat = reader
@@ -57,20 +52,26 @@ pub fn placeholder_two(file_name: &String) {
         idx.push(pat.clone());
     }
 
-    let f = idx.clone().iter().position(|v| {
-        for i in 0..v.len() {
-            if !v[i].eq_ignore_ascii_case(&pat[i]) {
-                return false
+    let f = idx
+        .clone()
+        .iter()
+        .position(|v| {
+            for i in 0..v.len() {
+                if !v[i].eq_ignore_ascii_case(&pat[i]) {
+                    return false;
+                }
             }
-        }
-        true
-    }).unwrap();
+            true
+        })
+        .unwrap();
 
     let v = &idx[(1000000000 - f) % (it - f) + f];
 
-    let ans = v.iter().enumerate().map(|(idx, r)| {
-        (r.chars().filter(|&x| x == 'O').count() * (v.len() - idx)) as u32
-    }).sum::<u32>();
+    let ans = v
+        .iter()
+        .enumerate()
+        .map(|(idx, r)| (r.chars().filter(|&x| x == 'O').count() * (v.len() - idx)) as u32)
+        .sum::<u32>();
 
     println!("Answer: {ans}");
 

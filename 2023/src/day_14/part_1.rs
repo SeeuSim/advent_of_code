@@ -44,7 +44,7 @@ fn process_pattern(pattern: &mut Vec<Vec<char>>) -> u32 {
     res
 }
 
-pub fn placeholder(file_name: &String) {
+pub fn parabolic_reflector_dish(file_name: &String) {
     let reader = extract_file(file_name).expect("An error occurred while reading the file");
 
     let mut pat_1 = "
