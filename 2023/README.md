@@ -71,13 +71,18 @@ I decided to attempt it in Rust, so all the source code here is in Rust 🤠
   - [Part 1 - Calculating Visited Cells in Grid](#part-1---calculating-visited-cells-in-grid)
   - [Part 2 - Calculating Optimal Start Point for Grid](#part-2---calculating-optimal-start-point-for-grid)
 
-- [Day 18 - Clumsy Crucible](#day-17---clumsy-crucible)
+- [Day 17 - Clumsy Crucible](#day-17---clumsy-crucible)
   - [Part 1 - Shortest Path with max 3 consec. jumps per direction](#part-1---shortest-path-with-max-3-consec-jumps-per-direction)
   - [Part 2 - Minimum 4, Maximum 10 jumps per direction](#part-2---minimum-4-maximum-10-jumps-per-direction)
+
+- [Day 18 - Lavaduct Lagoon](#day-18---lavaduct-lagoon)
+  - [Part 1 - Parsing values from left](#part-1---parsing-values-from-left)
+  - [Part 2 - Parsing values from end](#part-2---parsing-values-from-end)
 
 - [](#day-x)
   - [](#part-1)
   - [](#part-2)
+
 <!-- - [](#day-x)
   - [](#part-1)
   - [](#part-2) -->
@@ -616,6 +621,39 @@ destination cell is hit, the cost returned is the lowest.
 This simply altered the logic of the previous part by tweaking the forward
 exploration limit to 10 jumps, and the exploration of other directions to
 only the start node, as well as when at least 4 jumps were made.
+
+## Day 18 - Lavaduct Lagoon
+
+### Part 1 - Parsing values from left
+
+For this part, parsing the values from the left of the pattern was
+relatively straightforward.
+
+To form the polygon vertices, it suffices to iterate through the
+instructions, multiplying the deltas by the distance of each instruction,
+then accumulating the coordinates to get the next vertice coordinate.
+
+Then, to get the polygon area, it suffices to use the shoelace method
+to obtain the polygon area.
+
+However, as the polygon is not a regular shape, this eats into the
+circumference. Hence, we use Pick's theorem to obtain the internal area
+comprising all internal integers of the polygon.
+
+Then, adding the circumference, we obtain the total area.
+
+### Part 2 - Parsing values from end
+
+To simplify parsing the hex values from the end of each instruction,
+we used a regex capture to capture only the needed characters, then
+split them, taking the last character as the direction, while the front
+5 characters as a hex digit using the `u64::from_str_radix` function.
+
+As the values are relatively larger, annotation of types to `u64` and `i64`
+are needed to prevent overflow.
+
+As we used a mathematical method for the previous part, no space constraints
+were needed for this one.
 
 ## Day X -
 
