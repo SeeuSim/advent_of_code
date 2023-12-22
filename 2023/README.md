@@ -63,13 +63,13 @@ I decided to attempt it in Rust, so all the source code here is in Rust 🤠
   - [Part 1 - Tilting North and Counting score](#part-1---tilting-north-and-counting-score)
   - [Part 2 - Tilting in all directions, for 1,000,000,000 times](#part-2---tilting-in-all-directions-for-1000000000-times)
 
-- [](#day-15---lens-library)
-  - [](#part-1---obtain-hash-codes)
-  - [](#part-2---place-lens-filters-and-calculate-scores)
+- [Day 15 - Lens Library](#day-15---lens-library)
+  - [Part 1 - Obtain Hash Codes](#part-1---obtain-hash-codes)
+  - [Part 2 - Place Lens Filters and Calculate scores](#part-2---place-lens-filters-and-calculate-scores)
 
-- [](#day-16---the-floor-will-be-lava)
-  - [](#part-1)
-  - [](#part-2)
+- [Day 16 - The Floor Will Be Lava](#day-16---the-floor-will-be-lava)
+  - [Part 1 - Calculating Visited Cells in Grid](#part-1---calculating-visited-cells-in-grid)
+  - [Part 2 - Calculating Optimal Start Point for Grid](#part-2---calculating-optimal-start-point-for-grid)
 
 <!-- - [](#day-x)
   - [](#part-1)
@@ -572,9 +572,20 @@ of each lens, their position within the box, and summing them all up.
 
 ## Day 16 - The Floor Will Be Lava
 
-### Part 1 - 
+### Part 1 - Calculating Visited Cells in Grid
 
-### Part 2 -
+For this part, the answer is simply the total number of visited cells in the grid,
+by exploring the grid.
+
+Each cell may be explored up to 1 time in each of the directions.
+
+However, as the answer is only keen on counting the total number of explored cells,
+we strip the visited delta from each cell and only count the total number of unique cells.
+
+### Part 2 - Calculating Optimal Start Point for Grid
+
+For this part, we use the score obtaining function from part 1 and iterate through all
+possible starting positions to obtain the maximum score.
 
 <!-- ## Day X -
 
