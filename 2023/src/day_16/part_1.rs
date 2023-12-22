@@ -86,7 +86,7 @@ fn nav_grid(grid: &Vec<Vec<char>>) -> u32 {
     visited_coords.len() as u32
 }
 
-pub fn placeholder(file_name: &String) {
+pub fn the_floor_will_be_lava(file_name: &String) {
     let test = r#"
     .|...\....
     |.-.\.....

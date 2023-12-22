@@ -52,8 +52,8 @@ use crate::day_14::part_1::parabolic_reflector_dish;
 use crate::day_14::part_2::parabolic_reflector_dish_two;
 use crate::day_15::part_1::lens_library;
 use crate::day_15::part_2::lens_library_two;
-use crate::day_16::part_1::placeholder;
-use crate::day_16::part_2::placeholder_two;
+use crate::day_16::part_1::the_floor_will_be_lava;
+use crate::day_16::part_2::the_floor_will_be_lava_two;
 
 // use crate::day_x::part_1::placeholder;
 // use crate::day_x::part_2::placeholder_two;
@@ -253,10 +253,13 @@ fn main() {
         (
             "16".to_string(),
             HashMap::from([
-                ("1".to_string(), placeholder as FunctionWithParamFileName),
+                (
+                    "1".to_string(),
+                    the_floor_will_be_lava as FunctionWithParamFileName,
+                ),
                 (
                     "2".to_string(),
-                    placeholder_two as FunctionWithParamFileName,
+                    the_floor_will_be_lava_two as FunctionWithParamFileName,
                 ),
             ]),
         ),
