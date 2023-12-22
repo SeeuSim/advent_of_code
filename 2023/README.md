@@ -71,9 +71,9 @@ I decided to attempt it in Rust, so all the source code here is in Rust 🤠
   - [Part 1 - Calculating Visited Cells in Grid](#part-1---calculating-visited-cells-in-grid)
   - [Part 2 - Calculating Optimal Start Point for Grid](#part-2---calculating-optimal-start-point-for-grid)
 
-<!-- - [](#day-x)
+- [](#day-x)
   - [](#part-1)
-  - [](#part-2) -->
+  - [](#part-2)
 
 <!-- - [](#day-x)
   - [](#part-1)
@@ -586,6 +586,12 @@ we strip the visited delta from each cell and only count the total number of uni
 
 For this part, we use the score obtaining function from part 1 and iterate through all
 possible starting positions to obtain the maximum score.
+
+## Day X -
+
+### Part 1 -
+
+### Part 2 -
 
 <!-- ## Day X -
 
