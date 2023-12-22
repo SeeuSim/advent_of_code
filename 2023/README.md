@@ -71,7 +71,7 @@ I decided to attempt it in Rust, so all the source code here is in Rust 🤠
   - [Part 1 - Calculating Visited Cells in Grid](#part-1---calculating-visited-cells-in-grid)
   - [Part 2 - Calculating Optimal Start Point for Grid](#part-2---calculating-optimal-start-point-for-grid)
 
-- [Day 18 - Clumsy Crucible](#day-18---clumsy-crucible)
+- [Day 18 - Clumsy Crucible](#day-17---clumsy-crucible)
   - [Part 1 - Shortest Path with max 3 consec. jumps per direction](#part-1---shortest-path-with-max-3-consec-jumps-per-direction)
   - [Part 2 - Minimum 4, Maximum 10 jumps per direction](#part-2---minimum-4-maximum-10-jumps-per-direction)
 
@@ -590,7 +590,7 @@ we strip the visited delta from each cell and only count the total number of uni
 For this part, we use the score obtaining function from part 1 and iterate through all
 possible starting positions to obtain the maximum score.
 
-## Day 18 - Clumsy Crucible
+## Day 17 - Clumsy Crucible
 
 ### Part 1 - Shortest Path with max 3 consec. jumps per direction
 

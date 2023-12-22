@@ -1,23 +1,24 @@
 pub mod utils;
 
-pub mod day_1;
-pub mod day_2;
-pub mod day_3;
-pub mod day_4;
-pub mod day_5;
-pub mod day_6;
-pub mod day_7;
-pub mod day_8;
-pub mod day_9;
+mod day_1;
+mod day_2;
+mod day_3;
+mod day_4;
+mod day_5;
+mod day_6;
+mod day_7;
+mod day_8;
+mod day_9;
 
-pub mod day_10;
-pub mod day_11;
-pub mod day_12;
-pub mod day_13;
-pub mod day_14;
-pub mod day_15;
-pub mod day_16;
-pub mod day_17;
+mod day_10;
+mod day_11;
+mod day_12;
+mod day_13;
+mod day_14;
+mod day_15;
+mod day_16;
+mod day_17;
+mod day_18;
 
 use clap::{Arg, Command};
 use std::collections::HashMap;
@@ -57,6 +58,8 @@ use crate::day_16::part_1::the_floor_will_be_lava;
 use crate::day_16::part_2::the_floor_will_be_lava_two;
 use crate::day_17::part_1::clumsy_crucible;
 use crate::day_17::part_2::clumsy_crucible_two;
+use crate::day_18::part_1::lavaduct_lagoon;
+use crate::day_18::part_2::lavaduct_lagoon_two;
 
 // use crate::day_x::part_1::placeholder;
 // use crate::day_x::part_2::placeholder_two;
@@ -276,6 +279,19 @@ fn main() {
                 (
                     "2".to_string(),
                     clumsy_crucible_two as FunctionWithParamFileName,
+                ),
+            ]),
+        ),
+        (
+            "18".to_string(),
+            HashMap::from([
+                (
+                    "1".to_string(),
+                    lavaduct_lagoon as FunctionWithParamFileName,
+                ),
+                (
+                    "2".to_string(),
+                    lavaduct_lagoon_two as FunctionWithParamFileName,
                 ),
             ]),
         ),
