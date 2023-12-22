@@ -67,6 +67,14 @@ I decided to attempt it in Rust, so all the source code here is in Rust 🤠
   - [](#part-1---obtain-hash-codes)
   - [](#part-2---place-lens-filters-and-calculate-scores)
 
+- [](#day-16---the-floor-will-be-lava)
+  - [](#part-1)
+  - [](#part-2)
+
+<!-- - [](#day-x)
+  - [](#part-1)
+  - [](#part-2) -->
+
 <!-- - [](#day-x)
   - [](#part-1)
   - [](#part-2) -->
@@ -561,6 +569,12 @@ For this, a bit more iteration was needed, but by simply pre-allocating
 the vector of boxes and inserting/updating/removing the lenses as specified,
 the score is obtained by multiplying the box index with the refractive index
 of each lens, their position within the box, and summing them all up.
+
+## Day 16 - The Floor Will Be Lava
+
+### Part 1 - 
+
+### Part 2 -
 
 <!-- ## Day X -
 

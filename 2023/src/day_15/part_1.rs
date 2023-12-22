@@ -1,5 +1,5 @@
 use crate::utils::extract_file;
-use std::io::{BufRead, Read};
+use std::io::BufRead;
 
 fn get_code_score(code: &String) -> u32 {
     code.chars().fold(0_u32, |acc, e| {

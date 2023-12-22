@@ -16,6 +16,7 @@ pub mod day_12;
 pub mod day_13;
 pub mod day_14;
 pub mod day_15;
+pub mod day_16;
 
 use clap::{Arg, Command};
 use std::collections::HashMap;
@@ -51,6 +52,8 @@ use crate::day_14::part_1::parabolic_reflector_dish;
 use crate::day_14::part_2::parabolic_reflector_dish_two;
 use crate::day_15::part_1::lens_library;
 use crate::day_15::part_2::lens_library_two;
+use crate::day_16::part_1::placeholder;
+use crate::day_16::part_2::placeholder_two;
 
 // use crate::day_x::part_1::placeholder;
 // use crate::day_x::part_2::placeholder_two;
@@ -244,6 +247,16 @@ fn main() {
                 (
                     "2".to_string(),
                     lens_library_two as FunctionWithParamFileName,
+                ),
+            ]),
+        ),
+        (
+            "16".to_string(),
+            HashMap::from([
+                ("1".to_string(), placeholder as FunctionWithParamFileName),
+                (
+                    "2".to_string(),
+                    placeholder_two as FunctionWithParamFileName,
                 ),
             ]),
         ),
