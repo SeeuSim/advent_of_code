@@ -20,11 +20,9 @@ impl Ord for CrucibleState {
         // Notice that the we flip the ordering on costs.
         // In case of a tie we compare positions - this step is necessary
         // to make implementations of `PartialEq` and `Ord` consistent.
-        other
-            .heat_loss
-            .cmp(&self.heat_loss)
-            // .then_with(|| self.ro.cmp(&other.ro))
-            // .then_with(|| self.col.cmp(&other.col))
+        other.heat_loss.cmp(&self.heat_loss)
+        // .then_with(|| self.ro.cmp(&other.ro))
+        // .then_with(|| self.col.cmp(&other.col))
     }
 }
 
@@ -104,7 +102,7 @@ fn get_loss(grid: &Vec<Vec<u32>>) -> u32 {
     0
 }
 
-pub fn placeholder(file_name: &String) {
+pub fn clumsy_crucible(file_name: &String) {
     let test_grid = "
     2413432311323
     3215453535623
