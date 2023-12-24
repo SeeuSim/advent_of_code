@@ -83,9 +83,9 @@ I decided to attempt it in Rust, so all the source code here is in Rust 🤠
   - [Part 1 - Processing each part individually](#part-1---processing-each-part-individually)
   - [Part 2 - Processing all possible combinations of ranges](#part-2---processing-all-possible-combinations-of-ranges)
 
-- [](#day-x)
-  - [](#part-1)
-  - [](#part-2)
+- [Day 20 - Pulse Propagation](#day-20---pulse-propagation)
+  - [Part 1 - 1000 cycles](#part-1---1000-cycles)
+  - [Part 2 - Cycling until `rx` is hit](#part-2---cycling-until-rx-is-hit)
 
 <!-- - [](#day-x)
   - [](#part-1)
@@ -691,11 +691,36 @@ Using this base state, I summed up all the possible counts.
 Given the limited set of rules, the depth of this recursion
 tree was not too deep, and the computation was near instantaneous.
 
-## Day X -
+## Day 20 - Pulse Propagation
 
-### Part 1 -
+### Part 1 - 1000 cycles
 
-### Part 2 -
+For this, I first initialised all conjunction modules to register all their
+linked input flip flops.
+
+Then, I iterated through the loops of pressing the button and then processing
+all downstream modules, one by one. Once a loop that ended with all the modules
+at their starting state, the end of the cycle was recorded, and the number of
+iterations was then multiplied by the number of times each cycle of iterations
+is needed to make 1000 iterations.
+
+### Part 2 - Cycling until `rx` is hit
+
+(Inspired by hyperneutrino)
+
+Initially, I tried a simple break condition, but it appeared that the number
+was so huge that another solution was needed.
+
+As there was only one node which could send the requisite signal to the 'rx'
+node, we needed to keep a lookout for which nodes could send the requisite
+'high' signal to that node, so that it can send the requisite 'low' signal
+to the 'rx' node.
+
+Then, after keeping track of the cycles of iterations needed to reach each
+of the requisite 'grandparent' nodes, the LCM of all of the iteration
+counts required for each of the grandparent nodes would then give the
+number of iterations to send the signal to the 'rx' node.
+
 <!-- ## Day X -
 
 ### Part 1 -

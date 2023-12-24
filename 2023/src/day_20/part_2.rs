@@ -167,7 +167,7 @@ fn get_cycles(lines: &Vec<String>) -> usize {
     n_it
 }
 
-pub fn placeholder_two(file_name: &String) {
+pub fn pulse_propagation_two(file_name: &String) {
     let reader = extract_file(file_name).expect("An error occurred while reading the file");
 
     let lines = reader

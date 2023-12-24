@@ -152,7 +152,7 @@ fn get_cycles(lines: &Vec<String>) -> usize {
     lo * hi
 }
 
-pub fn placeholder(file_name: &String) {
+pub fn pulse_propagation(file_name: &String) {
     let test_1 = r#"
     broadcaster -> a, b, c
     %a -> b
