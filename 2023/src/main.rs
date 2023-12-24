@@ -20,6 +20,7 @@ mod day_16;
 mod day_17;
 mod day_18;
 mod day_19;
+mod day_20;
 
 use clap::{Arg, Command};
 use std::collections::HashMap;
@@ -63,6 +64,8 @@ use crate::day_18::part_1::lavaduct_lagoon;
 use crate::day_18::part_2::lavaduct_lagoon_two;
 use crate::day_19::part_1::aplenty;
 use crate::day_19::part_2::aplenty_two;
+use crate::day_20::part_1::placeholder;
+use crate::day_20::part_2::placeholder_two;
 
 // use crate::day_x::part_1::placeholder;
 // use crate::day_x::part_2::placeholder_two;
@@ -303,6 +306,16 @@ fn main() {
             HashMap::from([
                 ("1".to_string(), aplenty as FunctionWithParamFileName),
                 ("2".to_string(), aplenty_two as FunctionWithParamFileName),
+            ]),
+        ),
+        (
+            "20".to_string(),
+            HashMap::from([
+                ("1".to_string(), placeholder as FunctionWithParamFileName),
+                (
+                    "2".to_string(),
+                    placeholder_two as FunctionWithParamFileName,
+                ),
             ]),
         ),
         // (
