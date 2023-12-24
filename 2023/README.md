@@ -79,6 +79,10 @@ I decided to attempt it in Rust, so all the source code here is in Rust 🤠
   - [Part 1 - Parsing values from left](#part-1---parsing-values-from-left)
   - [Part 2 - Parsing values from end](#part-2---parsing-values-from-end)
 
+- [Day 19 - Aplenty](#day-19---aplenty)
+  - [Part 1 - Processing each part individually](#part-1---processing-each-part-individually)
+  - [Part 2 - Processing all possible combinations of ranges](#part-2---processing-all-possible-combinations-of-ranges)
+
 - [](#day-x)
   - [](#part-1)
   - [](#part-2)
@@ -654,6 +658,38 @@ are needed to prevent overflow.
 
 As we used a mathematical method for the previous part, no space constraints
 were needed for this one.
+
+## Day 19 - Aplenty
+
+### Part 1 - Processing each part individually
+
+Given a list of workflows, I defined a custom struct for each workflow, and
+a custom struct for each Rule for a separation of concerns on which struct
+handled what responsibility.
+
+I also designed a Part struct as a logical grouping for the JSON object with 
+'x', 'm', 'a', and 's' keys.
+
+Using the parsing logic, and providing a `process` function on each workflow
+to evaluate each `Part`, I was able to quickly classify if each part was
+to be accepted or not, and perform the relevant sums.
+
+### Part 2 - Processing all possible combinations of ranges
+
+This was slightly trickier as there was a large number of ranges, to the
+${10}^{14}$, and processing each combination of values
+would be rather costly.
+
+Hence, I used a set of range computations, and partitioned
+them according to pass or fail ranges for each rule.
+
+Then, for those that got passed and redirected, I recursively
+processed them until they ended in rejected or accepted ranges.
+
+Using this base state, I summed up all the possible counts.
+
+Given the limited set of rules, the depth of this recursion
+tree was not too deep, and the computation was near instantaneous.
 
 ## Day X -
 
