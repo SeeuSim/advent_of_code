@@ -1,6 +1,5 @@
-use num::{integer::gcd, Integer};
-
 use crate::utils::extract_file;
+use num::integer::gcd;
 use std::{
     collections::{HashMap, VecDeque},
     io::BufRead,
