@@ -194,13 +194,11 @@ fn count_accepted_parts(lines: &Vec<String>) -> u32 {
             while label.ne(&String::from("R")) || label.ne(&String::from("A")) {
                 let rules = match table.get(&label) {
                     Some(v) => v,
-                    None => {
-                        match label.as_str() {
-                            "R" => return 0,
-                            "A" => return p.x + p.m + p.a + p.s,
-                            _ => unreachable!()
-                        }
-                    }
+                    None => match label.as_str() {
+                        "R" => return 0,
+                        "A" => return p.x + p.m + p.a + p.s,
+                        _ => unreachable!(),
+                    },
                 };
                 for rule in rules {
                     let result = rule.process(&p);

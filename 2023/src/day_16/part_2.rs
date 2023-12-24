@@ -98,11 +98,22 @@ pub fn the_floor_will_be_lava_two(file_name: &String) {
     let (n_r, n_c) = (grid.len(), grid[0].len());
 
     let start_indexes: Vec<(i16, i16, i16, i16)> = vec![
-        (0..n_r).flat_map(|r_idx| vec![(r_idx as i16, -1, 0, 1), (r_idx as i16, n_c as i16, 0, -1)]).collect::<Vec<_>>(),
-        (0..n_c).flat_map(|c_idx| vec![(-1, c_idx as i16, 1, 0), (n_r as i16, c_idx as i16, -1, 0)]).collect::<Vec<_>>()
-    ].concat();
+        (0..n_r)
+            .flat_map(|r_idx| vec![(r_idx as i16, -1, 0, 1), (r_idx as i16, n_c as i16, 0, -1)])
+            .collect::<Vec<_>>(),
+        (0..n_c)
+            .flat_map(|c_idx| vec![(-1, c_idx as i16, 1, 0), (n_r as i16, c_idx as i16, -1, 0)])
+            .collect::<Vec<_>>(),
+    ]
+    .concat();
 
-    let ans = start_indexes.iter().map(|(s_r, s_c, s_delta_r, s_delta_c)| nav_grid(&grid, (*s_r, *s_c, *s_delta_r, *s_delta_c))).max().unwrap();
+    let ans = start_indexes
+        .iter()
+        .map(|(s_r, s_c, s_delta_r, s_delta_c)| {
+            nav_grid(&grid, (*s_r, *s_c, *s_delta_r, *s_delta_c))
+        })
+        .max()
+        .unwrap();
 
     println!("Answer: {ans}");
 }

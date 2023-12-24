@@ -6,10 +6,7 @@ fn get_lava_area(instructions: &Vec<String>) -> u32 {
         .iter()
         .map(|x| {
             let values = x.trim().split(' ').take(2).collect::<Vec<_>>();
-            (
-                values[0].to_string(),
-                values[1].parse::<u32>().unwrap(),
-            )
+            (values[0].to_string(), values[1].parse::<u32>().unwrap())
         })
         .collect::<Vec<_>>();
 
@@ -35,17 +32,15 @@ fn get_lava_area(instructions: &Vec<String>) -> u32 {
         .map(|index| {
             let i_sub1 = match index {
                 0 => vertices.len() - 1,
-                _ => index - 1
+                _ => index - 1,
             };
 
-            let i_add1 = match index < vertices.len() - 1{
+            let i_add1 = match index < vertices.len() - 1 {
                 true => index + 1,
-                false => 0
+                false => 0,
             };
 
-            vertices[index as usize].0
-                * (vertices[i_sub1].1
-                    - vertices[i_add1].1)
+            vertices[index as usize].0 * (vertices[i_sub1].1 - vertices[i_add1].1)
         })
         .sum::<i32>()
         .abs()

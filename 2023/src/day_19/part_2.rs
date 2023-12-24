@@ -116,12 +116,12 @@ fn count_combinations(
         let (pass, fail) = match rule.is_less {
             true => (
                 (*low, *high.min(&(rule.value - 1))),
-                (*low.max(&rule.value), *high)
+                (*low.max(&rule.value), *high),
             ),
             false => (
                 (*low.max(&(rule.value + 1)), *high),
-                (*low, *high.min(&rule.value))
-            )
+                (*low, *high.min(&rule.value)),
+            ),
         };
 
         if pass.0 <= pass.1 {

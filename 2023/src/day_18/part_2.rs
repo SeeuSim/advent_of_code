@@ -24,7 +24,7 @@ fn get_lava_area(instructions: &Vec<String>) -> u64 {
             '1' => (1, 0),
             '2' => (0, -1),
             '3' => (-1, 0),
-            _ => unreachable!()
+            _ => unreachable!(),
         };
         let last_idx = vertices.len() - 1;
         let (last_y, last_x) = vertices[last_idx];
@@ -94,5 +94,4 @@ pub fn lavaduct_lagoon_two(file_name: &String) {
     let answer = get_lava_area(&instructions);
 
     println!("Answer: {answer}");
-    
 }
