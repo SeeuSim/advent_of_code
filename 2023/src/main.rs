@@ -61,7 +61,7 @@ use crate::day_17::part_1::clumsy_crucible;
 use crate::day_17::part_2::clumsy_crucible_two;
 use crate::day_18::part_1::lavaduct_lagoon;
 use crate::day_18::part_2::lavaduct_lagoon_two;
-use crate::day_19::part_1::placeholder;
+use crate::day_19::part_1::aplenty;
 use crate::day_19::part_2::placeholder_two;
 
 // use crate::day_x::part_1::placeholder;
@@ -301,7 +301,7 @@ fn main() {
         (
             "19".to_string(),
             HashMap::from([
-                ("1".to_string(), placeholder as FunctionWithParamFileName),
+                ("1".to_string(), aplenty as FunctionWithParamFileName),
                 (
                     "2".to_string(),
                     placeholder_two as FunctionWithParamFileName,
