@@ -104,9 +104,43 @@ fn count_combinations(
         Some(v) => v,
     };
 
-    
+    let mut total = 0;
+    let mut r = ranges.clone();
+    for rule in rules {
+        if !rule.has_cmp {
+            total += count_combinations(r, workflow_table, &rule.destination);
+            break;
+        }
+        let prop = rule.prop.chars().next().unwrap();
+        let (low, high) = r.get(&prop).unwrap();
+        let (pass, fail) = match rule.is_less {
+            true => (
+                (*low, *high.min(&(rule.value - 1))),
+                (*low.max(&rule.value), *high)
+            ),
+            false => (
+                (*low.max(&(rule.value + 1)), *high),
+                (*low, *high.min(&rule.value))
+            )
+        };
 
-    0
+        if pass.0 <= pass.1 {
+            let mut ranges_c = r.clone();
+            ranges_c.entry(prop).and_modify(|x| {
+                x.0 = pass.0;
+                x.1 = pass.1;
+            });
+            total += count_combinations(ranges_c, workflow_table, &rule.destination);
+        }
+
+        if fail.0 <= fail.1 {
+            r.entry(prop).and_modify(|x| {
+                x.0 = fail.0;
+                x.1 = fail.1;
+            });
+        }
+    }
+    total
 }
 
 fn count_accepted_parts_range(lines: &Vec<String>) -> u64 {
