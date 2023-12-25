@@ -68,7 +68,7 @@ use crate::day_19::part_2::aplenty_two;
 use crate::day_20::part_1::pulse_propagation;
 use crate::day_20::part_2::pulse_propagation_two;
 use crate::day_21::part_1::step_counter;
-use crate::day_21::part_2::placeholder_two;
+use crate::day_21::part_2::step_counter_two;
 
 // use crate::day_x::part_1::placeholder;
 // use crate::day_x::part_2::placeholder_two;
@@ -330,7 +330,7 @@ fn main() {
                 ("1".to_string(), step_counter as FunctionWithParamFileName),
                 (
                     "2".to_string(),
-                    placeholder_two as FunctionWithParamFileName,
+                    step_counter_two as FunctionWithParamFileName,
                 ),
             ]),
         ),

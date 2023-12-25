@@ -87,6 +87,10 @@ I decided to attempt it in Rust, so all the source code here is in Rust 🤠
   - [Part 1 - 1000 cycles](#part-1---1000-cycles)
   - [Part 2 - Cycling until `rx` is hit](#part-2---cycling-until-rx-is-hit)
 
+- [Day 21 - Step Counter](#day-21---step-counter)
+  - [Part 1 - Counting cells reachable in n steps](#part-1---counting-cells-reachable-in-n-steps)
+  - [Part 2 - Counting cells reachable in an infinite grid, with millions of steps](#part-2---counting-cells-reachable-in-an-infinite-grid-with-millions-of-steps)
+
 <!-- - [](#day-x)
   - [](#part-1)
   - [](#part-2) -->
@@ -720,6 +724,120 @@ Then, after keeping track of the cycles of iterations needed to reach each
 of the requisite 'grandparent' nodes, the LCM of all of the iteration
 counts required for each of the grandparent nodes would then give the
 number of iterations to send the signal to the 'rx' node.
+
+## Day 21 - Step Counter
+
+### Part 1 - Counting cells reachable in n steps
+
+In this portion, we use a form of BFS to explore the grid, starting from the start
+coordinates.
+
+As long as we reach a step count that matches if the given step count mod 2, we add
+that to the qualified set as the gardener can always either take the number of steps
+to reach the cells, or backtrack along their path to the cells reached earlier along
+the path, like so:
+
+```sh
+# Odd
+# | S | step_1 | step_2 | step_3
+#
+# Even
+# | S | step_1 | step_2
+```
+
+In these cases, when the steps specified are odd, say 3, the gardener can always go back
+to step_1, from step_2 (instead of heading to step_3). In this case, both step_1 and step_3's
+shortest distance from S have the same modulo with respect to 2.
+
+By extension, this will also work for an even number of steps.
+
+### Part 2 - Counting cells reachable in an infinite grid, with millions of steps
+
+For this part, they specify a large step count, or the size of the original grid multiplied by
+2023.
+
+We can think of the expanded grid like a giant square rotated by 45 degrees. Given that the number
+of steps that are allowed is a multiple of the grid length by 2023, we can traverse up to 2023 grids
+directly in each direction, from the start coordinates which happen to be in the center of the grid,
+which also happens to be a square.
+
+```sh
+# <| | | ... 2022 grids | S
+```
+
+As shown, up to 2022 grids external to the start grid can be traversed from the start coordinates,
+in each direction. The 2023rd grid length is reserved for traversing from the start position to the
+edge of the first grid, as well as the half grid corner at the edge.
+
+We can then calculate the number of grids that are external to the start grid, by taking the floor
+division of the number of steps divided by the length of the start grid, and subtract one from that.
+(Excluding the start grid)
+
+#### Odd and Even Grids
+
+Then, to count the cells in entire grids that are reachable from the start grid, we can segment them
+by either grids which take an odd number of steps from the start coordinates, and grids which take
+an even number of steps from the start coordinates:
+
+```sh
+# | g_odd | g_even | S | g_even | g_odd
+```
+
+As shown, as our grid length happens to be odd, it would take an even number of steps from our start
+coordinates (65 + 131) to reach the edge of the grids adjacent to our start grid, as well as every other
+alternating grid after that. Conversely, for every other grid that is 2 grids away from the start grid,
+they take an odd number of steps (65 + 2k * 131) to reach their farthest edges from the start coordinates.
+
+The number of odd step grids can be calculated by the square of the number of grids rounded up to the
+nearest odd number.
+
+This **_number of grids_** is the $(\frac{\text{steps}}{\text{grid width}} - 1)$ taken earlier.
+
+Likewise, the number of even grids is the square of the number of grids rounded down to the nearest even number. We then multiply
+these respective numbers by the number of cells explorable in a
+single grid, with even and odd step numbers respectively.
+
+#### Corners
+
+If the 2023 grids per side adjacent to the start coordinates are
+laid out in a cross and the gaps are filled, these would form the
+corners of the large diamond diagram. As we earlier only counted
+the cells in grids adjacent to the starting grid, these corners and more are left out.
+
+For the corners, the calculations are somewhat special. These simply
+calculate for each side of the grid, the number of cells that can be explored if you start from the middle of an edge and make your way
+towards the middle of the opposing edge, traversing a maximum of 
+the length of the grid in terms of steps.
+
+#### Diagonal Edges
+
+For each of the remaining diagonal edges, two types of cells remain,
+namely the small triangles, and the big triangles:
+
+```txt
+  |\
+  | \
+  ----
+  |  \
+  |   \
+  -----
+```
+
+To calculate the number of cells reachable in each of these types of
+cells, the small triangles can be treated as 1/8th of a grid,
+while the larger trapezoid is more like a grid square with the smaller triangle lopped off.
+
+For each of these, we can start from the bottom corner,
+and provide $(\text{grid width}\div 2)$ steps for the smaller
+triangles, or $(\text{grid width}\times 3\div 2)$ steps for the
+larger trapezoids.
+
+Along each edge, there can be up to half the width of the large grid's worth of the larger trapezoids, and the same plus one 
+for the number of smaller triangles.
+
+#### Answer
+
+Taking the sum of all these, we obtain our answer.
 
 <!-- ## Day X -
 

@@ -121,7 +121,7 @@ fn infinite_bfs_garden(steps: u64, garden: &Vec<Vec<char>>) -> u64 {
         + (large_grid_width * big_triangles)
 }
 
-pub fn placeholder_two(file_name: &String) {
+pub fn step_counter_two(file_name: &String) {
     let reader = extract_file(file_name).expect("An error occurred while reading the file");
     let lines = reader
         .lines()
