@@ -7,17 +7,17 @@ use std::{
 
 fn count_cells_reachable(steps: u64, garden: &Vec<Vec<char>>, (s_r, s_c): (usize, usize)) -> u64 {
     let (n_r, n_c) = (garden.len(), garden[0].len());
-    let mut queue = VecDeque::from([((s_r, s_c), steps)]);
+    let mut queue = VecDeque::from([((s_r, s_c), 0)]);
 
     let mut visited: HashSet<(usize, usize)> = HashSet::new();
     let mut count: HashSet<(usize, usize)> = HashSet::new();
     while let Some(((curr_ro, curr_col), steps_taken)) = queue.pop_front() {
         // If steps is odd, count every other
         // Else, count incl start point (even)
-        if steps_taken % 2 == 0 {
+        if steps_taken % 2 == steps % 2 {
             count.insert((curr_ro, curr_col));
         }
-        if steps_taken == 0 {
+        if steps_taken == steps {
             continue;
         }
         for (delta_r, delta_c) in [(-1, 0), (1, 0), (0, 1), (0, -1)] {
@@ -34,7 +34,7 @@ fn count_cells_reachable(steps: u64, garden: &Vec<Vec<char>>, (s_r, s_c): (usize
                 continue;
             }
             visited.insert(key);
-            queue.push_back((key, steps_taken - 1))
+            queue.push_back((key, steps_taken + 1))
         }
     }
     count.len() as u64
