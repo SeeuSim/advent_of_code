@@ -73,7 +73,7 @@ use crate::day_21::part_1::step_counter;
 use crate::day_21::part_2::step_counter_two;
 use crate::day_22::part_1::sand_slabs;
 use crate::day_22::part_2::sand_slabs_two;
-use crate::day_23::part_1::placeholder;
+use crate::day_23::part_1::a_long_walk;
 use crate::day_23::part_2::placeholder_two;
 
 // use crate::day_x::part_1::placeholder;
@@ -350,7 +350,7 @@ fn main() {
         (
             "23".to_string(),
             HashMap::from([
-                ("1".to_string(), placeholder as FunctionWithParamFileName),
+                ("1".to_string(), a_long_walk as FunctionWithParamFileName),
                 (
                     "2".to_string(),
                     placeholder_two as FunctionWithParamFileName,
