@@ -21,6 +21,7 @@ mod day_17;
 mod day_18;
 mod day_19;
 mod day_20;
+mod day_21;
 
 use clap::{Arg, Command};
 use std::collections::HashMap;
@@ -66,6 +67,8 @@ use crate::day_19::part_1::aplenty;
 use crate::day_19::part_2::aplenty_two;
 use crate::day_20::part_1::pulse_propagation;
 use crate::day_20::part_2::pulse_propagation_two;
+use crate::day_21::part_1::placeholder;
+use crate::day_21::part_2::placeholder_two;
 
 // use crate::day_x::part_1::placeholder;
 // use crate::day_x::part_2::placeholder_two;
@@ -318,6 +321,16 @@ fn main() {
                 (
                     "2".to_string(),
                     pulse_propagation_two as FunctionWithParamFileName,
+                ),
+            ]),
+        ),
+        (
+            "21".to_string(),
+            HashMap::from([
+                ("1".to_string(), placeholder as FunctionWithParamFileName),
+                (
+                    "2".to_string(),
+                    placeholder_two as FunctionWithParamFileName,
                 ),
             ]),
         ),
