@@ -91,6 +91,10 @@ I decided to attempt it in Rust, so all the source code here is in Rust 🤠
   - [Part 1 - Counting cells reachable in n steps](#part-1---counting-cells-reachable-in-n-steps)
   - [Part 2 - Counting cells reachable in an infinite grid, with millions of steps](#part-2---counting-cells-reachable-in-an-infinite-grid-with-millions-of-steps)
 
+- [Day 22 - Sand Slabs](#day-22---sand-slabs)
+  - [Part 1 - Counting which bricks can be taken out safely](#part-1---counting-which-bricks-can-be-taken-out-safely)
+  - [Part 2 - Counting how many bricks will drop for each removed brick](#part-2---counting-how-many-bricks-will-drop-for-each-removed-brick)
+
 <!-- - [](#day-x)
   - [](#part-1)
   - [](#part-2) -->
@@ -838,6 +842,25 @@ for the number of smaller triangles.
 #### Answer
 
 Taking the sum of all these, we obtain our answer.
+
+## Day 22 - Sand Slabs
+
+### Part 1 - Counting which bricks can be taken out safely
+
+We first sorted the bricks so that those with the lowest z coordinates,
+or height, were in front first, then sorted by y coordinates, and then x coordinates.
+
+This allowed us to iterate over the stack of bricks, settling them and recording the new
+height of the bricks before further processing took place.
+
+Then, to process the bricks, we simply removed each brick and filtered which one would cause
+the now removed stack to have none of the bricks drop. By taking the count of these bricks,
+the answer is obtained.
+
+### Part 2 - Counting how many bricks will drop for each removed brick
+
+This simply required tweaking the result function to count the number of dropped bricks, and
+sum the count of all bricks dropped, per brick.
 
 <!-- ## Day X -
 
