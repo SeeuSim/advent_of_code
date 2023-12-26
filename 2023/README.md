@@ -99,6 +99,10 @@ I decided to attempt it in Rust, so all the source code here is in Rust 🤠
   - [Part 1 - Longest Path with Slope Restriction](#part-1---longest-path-with-slope-restriction)
   - [Part 2 - Longest Path without Slope Restriction](#part-2---longest-path-without-slope-restriction)
 
+- [Day 24 - Never Tell Me the Odds](#day-24---never-tell-me-the-odds)
+  - [Part 1 - Count Pairwise Intersections](#part-1---count-pairwise-intersections)
+  - [Part 2 - Calculate Singular Intersecting Vector](#part-2---calculate-singular-intersecting-vector)
+
 <!-- - [](#day-x)
   - [](#part-1)
   - [](#part-2) -->
@@ -887,11 +891,58 @@ get the correct answer (6695 vs 6378).
 
 TO BE IMPLEMENTED: Explore how to get correct ans in Rust.
 
-<!-- ## Day X -
+## Day 24 - Never Tell Me the Odds
 
-### Part 1 -
+### Part 1 - Count Pairwise Intersections
 
-### Part 2 - -->
+For this part, I took inspiration from [cranil](https://github.com/cranil/aoc2023-rs)'s repo.
+
+I had already gotten the indices and parsing of the stones. However, my intersection calculations
+were not working, and hence I borrowed Cranil's functions to solve for my intersections.
+
+Let each position $P_x$, $P_y$ be expressed as a function of $x,y$ and its vector $V_x, V_y$:
+
+$$
+\begin{align*}
+P_x &= x + k\cdot V_x \\
+P_y &= y + k\cdot V_y \\
+\frac{P_x-x}{V_x}&=\frac{P_y-y}{V_y} \\
+V_y\cdot P_x - Vx\cdot P_y &= V_y\cdot x - V_x\cdot y \\
+ax + by &= c \\
+a &= V_y \\
+b &= -V_x \\
+c &= V_y \cdot x - V_x\cdot y
+\end{align*}
+$$
+
+By taking the determinant, we can determine if the lines
+are parallel and hence if they intersect.
+
+My implementation of this was giving me errors, and I used
+Cranil's one which may move around the computations
+slightly.
+
+TO BE IMPLEMENTED: Using LINALG LIB
+
+### Part 2 - Calculate Singular Intersecting Vector
+
+Again, I used Cranil's implementation for this, and
+reworded the variables to make it slightly clearer. I
+still do not fully understand the code.
+
+It takes the first three stones and attempts to solve
+for the plane in which the three stones' paths intersect.
+
+After some calculations, a system of equations is formed,
+and he solves it to obtain the resultant vector.
+
+He then tries different combinations of subtracting
+various deltas from the resultant vector's position
+and velocity, and once the vector product of the
+position deltas and the velocity deltas match, the
+resultant vector is formed.
+
+TO BE IMPLEMENTED: USING LINALG LIB
 
 <!-- ## Day X -
 

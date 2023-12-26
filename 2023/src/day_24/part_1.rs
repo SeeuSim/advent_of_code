@@ -10,12 +10,12 @@ use std::io::BufRead;
 struct Point {
     x: i64,
     y: i64,
-    z: i64,
+    _z: i64,
 }
 
 impl Point {
     fn new(x: i64, y: i64, z: i64) -> Self {
-        Self { x, y, z }
+        Self { x, y, _z: z }
     }
 }
 
@@ -63,12 +63,12 @@ impl HailStone {
             position: Point {
                 x: origin[0],
                 y: origin[1],
-                z: origin[2],
+                _z: origin[2],
             },
             velocity: Point {
                 x: velocity[0],
                 y: velocity[1],
-                z: velocity[2],
+                _z: velocity[2],
             },
         })
     }

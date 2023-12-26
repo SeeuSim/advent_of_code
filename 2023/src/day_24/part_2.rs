@@ -125,26 +125,26 @@ fn calc_intersection_pt(lines: impl Iterator<Item = String>) -> i64 {
     let v1 = stones[1].velocity;
     let v2 = stones[2].velocity;
 
-    let dp0 = Point::new(p1.x - p0.x, p1.y - p0.y, p1.z - p0.z);
-    let dp1 = Point::new(p2.x - p1.x, p2.y - p1.y, p2.z - p1.z);
+    let delta_pos_0 = Point::new(p1.x - p0.x, p1.y - p0.y, p1.z - p0.z);
+    let delta_pos_1 = Point::new(p2.x - p1.x, p2.y - p1.y, p2.z - p1.z);
 
-    let dv0 = Point::new(v1.x - v0.x, v1.y - v0.y, v1.z - v0.z);
-    let dv1 = Point::new(v2.x - v1.x, v2.y - v1.y, v2.z - v1.z);
+    let delta_vel_0 = Point::new(v1.x - v0.x, v1.y - v0.y, v1.z - v0.z);
+    let delta_vel_1 = Point::new(v2.x - v1.x, v2.y - v1.y, v2.z - v1.z);
 
-    let dp0x = cross(&dp0);
-    let dp1x = cross(&dp1);
+    let cross_posx_0 = cross(&delta_pos_0);
+    let cross_posx_1 = cross(&delta_pos_1);
 
-    let dv0x = cross(&dv0);
-    let dv1x = cross(&dv1);
+    let cross_velx_0 = cross(&delta_vel_0);
+    let cross_velx_1 = cross(&delta_vel_1);
 
-    // M = [[-dv0x, dp0x], [-dv1x, dp1x]]
+    // M = [[-cross_velx_0, cross_posx_0], [-cross_velx_1, cross_posx_1]]
     let mut coeffs = [[0.0; 7]; 6];
     for i in 0..3 {
         for j in 0..3 {
-            coeffs[i][j] = -dv0x[i][j] as f64;
-            coeffs[i][j + 3] = dp0x[i][j] as f64;
-            coeffs[i + 3][j] = -dv1x[i][j] as f64;
-            coeffs[i + 3][j + 3] = dp1x[i][j] as f64;
+            coeffs[i][j] = -cross_velx_0[i][j] as f64;
+            coeffs[i][j + 3] = cross_posx_0[i][j] as f64;
+            coeffs[i + 3][j] = -cross_velx_1[i][j] as f64;
+            coeffs[i + 3][j + 3] = cross_posx_1[i][j] as f64;
         }
     }
 
@@ -161,6 +161,7 @@ fn calc_intersection_pt(lines: impl Iterator<Item = String>) -> i64 {
         coeffs[i][6] = (p1xv1[i] - p0xv0[i]) as f64;
         coeffs[i + 3][6] = (p2xv2[i] - p1xv1[i]) as f64;
     }
+    
     gauss_elimination(&mut coeffs);
 
     let rock_pos = Point::new(
