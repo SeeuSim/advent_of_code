@@ -1,9 +1,8 @@
 /**
  * Inspired by Cranil
- * 
+ *
  * https://github.com/cranil/aoc2023-rs
  */
-
 use crate::utils::extract_file;
 use std::io::BufRead;
 
@@ -125,7 +124,7 @@ fn calc_n_intersections(lines: impl Iterator<Item = String>) -> u64 {
     count as u64
 }
 
-pub fn placeholder(file_name: &String) {
+pub fn never_fail_to_tell_me_the_odds(file_name: &String) {
     // let test = r#"
     // 19, 13, 30 @ -2,  1, -2
     // 18, 19, 22 @ -1, -1, -2
