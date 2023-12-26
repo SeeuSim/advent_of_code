@@ -1,6 +1,6 @@
 use crate::utils::extract_file;
 use std::{
-    collections::{VecDeque, HashSet},
+    collections::{HashSet, VecDeque},
     io::BufRead,
 };
 
@@ -24,7 +24,7 @@ fn bfs_garden(steps: u32, garden: &Vec<Vec<char>>) -> u64 {
     let mut count = HashSet::new();
 
     while let Some(((curr_r, curr_c), steps_taken)) = queue.pop_front() {
-        if steps_taken == steps || steps_taken % 2 == steps % 2  {
+        if steps_taken == steps || steps_taken % 2 == steps % 2 {
             count.insert((curr_r, curr_c));
         }
         if steps_taken == steps {

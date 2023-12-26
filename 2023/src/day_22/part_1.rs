@@ -98,7 +98,11 @@ pub fn sand_slabs(file_name: &String) {
     2,0,5~2,2,5
     0,1,6~2,1,6
     1,1,8~1,1,9
-    "#.trim().split('\n').map(|x| x.trim().to_string()).collect();
+    "#
+    .trim()
+    .split('\n')
+    .map(|x| x.trim().to_string())
+    .collect();
 
     let test_bricks = parse_sort_bricks(&test);
 

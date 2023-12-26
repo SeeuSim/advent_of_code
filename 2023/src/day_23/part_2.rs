@@ -25,7 +25,7 @@ fn dfs(
             );
         }
     }
-    
+
     visited.remove(&point);
     res
 }

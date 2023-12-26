@@ -3,7 +3,6 @@
  *
  * https://github.com/cranil/aoc2023-rs
  */
-
 use crate::utils::extract_file;
 use itertools::Itertools;
 use std::io::BufRead;
@@ -161,7 +160,7 @@ fn calc_intersection_pt(lines: impl Iterator<Item = String>) -> i64 {
         coeffs[i][6] = (p1xv1[i] - p0xv0[i]) as f64;
         coeffs[i + 3][6] = (p2xv2[i] - p1xv1[i]) as f64;
     }
-    
+
     gauss_elimination(&mut coeffs);
 
     let rock_pos = Point::new(
