@@ -24,6 +24,7 @@ mod day_20;
 mod day_21;
 mod day_22;
 mod day_23;
+mod day_24;
 
 use clap::{Arg, Command};
 use std::collections::HashMap;
@@ -75,6 +76,8 @@ use crate::day_22::part_1::sand_slabs;
 use crate::day_22::part_2::sand_slabs_two;
 use crate::day_23::part_1::a_long_walk;
 use crate::day_23::part_2::a_long_walk_two;
+use crate::day_24::part_1::placeholder;
+use crate::day_24::part_2::placeholder_two;
 
 // use crate::day_x::part_1::placeholder;
 // use crate::day_x::part_2::placeholder_two;
@@ -354,6 +357,16 @@ fn main() {
                 (
                     "2".to_string(),
                     a_long_walk_two as FunctionWithParamFileName,
+                ),
+            ]),
+        ),
+        (
+            "24".to_string(),
+            HashMap::from([
+                ("1".to_string(), placeholder as FunctionWithParamFileName),
+                (
+                    "2".to_string(),
+                    placeholder_two as FunctionWithParamFileName,
                 ),
             ]),
         ),

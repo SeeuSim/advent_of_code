@@ -885,7 +885,7 @@ between each point along the way from the start to the end.
 While simply removing the slope restriction from part 1 should do the trick, we unfortunately cannot
 get the correct answer (6695 vs 6378).
 
-TODO: Explore how to get correct ans in Rust.
+TO BE IMPLEMENTED: Explore how to get correct ans in Rust.
 
 <!-- ## Day X -
 
