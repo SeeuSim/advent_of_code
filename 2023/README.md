@@ -5,6 +5,13 @@
 My attempt repository for this year's [Advent of Code](https://adventofcode.com/2023).
 I decided to attempt it in Rust, so all the source code here is in Rust 🤠
 
+TODO:
+
+- [ ] D14 Part 2
+- [ ] D23 Part 2 
+- [ ] D24 Part 1 (Understanding)
+- [ ] D24 Part 2 (Understanding)
+
 ## 📚 Table of Contents
 
 - [Day 1 - Trebuchet](#day-1---trebuchet)
@@ -103,9 +110,8 @@ I decided to attempt it in Rust, so all the source code here is in Rust 🤠
   - [Part 1 - Count Pairwise Intersections](#part-1---count-pairwise-intersections)
   - [Part 2 - Calculate Singular Intersecting Vector](#part-2---calculate-singular-intersecting-vector)
 
-<!-- - [](#day-x)
-  - [](#part-1)
-  - [](#part-2) -->
+- [Day 25 - Snowverload](#day-25---snowverload)
+  - [Finding minimum cut](#finding-minimum-cut)
 
 
 ## Day 1 - Trebuchet
@@ -944,11 +950,24 @@ resultant vector is formed.
 
 TO BE IMPLEMENTED: USING LINALG LIB
 
-<!-- ## Day X -
+## Day 25 - Snowverload
 
-### Part 1 -
+### Finding minimum cut
 
-### Part 2 - -->
+For this puzzle, they require us to find the minimum cut that
+partitions the graph into two partitions of maximum size.
 
+For this attempt, I took inspiration from Chris Biscardi
+and used two crates:
 
-[[ TO BE EXPANDED ]]
+- `petgraph`
+- `rustworkx-core`
+
+The petgraph crate was to create an undirected graph in a more
+seamless fashion as opposed to using a HashMap and having duplicate
+records for bidirectional edges.
+
+Then, we used the rustworkx algorithm which already implemented a
+minimum cut for us. Using this cut and measuring the sizes of the
+partitions, we obtained the answer by multiplying the two partitions
+together.
