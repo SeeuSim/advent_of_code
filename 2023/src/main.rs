@@ -25,6 +25,7 @@ mod day_21;
 mod day_22;
 mod day_23;
 mod day_24;
+mod day_25;
 
 use clap::{Arg, Command};
 use std::collections::HashMap;
@@ -78,9 +79,8 @@ use crate::day_23::part_1::a_long_walk;
 use crate::day_23::part_2::a_long_walk_two;
 use crate::day_24::part_1::never_fail_to_tell_me_the_odds;
 use crate::day_24::part_2::never_fail_to_tell_me_the_odds_two;
-
-// use crate::day_x::part_1::placeholder;
-// use crate::day_x::part_2::placeholder_two;
+use crate::day_25::part_1::snowverload;
+use crate::day_25::part_2::placeholder_two;
 
 type FunctionWithParamFileName = fn(&String);
 
@@ -373,16 +373,16 @@ fn main() {
                 ),
             ]),
         ),
-        // (
-        //     "day".to_string(),
-        //     HashMap::from([
-        //         ("1".to_string(), placeholder as FunctionWithParamFileName),
-        //         (
-        //             "2".to_string(),
-        //             placeholder_two as FunctionWithParamFileName,
-        //         ),
-        //     ]),
-        // ),
+        (
+            "25".to_string(),
+            HashMap::from([
+                ("1".to_string(), snowverload as FunctionWithParamFileName),
+                (
+                    "2".to_string(),
+                    placeholder_two as FunctionWithParamFileName,
+                ),
+            ]),
+        ),
     ]);
 
     let file_name: &String = _matches
