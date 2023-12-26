@@ -70,6 +70,8 @@ fn get_longest_flat_distance(maze: &Vec<Vec<char>>) -> u32 {
     let mut graph: HashMap<(usize, usize), HashMap<(usize, usize), u32>> =
         HashMap::from_iter(summarised_graph_pts.iter().map(|&pt| (pt, HashMap::new())));
 
+    // Iterate and find the dfs distance to each of the other points.
+    // TODO: Find shortest one instead of first one
     summarised_graph_pts
         .iter()
         .for_each(|&(start_ro, start_col)| {
@@ -84,7 +86,7 @@ fn get_longest_flat_distance(maze: &Vec<Vec<char>>) -> u32 {
                         .or_insert(0) = dist;
                     continue;
                 }
-                let dirs = [(1, 0), (0, 1), (-1, 0), (0, -1)];
+                let dirs = [(-1, 0), (1, 0), (0, -1), (0, 1)];
                 for (delta_ro, delta_col) in dirs {
                     let (f_r, f_c) = ((r as i32) + delta_ro, (c as i32) + delta_col);
                     if 0 <= f_r

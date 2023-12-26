@@ -95,6 +95,10 @@ I decided to attempt it in Rust, so all the source code here is in Rust 🤠
   - [Part 1 - Counting which bricks can be taken out safely](#part-1---counting-which-bricks-can-be-taken-out-safely)
   - [Part 2 - Counting how many bricks will drop for each removed brick](#part-2---counting-how-many-bricks-will-drop-for-each-removed-brick)
 
+- [Day 23 - A Long Walk](#day-23---a-long-walk)
+  - [Part 1 - Longest Path with Slope Restriction](#part-1---longest-path-with-slope-restriction)
+  - [Part 2 - Longest Path without Slope Restriction](#part-2---longest-path-without-slope-restriction)
+
 <!-- - [](#day-x)
   - [](#part-1)
   - [](#part-2) -->
@@ -861,6 +865,33 @@ the answer is obtained.
 
 This simply required tweaking the result function to count the number of dropped bricks, and
 sum the count of all bricks dropped, per brick.
+
+## Day 23 - A Long Walk
+
+### Part 1 - Longest Path with Slope Restriction
+
+Using the maze, we constructed a summarised graph to simulate a DAG, of the maze's points of interest,
+namely the points which have at least three points of inflection.
+
+Then, we iteratively explore the map from each of these points until we reach all other points in the graph,
+forming a sort of DAG for the points of interest. This records the distance between each of the points of 
+interest. This exploration is restricted when we encounter slopes.
+
+Then, we iterate from the start point towards the end point in the graph, and add the longest distance
+between each point along the way from the start to the end.
+
+### Part 2 - Longest Path without Slope Restriction
+
+While simply removing the slope restriction from part 1 should do the trick, we unfortunately cannot
+get the correct answer (6695 vs 6378).
+
+TODO: Explore how to get correct ans in Rust.
+
+<!-- ## Day X -
+
+### Part 1 -
+
+### Part 2 - -->
 
 <!-- ## Day X -
 
