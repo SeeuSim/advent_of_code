@@ -320,7 +320,7 @@ This is trivial enough to perform the iterative mapping for each seed value.
 
 ### Part 2 - Mapping a Set of Ranges and finding minimum value
 
-This adapts Part 1 by converting each pair of seeds into: $(\text{seed\_ range\_ start},\text{range\_ length})$.
+This adapts Part 1 by converting each pair of seeds into: $(\text{seed[range start]},\text{range length})$.
 
 Then, for each number in the range, find the mappings as per Part 1 and find the minimum
 output number.
