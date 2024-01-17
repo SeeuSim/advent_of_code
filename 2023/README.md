@@ -299,8 +299,8 @@ map):
 ```
 For each line, it is formatted in the format (`dest_start`, `source_start`, `length`).
 
-This implies that the mapping of any value in the range $[\text{source\_start, source\_start+length})$ 
-will be mapped to the range $[\text{dest\_start, dest\_start+length})$ in a 1:1 mapping.
+This implies that the mapping of any value in the range $[\text{source\_ start, source\_ start+length})$ 
+will be mapped to the range $[\text{dest\_ start, dest\_ start+length})$ in a 1:1 mapping.
 
 For instance, if we have (2, 5, 3), we would have 5 mapped to 2, 6 mapped to 3 and 7
 mapped to 4 for a length of 3 elements. 
@@ -320,7 +320,7 @@ This is trivial enough to perform the iterative mapping for each seed value.
 
 ### Part 2 - Mapping a Set of Ranges and finding minimum value
 
-This adapts Part 1 by converting each pair of seeds into: $(\text{seed\_range\_start},\text{range\_length})$.
+This adapts Part 1 by converting each pair of seeds into: $(\text{seed\_ range\_ start},\text{range\_ length})$.
 
 Then, for each number in the range, find the mappings as per Part 1 and find the minimum
 output number.
