@@ -300,13 +300,9 @@ map):
 For each line, it is formatted in the format (`dest_start`, `source_start`, `length`).
 
 This implies that the mapping of any value in the range
-
-$$[\text{source\_start, source\_start+length}]$$
-
+$`(\text{source\_start, source\_start+length})`$
 will be mapped to the range
-
-$$[\text{dest\_start, dest\_start+length}]$$
-
+$`(\text{dest\_start, dest\_start+length})`$
 in a 1:1 mapping.
 
 For instance, if we have (2, 5, 3), we would have 5 mapped to 2, 6 mapped to 3 and 7
