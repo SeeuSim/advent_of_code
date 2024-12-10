@@ -10,11 +10,7 @@ import (
 )
 
 func RunP1() {
-	file, e := os.Open("./day_01/input.in")
-	if e != nil {
-		fmt.Printf("%s\n", e)
-		return
-	}
+	file := OpenInput()
 	defer file.Close()
 
 	var lSlice, rSlice []int
@@ -53,11 +49,7 @@ func RunP1() {
 }
 
 func RunP2() {
-	file, e := os.Open("./day_01/input.in")
-	if e != nil {
-		fmt.Printf("%s\n", e)
-		return
-	}
+	file := OpenInput()
 	defer file.Close()
 
 	rFreq := make(map[int]int)
@@ -90,6 +82,16 @@ func RunP2() {
 		sum += lSlice[i] * rFreq[lSlice[i]]
 	}
 	fmt.Printf("SUM: %d\n", sum)
+}
+
+func OpenInput() *os.File {
+  f, e := os.Open("./day_01/input.in")
+  if e != nil {
+    fmt.Printf("Error opening input file: %s\n", e)
+    os.Exit(1)
+    return nil
+  }
+  return f
 }
 
 func Abs(lNum, rNum int) int {

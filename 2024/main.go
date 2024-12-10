@@ -2,6 +2,7 @@ package main
 
 import (
 	day01 "2024/day_01"
+	day02 "2024/day_02"
 	"fmt"
 	"os"
 	"strconv"
@@ -25,6 +26,9 @@ func main() {
 	days = append(days, G{
 		RunP1: day01.RunP1,
 		RunP2: day01.RunP2,
+	}, G{
+		RunP1: day02.RunP1,
+		RunP2: day02.RunP2,
 	})
 
 	d, e := strconv.Atoi(day)
