@@ -1,15 +1,15 @@
 package day02
 
 import (
+	"2024/utils"
 	"bufio"
 	"fmt"
-	"os"
 	"strconv"
 	"strings"
 )
 
 func RunP1() {
-	file := OpenInput()
+	file := utils.OpenFile(2, false)
 	defer file.Close()
 
 	scanner := bufio.NewScanner(file)
@@ -26,7 +26,7 @@ func RunP1() {
 }
 
 func RunP2() {
-	file := OpenInput()
+	file := utils.OpenFile(2, false)
 	defer file.Close()
 
 	scanner := bufio.NewScanner(file)
@@ -40,16 +40,6 @@ func RunP2() {
 		}
 	}
 	fmt.Printf("Safe Reports: %d\n", nSafe)
-}
-
-func OpenInput() *os.File {
-	f, e := os.Open("./day_02/input.in")
-	if e != nil {
-		fmt.Printf("Error opening input file: %s\n", e)
-		os.Exit(1)
-		return nil
-	}
-	return f
 }
 
 func GetLevels(report string) []int {

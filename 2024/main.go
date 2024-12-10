@@ -4,6 +4,7 @@ import (
 	day01 "2024/day_01"
 	day02 "2024/day_02"
 	day03 "2024/day_03"
+	day04 "2024/day_04"
 	"fmt"
 	"os"
 	"strconv"
@@ -33,6 +34,9 @@ func main() {
 	}, G{
 		RunP1: day03.RunP1,
 		RunP2: day03.RunP2,
+	}, G{
+		RunP1: day04.RunP1,
+		RunP2: day04.RunP2,
 	})
 
 	d, e := strconv.Atoi(day)

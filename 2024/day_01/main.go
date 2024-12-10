@@ -1,16 +1,16 @@
 package day01
 
 import (
+	"2024/utils"
 	"bufio"
 	"fmt"
-	"os"
 	"sort"
 	"strconv"
 	"strings"
 )
 
 func RunP1() {
-	file := OpenInput()
+	file := utils.OpenFile(1, false)
 	defer file.Close()
 
 	var lSlice, rSlice []int
@@ -49,7 +49,7 @@ func RunP1() {
 }
 
 func RunP2() {
-	file := OpenInput()
+	file := utils.OpenFile(1, false)
 	defer file.Close()
 
 	rFreq := make(map[int]int)
@@ -82,16 +82,6 @@ func RunP2() {
 		sum += lSlice[i] * rFreq[lSlice[i]]
 	}
 	fmt.Printf("SUM: %d\n", sum)
-}
-
-func OpenInput() *os.File {
-	f, e := os.Open("./day_01/input.in")
-	if e != nil {
-		fmt.Printf("Error opening input file: %s\n", e)
-		os.Exit(1)
-		return nil
-	}
-	return f
 }
 
 func Abs(lNum, rNum int) int {
