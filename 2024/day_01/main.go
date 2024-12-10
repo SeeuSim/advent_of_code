@@ -29,7 +29,7 @@ func RunP1() {
 			return
 		}
 
-		num2, err := strconv.Atoi(parts[1]) 
+		num2, err := strconv.Atoi(parts[1])
 		if err != nil {
 			fmt.Printf("An error occurred: %s\n", parts[1])
 		}
@@ -42,7 +42,7 @@ func RunP1() {
 	sort.Ints(rSlice)
 
 	sum := 0
-	for i := range(lSlice) {
+	for i := range lSlice {
 		sum += Abs(lSlice[i], rSlice[i])
 	}
 	fmt.Printf("SUM: %d\n", sum)
@@ -69,7 +69,7 @@ func RunP2() {
 			return
 		}
 
-		num2, err := strconv.Atoi(parts[1]) 
+		num2, err := strconv.Atoi(parts[1])
 		if err != nil {
 			fmt.Printf("An error occurred: %s\n", parts[1])
 		}
@@ -78,20 +78,20 @@ func RunP2() {
 		rFreq[num2] = rFreq[num2] + 1
 	}
 	sum := 0
-	for i := range(lSlice) {
+	for i := range lSlice {
 		sum += lSlice[i] * rFreq[lSlice[i]]
 	}
 	fmt.Printf("SUM: %d\n", sum)
 }
 
 func OpenInput() *os.File {
-  f, e := os.Open("./day_01/input.in")
-  if e != nil {
-    fmt.Printf("Error opening input file: %s\n", e)
-    os.Exit(1)
-    return nil
-  }
-  return f
+	f, e := os.Open("./day_01/input.in")
+	if e != nil {
+		fmt.Printf("Error opening input file: %s\n", e)
+		os.Exit(1)
+		return nil
+	}
+	return f
 }
 
 func Abs(lNum, rNum int) int {
