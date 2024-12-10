@@ -53,7 +53,35 @@ func RunP1() {
 }
 
 func RunP2() {
+	file := utils.OpenFile(4, false)
+	defer file.Close()
 
+	maze, _ := GetMaze(file)
+	nRows := len(maze)
+	nCols := len(maze[0])
+
+	nXmas := 0
+	// Rotate through the maze, in 3x3 blocks
+	for ro := 0; ro < nRows-2; ro++ {
+		// Check if is X-MAS
+		for co := 0; co < nCols-2; co++ {
+			// Check if window center is 'A'
+			if maze[ro+1][co+1] != 'A' {
+				continue
+			}
+
+			// Check corners - 4 possible configs
+			if maze[ro][co] == maze[ro][co+2] && maze[ro+2][co] == maze[ro+2][co+2] && ((maze[ro][co] == 'M' && maze[ro+2][co] == 'S') || (maze[ro][co] == 'S' && maze[ro+2][co] == 'M')) {
+				// M both top or both bottom
+				nXmas += 1
+				} else if maze[ro][co] == maze[ro+2][co] && maze[ro][co+2] == maze[ro+2][co+2] && ((maze[ro][co] == 'M' && maze[ro][co+2] == 'S') || (maze[ro][co] == 'S' && maze[ro][co+2] == 'M')) {
+				// M both left or both right
+				nXmas += 1
+			}
+
+		}
+	}
+	fmt.Printf("N XMAS: %d\n", nXmas)
 }
 
 func GetMaze(f *os.File) ([]string, [][2]int) {
