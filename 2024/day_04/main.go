@@ -74,7 +74,7 @@ func RunP2() {
 			if maze[ro][co] == maze[ro][co+2] && maze[ro+2][co] == maze[ro+2][co+2] && ((maze[ro][co] == 'M' && maze[ro+2][co] == 'S') || (maze[ro][co] == 'S' && maze[ro+2][co] == 'M')) {
 				// M both top or both bottom
 				nXmas += 1
-				} else if maze[ro][co] == maze[ro+2][co] && maze[ro][co+2] == maze[ro+2][co+2] && ((maze[ro][co] == 'M' && maze[ro][co+2] == 'S') || (maze[ro][co] == 'S' && maze[ro][co+2] == 'M')) {
+			} else if maze[ro][co] == maze[ro+2][co] && maze[ro][co+2] == maze[ro+2][co+2] && ((maze[ro][co] == 'M' && maze[ro][co+2] == 'S') || (maze[ro][co] == 'S' && maze[ro][co+2] == 'M')) {
 				// M both left or both right
 				nXmas += 1
 			}
