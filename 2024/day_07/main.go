@@ -23,7 +23,15 @@ func RunP1() {
 }
 
 func RunP2() {
-	// TODO: Implement Part 2
+	f := utils.OpenFile(7, false)
+	equations := GetGame(f)
+	out := 0
+	for _, eqn := range equations {
+		if eqn.IsValidP2() {
+			out += eqn.target
+		}
+	}
+	fmt.Printf("Sum: %d\n", out)
 }
 
 type Equation struct {
@@ -34,6 +42,7 @@ type Equation struct {
 const (
 	plus  = '+'
 	times = '*'
+	conc  = '|'
 )
 
 func (e *Equation) ToString() string {
@@ -44,12 +53,19 @@ func (e *Equation) IsValidP1() bool {
 	return IsTarget(e.target, e.operands[0], e.operands[1:])
 }
 
+func (e *Equation) IsValidP2() bool {
+	return IsTargetP2(e.target, e.operands[0], e.operands[1:])
+}
+
 func Calc(a, b int, op byte) int {
 	switch op {
 	case plus:
 		return a + b
 	case times:
 		return a * b
+	case conc:
+		res, _ := strconv.Atoi(fmt.Sprintf("%d%d", a, b))
+		return res
 	}
 	return 0
 }
@@ -62,6 +78,18 @@ func IsTarget(target, curr int, ops []int) bool {
 		return false
 	}
 	return IsTarget(target, Calc(curr, ops[0], plus), ops[1:]) || IsTarget(target, Calc(curr, ops[0], times), ops[1:])
+}
+
+func IsTargetP2(target, curr int, ops []int) bool {
+	if len(ops) == 0 {
+		return target == curr
+	}
+	if curr > target {
+		return false
+	}
+	return (IsTargetP2(target, Calc(curr, ops[0], plus), ops[1:]) ||
+		IsTargetP2(target, Calc(curr, ops[0], conc), ops[1:]) ||
+		IsTargetP2(target, Calc(curr, ops[0], times), ops[1:]))
 }
 
 func GetGame(f *os.File) []Equation {
