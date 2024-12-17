@@ -29,7 +29,24 @@ func RunP1() {
 }
 
 func RunP2() {
-	// TODO: Implement Part 2
+	f := utils.OpenFile(8, false)
+	maze, pos := GetMaze(f)
+	seen := make(map[Coord]struct{})
+	nNodes := 0
+	for _, v := range pos {
+		for l := range v {
+			for r := l + 1; r < len(v); r++ {
+				antiNodes := GetAntinodesP2(maze, v[l], v[r])
+				for _, node := range antiNodes {
+					if _, exists := seen[node]; !exists {
+						seen[node] = struct{}{}
+						nNodes += 1
+					}
+				}
+			}
+		}
+	}
+	fmt.Printf("Num Nodes: %d\n", nNodes)
 }
 
 type Coord struct {
@@ -90,4 +107,37 @@ func GetAntinodes(maze [][]byte, a, b Coord) []Coord {
 func IsValidCoord(maze [][]byte, c Coord) bool {
 	X, Y := len(maze[0]), len(maze)
 	return c.x >= 0 && c.x < X && c.y >= 0 && c.y < Y
+}
+
+func GetAntinodesP2(maze [][]byte, a, b Coord) []Coord {
+	var out []Coord
+
+	// wrt a: negative
+	dist := Coord{
+		a.x - b.x,
+		a.y - b.y,
+	}
+
+	lCurr := Coord{
+		a.x,
+		a.y,
+	}
+	for IsValidCoord(maze, lCurr) {
+		out = append(out, lCurr)
+		lCurr.x += dist.x
+		lCurr.y += dist.y
+	}
+
+	rCurr := Coord{
+		b.x,
+		b.y,
+	}
+
+	for IsValidCoord(maze, rCurr) {
+		out = append(out, rCurr)
+		rCurr.x -= dist.x
+		rCurr.y -= dist.y
+	}
+
+	return out
 }
