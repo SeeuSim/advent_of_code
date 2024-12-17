@@ -9,6 +9,7 @@ import (
 	day06 "2024/day_06"
 	day07 "2024/day_07"
 	day08 "2024/day_08"
+	day09 "2024/day_09"
 	"fmt"
 	"os"
 	"strconv"
@@ -29,31 +30,17 @@ func main() {
 	part := os.Args[2]
 
 	var days []G
-	days = append(days, G{
-		day01.RunP1,
-		day01.RunP2,
-	}, G{
-		day02.RunP1,
-		day02.RunP2,
-	}, G{
-		day03.RunP1,
-		day03.RunP2,
-	}, G{
-		day04.RunP1,
-		day04.RunP2,
-	}, G{
-		day05.RunP1,
-		day05.RunP2,
-	}, G{
-		day06.RunP1,
-		day06.RunP2,
-	}, G{
-		day07.RunP1,
-		day07.RunP2,
-	}, G{
-		day08.RunP1,
-		day08.RunP2,
-	})
+	days = append(days,
+		G{day01.RunP1, day01.RunP2},
+		G{day02.RunP1, day02.RunP2},
+		G{day03.RunP1, day03.RunP2},
+		G{day04.RunP1, day04.RunP2},
+		G{day05.RunP1, day05.RunP2},
+		G{day06.RunP1, day06.RunP2},
+		G{day07.RunP1, day07.RunP2},
+		G{day08.RunP1, day08.RunP2},
+		G{day09.RunP1, day09.RunP2},
+	)
 
 	d, e := strconv.Atoi(day)
 	if e != nil {
