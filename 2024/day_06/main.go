@@ -8,61 +8,54 @@ import (
 	"regexp"
 )
 
+const (
+	up    = 0
+	right = 1
+	down  = 2
+	left  = 3
+)
+
+type Coords struct {
+	x int
+	y int
+}
+
+type VectCoord struct {
+	x   int
+	y   int
+	dir int
+}
+
 func RunP1() {
 	f := utils.OpenFile(6, false)
 	defer f.Close()
-	pos_visited := 0
-	seen := make(map[int]bool)
+
 	maze, s_pos := GetMaze(f)
-	R, C := len(maze), len(maze[0])
-	queue := [][2]int{s_pos}
+	nUniquePoints, _ := GetGuardPath(maze, s_pos)
 
-	dir := 0 // 0 - up, 1 - down, 2 - left, 3 - right
-	deltas := [][3]int{
-		{-1, 0, 3}, // Up
-		{1, 0, 2},  // Down
-		{0, -1, 0}, // Left
-		{0, 1, 1},  // Right
-	}
-
-	for len(queue) > 0 {
-		// Dequeuing logic
-		curr := queue[0]
-		c_ro, c_col := curr[0], curr[1]
-		if c_ro < 0 || c_ro >= R || c_col < 0 || c_col >= C {
-			break
-		}
-
-		// Visiting Logic
-		z_pos := c_ro*C + c_col
-		if !seen[z_pos] {
-			seen[z_pos] = true
-			pos_visited += 1
-		}
-
-		// Processing next pos
-		delta := deltas[dir]
-		n_ro, n_col, n_dir := delta[0]+c_ro, delta[1]+c_col, delta[2]
-		if n_ro < 0 || n_ro >= R || n_col < 0 || n_col >= C {
-			break
-		} else if maze[n_ro][n_col] == '#' {
-			dir = n_dir
-			n_ro, n_col = deltas[n_dir][0]+c_ro, deltas[n_dir][1]+c_col
-		}
-
-		queue = append(queue[1:], [2]int{n_ro, n_col})
-	}
-
-	fmt.Printf("Positions Visited: %d\n", pos_visited)
+	fmt.Printf("Unique Points Visited: %d\n", nUniquePoints)
 }
 
 func RunP2() {
-	// TODO: Implement Part 2
+	f := utils.OpenFile(6, false)
+	defer f.Close()
+
+	maze, s_pos := GetMaze(f)
+	_, path := GetGuardPath(maze, s_pos)
+
+	for point := range path {
+		y, x := point.y, point.x
+		maze[y] = fmt.Sprintf("%s#%s", maze[y][:x], maze[y][x+1:])
+
+		// Todo: Add impl for Part 2
+
+		maze[y] = fmt.Sprintf("%s.%s", maze[y][:x], maze[y][x+1:])
+	}
 }
 
-func GetMaze(f *os.File) ([]string, [2]int) {
+func GetMaze(f *os.File) ([]string, VectCoord) {
 	var out []string
-	s_pos := [2]int{-1, -1}
+	var s_pos Coords
 	scanner := bufio.NewScanner(f)
 	s_regex := regexp.MustCompile(`\^`)
 	l_idx := 0
@@ -71,10 +64,74 @@ func GetMaze(f *os.File) ([]string, [2]int) {
 		out = append(out, line)
 		match := s_regex.FindStringIndex(line)
 		if match != nil {
-			s_pos[0] = l_idx
-			s_pos[1] = match[0]
+			s_pos.x = match[0]
+			s_pos.y = l_idx
 		}
 		l_idx += 1
 	}
-	return out, s_pos
+	return out, VectCoord{
+		x:   s_pos.x,
+		y:   s_pos.y,
+		dir: up,
+	}
+}
+
+func GetGuardPath(maze []string, start_pos VectCoord) (int, map[Coords]struct{}) {
+	uniquePoints := 0
+	out := make(map[Coords]struct{})
+	curr := start_pos
+	for {
+		if _, exists := out[Coords{curr.x, curr.y}]; !exists {
+			out[Coords{curr.x, curr.y}] = struct{}{}
+			uniquePoints += 1
+		}
+		isValid, next := GetNextPos(maze, curr)
+		if !isValid {
+			break
+		}
+		curr = next
+	}
+	return uniquePoints, out
+}
+
+func GetNextPos(maze []string, pos VectCoord) (bool, VectCoord) {
+	isValid := true
+	deltas := []Coords{
+		{
+			x: 0,
+			y: -1,
+		}, // Up
+		{
+			x: 1,
+			y: 0,
+		}, // Right
+		{
+			x: 0,
+			y: 1,
+		}, // Down
+		{
+			x: -1,
+			y: 0,
+		}, // Left
+	}
+	out := VectCoord{
+		x:   pos.x + deltas[pos.dir].x,
+		y:   pos.y + deltas[pos.dir].y,
+		dir: pos.dir,
+	}
+
+	Y, X := len(maze), len(maze[0])
+	isValid = out.x >= 0 && out.x < X && out.y >= 0 && out.y < Y
+	if isValid && maze[out.y][out.x] == '#' {
+		return GetNextPos(maze, VectCoord{
+			pos.x,
+			pos.y,
+			TurnRight(pos.dir),
+		})
+	}
+	return isValid, out
+}
+
+func TurnRight(dir int) int {
+	return (dir + 1) % 4
 }
