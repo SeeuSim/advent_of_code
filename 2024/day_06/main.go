@@ -43,14 +43,17 @@ func RunP2() {
 	maze, s_pos := GetMaze(f)
 	_, path := GetGuardPath(maze, s_pos)
 
+	n_obs := 0
 	for point := range path {
 		y, x := point.y, point.x
 		maze[y] = fmt.Sprintf("%s#%s", maze[y][:x], maze[y][x+1:])
 
-		// Todo: Add impl for Part 2
-
+		if IsLoop(maze, s_pos) {
+			n_obs += 1
+		}
 		maze[y] = fmt.Sprintf("%s.%s", maze[y][:x], maze[y][x+1:])
 	}
+	fmt.Printf("Num of Obstacles: %d\n", n_obs)
 }
 
 func GetMaze(f *os.File) ([]string, VectCoord) {
@@ -134,4 +137,23 @@ func GetNextPos(maze []string, pos VectCoord) (bool, VectCoord) {
 
 func TurnRight(dir int) int {
 	return (dir + 1) % 4
+}
+
+func IsLoop(maze []string, start VectCoord) bool {
+	loopSeen := make(map[VectCoord]struct{})
+	curr := start
+
+	for {
+		if _, exists := loopSeen[curr]; !exists {
+			loopSeen[curr] = struct{}{}
+		} else {
+			return true
+		}
+
+		isValid, next := GetNextPos(maze, curr)
+		if !isValid {
+			return false
+		}
+		curr = next
+	}
 }
