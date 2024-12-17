@@ -12,6 +12,8 @@ import (
 
 func RunP1() {
 	f := utils.OpenFile(7, false)
+	defer f.Close()
+
 	equations := GetGame(f)
 	out := 0
 	for _, eqn := range equations {
@@ -24,6 +26,8 @@ func RunP1() {
 
 func RunP2() {
 	f := utils.OpenFile(7, false)
+	defer f.Close()
+
 	equations := GetGame(f)
 	out := 0
 	for _, eqn := range equations {
@@ -45,8 +49,8 @@ const (
 	conc  = '|'
 )
 
-func (e *Equation) ToString() string {
-	return fmt.Sprintf("Target: %d, Ops: %d", e.target, e.operands)
+func (e Equation) String() string {
+	return fmt.Sprintf("{Target: %d, Ops: %d}", e.target, e.operands)
 }
 
 func (e *Equation) IsValidP1() bool {
