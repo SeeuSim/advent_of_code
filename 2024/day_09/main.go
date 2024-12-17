@@ -36,7 +36,40 @@ func RunP1() {
 }
 
 func RunP2() {
-	// TODO: Implement Part 2
+	f := utils.OpenFile(9, false)
+	files, empty := GetPuzzleP2(f)
+	for i := len(files) - 1; i >= 0; i-- {
+		rMostFile := files[i]
+		emptyIdx := -1
+		for eIdx, empt := range empty {
+			if empt.sPos > rMostFile.sPos {
+				break
+			} else if empt.len < rMostFile.len {
+				continue
+			}
+			emptyIdx = eIdx
+			break
+		}
+		if emptyIdx < 0 {
+			continue
+		}
+		empty[emptyIdx].len -= rMostFile.len
+		files[i].sPos = empty[emptyIdx].sPos
+		if empty[emptyIdx].len == 0 {
+			empty = append(empty[:emptyIdx], empty[emptyIdx+1:]...)
+		} else {
+			empty[emptyIdx].sPos += rMostFile.len
+		}
+
+	}
+
+	s := 0
+	for _, f := range files {
+		for i := 0; i < f.len; i++ {
+			s += f.fNo * (f.sPos + i)
+		}
+	}
+	fmt.Printf("Sum: %d\n", s)
 }
 
 type DiskPart struct {
@@ -80,4 +113,45 @@ func GetPuzzle(f *os.File) ([]DiskPart, []DiskPart) {
 		isSpace = !isSpace
 	}
 	return normal, empty
+}
+
+type File struct {
+	fNo     int
+	sPos    int
+	len     int
+	isEmpty bool
+}
+
+func (f File) String() string {
+	if f.isEmpty {
+		return fmt.Sprintf("{[E]<%d...%d>}", f.sPos, f.sPos+f.len-1)
+	}
+	return fmt.Sprintf("{[%d]<%d...%d>}", f.fNo, f.sPos, f.sPos+f.len-1)
+}
+
+func GetPuzzleP2(f *os.File) ([]File, []File) {
+	defer f.Close()
+
+	contents, _ := os.ReadFile(f.Name())
+	var files []File
+	var empty []File
+	cPos := 0
+	isSpace := false
+	for i, c := range contents {
+		nPos, _ := strconv.Atoi(fmt.Sprintf("%c", c))
+		f := File{
+			i / 2,
+			cPos,
+			nPos,
+			isSpace,
+		}
+		if isSpace {
+			empty = append(empty, f)
+		} else {
+			files = append(files, f)
+		}
+		cPos += nPos
+		isSpace = !isSpace
+	}
+	return files, empty
 }
