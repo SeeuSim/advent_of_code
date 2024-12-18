@@ -34,7 +34,19 @@ func RunP1() {
 }
 
 func RunP2() {
-	// TODO: Implement Part 2
+	f := utils.OpenFile(11, false)
+	stones := GetGame(f)
+	cache := make(map[Args]int)
+	score := 0
+	for _, s := range stones {
+		score += GetNStones(s, 75, cache)
+	}
+	fmt.Printf("Score: %d\n", score)
+}
+
+type Args struct {
+	stone  int
+	blinks int
 }
 
 func GetGame(f *os.File) []int {
@@ -46,4 +58,29 @@ func GetGame(f *os.File) []int {
 		out = append(out, ch)
 	}
 	return out
+}
+
+func GetNStones(stone int, blinks int, cache map[Args]int) int {
+	if blinks == 0 {
+		return 1
+	}
+	arg := Args{stone, blinks}
+	if v, exists := cache[arg]; exists {
+		return v
+	}
+	res := 0
+	if stone == 0 {
+		res = GetNStones(1, blinks-1, cache)
+	} else {
+		sFmt := strconv.Itoa(stone)
+		if len(sFmt)%2 == 0 {
+			l, _ := strconv.Atoi(sFmt[:len(sFmt)/2])
+			r, _ := strconv.Atoi(sFmt[len(sFmt)/2:])
+			res = GetNStones(l, blinks-1, cache) + GetNStones(r, blinks-1, cache)
+		} else {
+			res = GetNStones(stone*2024, blinks-1, cache)
+		}
+	}
+	cache[arg] = res
+	return res
 }
