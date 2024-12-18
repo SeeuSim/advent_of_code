@@ -21,12 +21,24 @@ func RunP1() {
 }
 
 func RunP2() {
-	// TODO: Implement Part 2
+	f := utils.OpenFile(10, false)
+	m, sPts := GetGame(f)
+	sum := 0
+	for _, s := range sPts {
+		sc := GetRating(m, s)
+		fmt.Printf("Pt: %s, Rting: %d\n", s, sc)
+		sum += sc
+	}
+	fmt.Printf("Score: %d\n", sum)
 }
 
 type Coord struct {
 	x int
 	y int
+}
+
+func (c Coord) String() string {
+	return fmt.Sprintf("{y:%d,x:%d}", c.y, c.x)
 }
 
 func GetScore(maze []string, startPoint Coord) int {
@@ -100,4 +112,44 @@ func HeightDiffValid(maze []string, a, b Coord) bool {
 func IsValidCoord(maze []string, coord Coord) bool {
 	Y, X := len(maze), len(maze[0])
 	return coord.x >= 0 && coord.x < X && coord.y >= 0 && coord.y < Y
+}
+
+func GetRating(maze []string, start Coord) int {
+	score := 0
+	thCount := make(map[Coord]int)
+
+	queue := []Coord{start}
+
+	for len(queue) > 0 {
+		curr := queue[0]
+		queue = queue[1:]
+
+		if maze[curr.y][curr.x] == '9' {
+			thCount[curr] += 1
+		}
+
+		queue = append(queue, GetNeighboursP2(maze, curr)...)
+	}
+
+	for _, v := range thCount {
+		score += v
+	}
+
+	return score
+}
+
+func GetNeighboursP2(maze []string, curr Coord) []Coord {
+	var out []Coord
+
+	deltas := [][2]int{{0, 1}, {0, -1}, {1, 0}, {-1, 0}}
+	for _, d := range deltas {
+		n := Coord{
+			curr.x + d[0],
+			curr.y + d[1],
+		}
+		if IsValidCoord(maze, n) && HeightDiffValid(maze, curr, n) {
+			out = append(out, n)
+		}
+	}
+	return out
 }
