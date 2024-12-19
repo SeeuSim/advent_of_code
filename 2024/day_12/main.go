@@ -8,9 +8,13 @@ import (
 )
 
 func RunP1() {
-	f := utils.OpenFile(12, true)
+	f := utils.OpenFile(12, false)
 	_, regions := GetGame(f)
-	fmt.Printf("%s\n", regions)
+	s := 0
+	for _, r := range regions {
+		s += r.area * r.perimeter
+	}
+	fmt.Printf("Sum: %d\n", s)
 }
 
 func RunP2() {
@@ -18,23 +22,13 @@ func RunP2() {
 }
 
 type Coords struct {
-	coordType byte
-	x         int
-	y         int
+	x int
+	y int
 }
 
 type Region struct {
-	regionType byte
-	regionId   int
-	nodes      []Coords
-}
-
-func (c Coords) String() string {
-	return fmt.Sprintf("{x:%d,y:%d,c:%c}", c.x, c.y, c.coordType)
-}
-
-func (r Region) String() string {
-	return fmt.Sprintf("{ID:%d,T:%c,N:%s}", r.regionId, r.regionType, r.nodes)
+	perimeter int
+	area      int
 }
 
 func GetGame(f *os.File) ([]string, []Region) {
@@ -42,77 +36,64 @@ func GetGame(f *os.File) ([]string, []Region) {
 
 	var maze []string
 	var regions []Region
-	nodeMap := make(map[Coords]struct{})
+	seen := make(map[Coords]struct{})
 	scanner := bufio.NewScanner(f)
 	lNum := 0
 	for scanner.Scan() {
 		line := scanner.Text()
-		for i, r := range []byte(line) {
-			nodeMap[Coords{r, i, lNum}] = struct{}{}
-		}
 		maze = append(maze, line)
 		lNum++
 	}
-	id := 0
-	for len(nodeMap) > 0 {
-		var firstNode Coords
-		for k := range nodeMap {
-			firstNode = k
-			break
+	Y, X := len(maze), len(maze[0])
+	for y := 0; y < Y; y++ {
+		for x := 0; x < X; x++ {
+			if _, exists := seen[Coords{x, y}]; exists {
+				continue
+			}
+			regions = append(regions, GetRegion(maze, seen, Region{}, Coords{x, y}))
 		}
-		regions = append(regions, GetRegion(maze, nodeMap, firstNode, id))
-		id++
 	}
 	return maze, regions
 }
 
-func GetRegion(maze []string, nodeMap map[Coords]struct{}, firstNode Coords, id int) Region {
-	var out Region
-	queue := []Coords{firstNode}
-	out.regionId = id
-	out.regionType = firstNode.coordType
-	for len(queue) > 0 {
-		curr := queue[0]
-		queue = queue[1:]
-		if _, exists := nodeMap[curr]; exists {
-			delete(nodeMap, curr)
-		}
-		out.nodes = append(out.nodes, curr)
-		queue = append(queue, GetNeighbours(maze, nodeMap, curr)...)
+func GetRegion(maze []string, seen map[Coords]struct{}, region Region, curr Coords) Region {
+	if _, exists := seen[curr]; exists {
+		return region
 	}
-	return out
+
+	// Even neighbours which are visited already will be generated.
+	// This gives the accurate number of neighbours for the current tile
+	neighbours := GetNeighbours(maze, curr)
+
+	region.area += 1
+	region.perimeter += (4 - len(neighbours))
+	seen[curr] = struct{}{}
+
+	for _, c := range neighbours {
+		region = GetRegion(maze, seen, region, c)
+	}
+
+	return region
 }
 
-func GetNeighbours(maze []string, nodeMap map[Coords]struct{}, node Coords) []Coords {
+func GetNeighbours(maze []string, curr Coords) []Coords {
 	var out []Coords
-	deltas := [4][2]int{
-		{0, 1},
-		{0, -1},
-		{1, 0},
-		{-1, 0},
-	}
+	deltas := [][2]int{{0, 1}, {0, -1}, {1, 0}, {-1, 0}}
 	for _, d := range deltas {
-		newCoord := Coords{node.coordType, node.x + d[0], node.y + d[1]}
-		if _, exists := nodeMap[newCoord]; !exists {
-			continue
-		}
-		if IsValidCoord(maze, newCoord) {
-			delete(nodeMap, newCoord)
+		newCoord := Coords{curr.x + d[0], curr.y + d[1]}
+		if IsValidNeighbour(maze, curr, newCoord) {
 			out = append(out, newCoord)
 		}
 	}
 	return out
 }
 
-func IsValidCoord(maze []string, node Coords) bool {
+func IsValidNeighbour(maze []string, coord, candidate Coords) bool {
 	Y, X := len(maze), len(maze[0])
-	if node.x >= X || node.x < 0 || node.y >= Y || node.y < 0 {
+	if candidate.y < 0 || candidate.y >= Y || candidate.x < 0 || candidate.x >= X {
 		return false
 	}
-	if node.coordType != maze[node.y][node.x] {
-		return false
-	}
-	return true
+	return maze[candidate.y][candidate.x] == maze[coord.y][coord.x]
 }
 
 /**
