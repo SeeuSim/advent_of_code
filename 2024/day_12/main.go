@@ -7,6 +7,13 @@ import (
 	"os"
 )
 
+const (
+	topLeft     = 0
+	topRight    = 1
+	bottomLeft  = 2
+	bottomRight = 3
+)
+
 func RunP1() {
 	f := utils.OpenFile(12, false)
 	_, regions := GetGame(f)
@@ -18,7 +25,13 @@ func RunP1() {
 }
 
 func RunP2() {
-	// TODO: Implement Part 2
+	f := utils.OpenFile(12, false)
+	_, regions := GetGame(f)
+	s := 0
+	for _, r := range regions {
+		s += r.area * r.sides
+	}
+	fmt.Printf("Sum: %d\n", s)
 }
 
 type Coords struct {
@@ -27,8 +40,9 @@ type Coords struct {
 }
 
 type Region struct {
-	perimeter int
 	area      int
+	perimeter int
+	sides     int
 }
 
 func GetGame(f *os.File) ([]string, []Region) {
@@ -65,9 +79,10 @@ func GetRegion(maze []string, seen map[Coords]struct{}, region Region, curr Coor
 	// This gives the accurate number of neighbours for the current tile
 	neighbours := GetNeighbours(maze, curr)
 
-	region.area += 1
+	region.area++
 	region.perimeter += (4 - len(neighbours))
 	seen[curr] = struct{}{}
+	region.sides += CheckCorners(maze, curr)
 
 	for _, c := range neighbours {
 		region = GetRegion(maze, seen, region, c)
@@ -94,6 +109,87 @@ func IsValidNeighbour(maze []string, coord, candidate Coords) bool {
 		return false
 	}
 	return maze[candidate.y][candidate.x] == maze[coord.y][coord.x]
+}
+
+func CheckCorners(maze []string, curr Coords) int {
+	out := 0
+	pType := maze[curr.y][curr.x]
+	Y, X, x, y := len(maze), len(maze[0]), curr.x, curr.y
+
+	corners := []Coords{
+		{0, 0}, {0, Y - 1}, {X - 1, 0}, {X - 1, Y - 1},
+	}
+	for _, c := range corners {
+		if x == c.x && y == c.y {
+			out++
+			break
+		}
+	}
+
+	isValid := func(c Coords) bool {
+		return c.y >= 0 && c.y < Y && c.x >= 0 && c.x < X
+	}
+	// Check edge cases for corners
+	isLimit := func(crnr int) bool {
+		switch crnr {
+		case topLeft:
+			return (x > 0 && y == 0) || x == 0 && y > 0
+		case topRight:
+			return (x < X-1 && y == 0) || x == X-1 && y > 0
+		case bottomLeft:
+			return (x > 0 && y == Y-1) || x == 0 && y < Y-1
+		case bottomRight:
+			return (x < X-1 && y == Y-1) || x == X-1 && y < Y-1
+		}
+		return false
+	}
+	getType := func(c Coords) byte {
+		return maze[c.y][c.x]
+	}
+
+	outsideCorners := [][]Coords{
+		{{-1, 0}, {0, -1}}, // Top Left
+		{{1, 0}, {0, -1}},  // Top Right
+		{{-1, 0}, {0, 1}},  // Bottom Left
+		{{1, 0}, {0, 1}},   // Bottom Right
+	}
+	for i, oC := range outsideCorners {
+		c1, c2 := Coords{x + oC[0].x, y + oC[0].y}, Coords{x + oC[1].x, y + oC[1].y}
+		isV1, isV2 := isValid(c1), isValid(c2)
+		if (isV1 && isV2 && getType(c1) != pType && getType(c2) != pType) ||
+			(isV1 && isLimit(i) && getType(c1) != pType) ||
+			(isV2 && isLimit(i) && getType(c2) != pType) {
+			out++
+		}
+	}
+
+	insideCorners := [][]Coords{
+		{{1, 0}, {0, 1}},   // Top Left
+		{{-1, 0}, {0, 1}},  // Top Right
+		{{1, 0}, {0, -1}},  // Bottom Left
+		{{-1, 0}, {0, -1}}, // Bottom Right
+	}
+	for _, iC := range insideCorners {
+		c1, c2 := iC[0], iC[1]
+		check := Coords{x + c1.x, y + c2.y}
+		if !isValid(check) {
+			continue
+		}
+		c1, c2 = Coords{x + c1.x, y}, Coords{x, y + c2.y}
+		if getType(c1) == pType && getType(c2) == pType && getType(check) != pType {
+			out++
+		}
+	}
+	return out
+}
+
+func IsDiffOutsideCorner(maze []string, coord, delta Coords) bool {
+	newC := Coords{coord.x + delta.x, coord.y + delta.y}
+	nX, nY := newC.x, newC.y
+	if nX < 0 || nX >= len(maze[0]) || nY < 0 || nY >= len(maze) {
+		return false
+	}
+	return maze[coord.y][coord.x] != maze[newC.y][newC.x]
 }
 
 /**

@@ -20,3 +20,5 @@ Cargo.lock
 
 # input files
 **/*.in
+
+**/.DS_Store
