@@ -20,11 +20,18 @@ func RunP1() {
 }
 
 func RunP2() {
-	// TODO: Implement Part 2
+	f := utils.OpenFile(13, false)
+	c := 0
+	counts := GetGame(f)
+	for _, _c := range counts {
+		c += _c.costP2
+	}
+	fmt.Printf("Cost: %d\n", c)
 }
 
 type Entry struct {
-	cost int
+	cost   int
+	costP2 int
 }
 
 type Coord struct {
@@ -55,6 +62,14 @@ func FromString(content string) Entry {
 
 	if a%det == 0 && b%det == 0 {
 		out.cost += (a*3/det + b/det)
+	}
+
+	target2 := Coord{target.x + 10000000000000, target.y + 10000000000000}
+	a = (target2.x*B.y - target2.y*B.x)
+	b = (target2.y*A.x - target2.x*A.y)
+
+	if a%det == 0 && b%det == 0 {
+		out.costP2 += (a*3/det + b/det)
 	}
 	return out
 }
