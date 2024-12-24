@@ -40,8 +40,31 @@ func RunP1() {
 	fmt.Printf("Sum: %d %d\n", sc, s)
 }
 
+// Run until all robots get their own tile.
 func RunP2() {
-	// TODO: Implement Part 2
+	f := utils.OpenFile(14, isTest)
+	g := GetGame(f)
+	time := 0
+	for {
+		time++
+		seen := make(map[Coord]struct{})
+		isEnd := true
+	robotLoop:
+		for _, rbt := range g {
+			p, v := rbt[0], rbt[1]
+			p.x = WrappingAdd(p.x, time*v.x, true)
+			p.y = WrappingAdd(p.y, time*v.y, false)
+			if _, exists := seen[p]; exists {
+				isEnd = false
+				break robotLoop
+			}
+			seen[p] = struct{}{}
+		}
+		if isEnd {
+			break
+		}
+	}
+	fmt.Printf("%d\n", time)
 }
 
 type Coord struct {
