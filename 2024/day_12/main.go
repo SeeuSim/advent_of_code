@@ -35,8 +35,7 @@ func RunP2() {
 }
 
 type Coords struct {
-	x int
-	y int
+	x, y int
 }
 
 type Region struct {

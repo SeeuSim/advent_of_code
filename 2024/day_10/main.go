@@ -33,8 +33,7 @@ func RunP2() {
 }
 
 type Coord struct {
-	x int
-	y int
+	x, y int
 }
 
 func (c Coord) String() string {

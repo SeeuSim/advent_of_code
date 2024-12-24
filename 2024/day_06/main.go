@@ -16,14 +16,11 @@ const (
 )
 
 type Coords struct {
-	x int
-	y int
+	x, y int
 }
 
 type VectCoord struct {
-	x   int
-	y   int
-	dir int
+	x, y, dir int
 }
 
 func RunP1() {

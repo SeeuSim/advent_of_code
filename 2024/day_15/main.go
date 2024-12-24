@@ -55,8 +55,7 @@ func RunP2() {
 }
 
 type Coord struct {
-	x int
-	y int
+	x, y int
 }
 
 func GetGame(f *os.File) ([][]byte, string, Coord) {
