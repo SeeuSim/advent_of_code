@@ -7,13 +7,21 @@ import (
 	"os"
 
 	pq "github.com/emirpasic/gods/queues/priorityqueue"
-	godsutils "github.com/emirpasic/gods/utils"
 )
 
 func RunP1() {
 	f := utils.OpenFile(16, false)
 	maze, start, end := GetGame(f)
-	seen := make(map[ExpNode]struct{})
+	cost := GetPathCost(maze, start, end)
+	fmt.Printf("Cost: %d\n", cost)
+}
+
+func RunP2() {
+	// TODO: Implement Part 2
+}
+
+func GetPathCost(maze []string, start, end Coord) int {
+	seen := make(map[DirNode]struct{})
 
 	X, Y := len(maze[0]), len(maze)
 
@@ -25,53 +33,50 @@ func RunP1() {
 	}
 
 	queue := pq.NewWith(cmp)
-	queue.Enqueue(PQNode{expNode: ExpNode{coord: start, dir: east}, cost: 0})
+	queue.Enqueue(PQNode{DirNode{start, east}, 0})
 
 	for !queue.Empty() {
 		curr, _ := queue.Dequeue()
 		currNode := curr.(PQNode)
-		if _, s := seen[currNode.expNode]; s {
+		dirNode := currNode.dirNode
+		coord, dir := dirNode.coord, dirNode.dir
+
+		if _, s := seen[dirNode]; s {
 			continue
 		}
-		if currNode.expNode.coord == end {
-			fmt.Printf("Cost: %d\n", currNode.cost)
-			break
+		if coord == end {
+			return currNode.cost
 		}
-		seen[currNode.expNode] = struct{}{}
+		seen[dirNode] = struct{}{}
 
 		neighbours := []PQNode{}
-		coord := currNode.expNode.coord
-		dir := currNode.expNode.dir
 
 		fwdCoord := Coord{coord.x + deltas[dir].x, coord.y + deltas[dir].y}
 		if fwdCoord.x >= 0 && fwdCoord.x < X && fwdCoord.y >= 0 && fwdCoord.y < Y && maze[fwdCoord.y][fwdCoord.x] != '#' {
-			neighbours = append(neighbours, PQNode{ExpNode{fwdCoord, dir}, currNode.cost + 1})
+			neighbours = append(neighbours, PQNode{DirNode{fwdCoord, dir}, currNode.cost + 1})
 		}
 
 		switch dir {
 		case north, south:
 			neighbours = append(
 				neighbours,
-				PQNode{ExpNode{coord, east}, currNode.cost + 1000},
-				PQNode{ExpNode{coord, west}, currNode.cost + 1000},
+				PQNode{DirNode{coord, east}, currNode.cost + 1000},
+				PQNode{DirNode{coord, west}, currNode.cost + 1000},
 			)
 		case east, west:
 			neighbours = append(
 				neighbours,
-				PQNode{ExpNode{coord, north}, currNode.cost + 1000},
-				PQNode{ExpNode{coord, south}, currNode.cost + 1000},
+				PQNode{DirNode{coord, north}, currNode.cost + 1000},
+				PQNode{DirNode{coord, south}, currNode.cost + 1000},
 			)
 		}
 		for _, candidate := range neighbours {
-			if _, exists := seen[candidate.expNode]; !exists {
+			if _, exists := seen[candidate.dirNode]; !exists {
 				queue.Enqueue(candidate)
 			}
 		}
 	}
-}
-
-func RunP2() {
-	// TODO: Implement Part 2
+	return -1
 }
 
 const (
@@ -85,20 +90,20 @@ type Coord struct {
 	x, y int
 }
 
-type ExpNode struct {
+type DirNode struct {
 	coord Coord
 	dir   int
 }
 
 type PQNode struct {
-	expNode ExpNode
+	dirNode DirNode
 	cost    int
 }
 
 func cmp(a, b interface{}) int {
 	cA := a.(PQNode).cost
 	cB := b.(PQNode).cost
-	return godsutils.IntComparator(cA, cB) // Increasing order
+	return cA - cB // Increasing order
 }
 
 func GetGame(f *os.File) ([]string, Coord, Coord) {
