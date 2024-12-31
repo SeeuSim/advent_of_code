@@ -19,18 +19,30 @@ func RunP1() {
 func RunP2() {
 	f := utils.OpenFile(16, false)
 	maze, start, end := GetGame(f)
-	_, path := GetPathCost(maze, start, end)
-	c := GetSafeTiles(maze, path, start, end)
-	fmt.Printf("Safe Tiles: %d\n", c)
+	cost, distFromStart := GetPathCost(maze, start, end)
+	_, distFromEnd := GetBackwardsPathCost(maze, start, end)
 
+	s := make(map[Coord]struct{})
+	for y := 0; y < len(maze); y++ {
+		for x := 0; x < len(maze[0]); x++ {
+			for _, dir := range []int{north, south, east, west} {
+				idNode := DirNode{Coord{x, y}, dir}
+				s1, seen1 := distFromStart[idNode]
+				s2, seen2 := distFromEnd[idNode]
+				if seen1 && seen2 && (s1+s2 == cost) {
+					s[Coord{x, y}] = struct{}{}
+				}
+			}
+		}
+	}
+	fmt.Printf("%d\n", len(s))
 }
 
-func GetPathCost(maze []string, start, end Coord) (int, map[Coord]int) {
-	seen := make(map[DirNode]struct{})
-
-	path := make(map[Coord]int)
+func GetPathCost(maze []string, start, end Coord) (int, map[DirNode]int) {
+	seen := make(map[DirNode]int)
+	out := -1
 	queue := pq.NewWith(Cmp)
-	queue.Enqueue(PQNode{DirNode{start, east}, 0, path})
+	queue.Enqueue(PQNode{DirNode{start, east}, 0})
 
 	for !queue.Empty() {
 		curr, _ := queue.Dequeue()
@@ -41,62 +53,53 @@ func GetPathCost(maze []string, start, end Coord) (int, map[Coord]int) {
 		if _, s := seen[dirNode]; s {
 			continue
 		}
-		currNode.path[coord] = currNode.cost
-		if coord == end {
-			return currNode.cost, currNode.path
+		if coord == end && out < 0 {
+			out = currNode.cost
 		}
-		seen[dirNode] = struct{}{}
+		seen[dirNode] = currNode.cost
 
-		for _, candidate := range GetNeighbours(maze, coord, dir, currNode.cost, currNode.path) {
+		for _, candidate := range GetNeighbours(maze, coord, dir, currNode.cost, false) {
 			if _, exists := seen[candidate.dirNode]; !exists {
 				queue.Enqueue(candidate)
 			}
 		}
 	}
-	return -1, make(map[Coord]int)
+	return out, seen
 }
 
-func GetSafeTiles(maze []string, path map[Coord]int, start, end Coord) int {
+func GetBackwardsPathCost(maze []string, start, end Coord) (int, map[DirNode]int) {
+	seen := make(map[DirNode]int)
+	out := -1
+
 	queue := pq.NewWith(Cmp)
-	queue.Enqueue(PQNode{DirNode{start, east}, 0, make(map[Coord]int)})
-	seen := make(map[DirNode]struct{})
-	newCoords := make(map[Coord]struct{})
+	for _, dir := range []int{north, south, east, west} {
+		queue.Enqueue(PQNode{DirNode{end, dir}, 0})
+	}
 
 	for !queue.Empty() {
-		e, _ := queue.Dequeue()
-		curr := e.(PQNode)
-		dirNode := curr.dirNode
+		curr, _ := queue.Dequeue()
+		currNode := curr.(PQNode)
+		dirNode := currNode.dirNode
 		coord, dir := dirNode.coord, dirNode.dir
 
-		// Expand curr and see if path leads to nodes not on the best path
-		if cost, exists := path[coord]; exists && cost == curr.cost {
-			for pt := range curr.path {
-				if _, exists := path[pt]; !exists {
-					newCoords[pt] = struct{}{}
-				}
-			}
-		}
-
-		if _, exists := seen[dirNode]; exists {
+		if _, s := seen[dirNode]; s {
 			continue
 		}
-		curr.path[coord] = curr.cost
-		seen[dirNode] = struct{}{}
-		if coord == end {
-			continue
+		if coord == start && out < 0 {
+			out = currNode.cost
 		}
+		seen[dirNode] = currNode.cost
 
-		for _, candidate := range GetNeighbours(maze, coord, dir, curr.cost, curr.path) {
+		for _, candidate := range GetNeighbours(maze, coord, dir, currNode.cost, true) {
 			if _, exists := seen[candidate.dirNode]; !exists {
 				queue.Enqueue(candidate)
 			}
 		}
 	}
-
-	return len(path) + len(newCoords)
+	return out, seen
 }
 
-func GetNeighbours(maze []string, coord Coord, dir, cost int, path map[Coord]int) []PQNode {
+func GetNeighbours(maze []string, coord Coord, dir, cost int, isBackwards bool) []PQNode {
 	X, Y := len(maze[0]), len(maze)
 	deltas := []Coord{
 		{0, -1}, // North
@@ -107,23 +110,28 @@ func GetNeighbours(maze []string, coord Coord, dir, cost int, path map[Coord]int
 
 	var neighbours []PQNode
 
-	fwdCoord := Coord{coord.x + deltas[dir].x, coord.y + deltas[dir].y}
+	d := dir
+	if isBackwards {
+		d = (d + 2) % 4
+	}
+
+	fwdCoord := Coord{coord.x + deltas[d].x, coord.y + deltas[d].y}
 	if fwdCoord.x >= 0 && fwdCoord.x < X && fwdCoord.y >= 0 && fwdCoord.y < Y && maze[fwdCoord.y][fwdCoord.x] != '#' {
-		neighbours = append(neighbours, PQNode{DirNode{fwdCoord, dir}, cost + 1, CopyMap(path)})
+		neighbours = append(neighbours, PQNode{DirNode{fwdCoord, dir}, cost + 1})
 	}
 
 	switch dir {
 	case north, south:
 		neighbours = append(
 			neighbours,
-			PQNode{DirNode{coord, east}, cost + 1000, CopyMap(path)},
-			PQNode{DirNode{coord, west}, cost + 1000, CopyMap(path)},
+			PQNode{DirNode{coord, east}, cost + 1000},
+			PQNode{DirNode{coord, west}, cost + 1000},
 		)
 	case east, west:
 		neighbours = append(
 			neighbours,
-			PQNode{DirNode{coord, north}, cost + 1000, CopyMap(path)},
-			PQNode{DirNode{coord, south}, cost + 1000, CopyMap(path)},
+			PQNode{DirNode{coord, north}, cost + 1000},
+			PQNode{DirNode{coord, south}, cost + 1000},
 		)
 	}
 	return neighbours
@@ -148,7 +156,6 @@ type DirNode struct {
 type PQNode struct {
 	dirNode DirNode
 	cost    int
-	path    map[Coord]int
 }
 
 func Cmp(a, b interface{}) int {
