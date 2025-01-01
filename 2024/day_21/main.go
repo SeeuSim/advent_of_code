@@ -90,8 +90,60 @@ func GetAllPairs(keypad map[byte]Coord, invalidCoord Coord) map[Pair][]byte {
 	return out
 }
 
+type GetLenArgs struct {
+	charSeq string
+	it      int
+}
+
+func GetLen(charSeq []byte, it int, numGraph map[Pair][]byte, dirGraph map[Pair][]byte, cache map[GetLenArgs]int, isFirstIt bool) int {
+	cacheKey := GetLenArgs{string(charSeq), it}
+	if v, e := cache[cacheKey]; e {
+		return v
+	}
+	p := byte('A')
+	out := 0
+	if it == 0 {
+		out = len(charSeq)
+	} else {
+		graph := dirGraph
+		if isFirstIt {
+			graph = numGraph
+		}
+		for _, c := range charSeq {
+			out += GetLen(graph[Pair{p, c}], it-1, numGraph, dirGraph, cache, false)
+			p = c
+		}
+	}
+	cache[cacheKey] = out
+	return out
+}
+
 func RunP2() {
-	// TODO: Implement Part 2
+	numpad := map[byte]Coord{
+		'7': {y: 0, x: 0}, '8': {y: 0, x: 1}, '9': {y: 0, x: 2},
+		'4': {y: 1, x: 0}, '5': {y: 1, x: 1}, '6': {y: 1, x: 2},
+		'1': {y: 2, x: 0}, '2': {y: 2, x: 1}, '3': {y: 2, x: 2},
+		'0': {y: 3, x: 1}, 'A': {y: 3, x: 2},
+	}
+	dirpad := map[byte]Coord{
+		'^': {y: 0, x: 1}, 'A': {y: 0, x: 2},
+		'<': {y: 1, x: 0}, 'v': {y: 1, x: 1}, '>': {y: 1, x: 2},
+	}
+	f := utils.OpenFile(21, false)
+	seqs := GetGame(f)
+
+	numGraph := GetAllPairs(numpad, Coord{y: 3, x: 0})
+	dirGraph := GetAllPairs(dirpad, Coord{y: 0, x: 0})
+
+	sum := 0
+	cache := make(map[GetLenArgs]int)
+	for _, seq := range seqs {
+		ct := GetLen(seq, 26, numGraph, dirGraph, cache, true)
+		_l := string(seq)
+		l, _ := strconv.Atoi(_l[:len(_l)-1])
+		sum += l * ct
+	}
+	fmt.Printf("Sum: %d\n", sum)
 }
 
 func GetGame(f *os.File) [][]byte {
