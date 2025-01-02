@@ -23,7 +23,39 @@ func RunP1() {
 }
 
 func RunP2() {
-	// TODO: Implement Part 2
+	f := utils.OpenFile(22, false)
+	g := GetGame(f)
+	s := 0
+	totals := make(map[ConsecChange]int)
+	for _, n := range g {
+		sec := n
+		diffs := []int{}
+		seen := make(map[ConsecChange]struct{})
+		for i := 0; i < 2000; i++ {
+			next := TransformNumber(sec)
+			diffs = append(diffs, next%10-sec%10)
+			sec = next
+			if i >= 3 {
+				id := ConsecChange{[4]int(diffs)}
+				if _, s := seen[id]; !s {
+					totals[id] += sec % 10
+					seen[id] = struct{}{}
+				}
+				diffs = diffs[1:]
+			}
+		}
+	}
+
+	for _, v := range totals {
+		if v > s {
+			s = v
+		}
+	}
+	fmt.Println("Sum:", s)
+}
+
+type ConsecChange struct {
+	diffs [4]int
 }
 
 func GetGame(f *os.File) []int {
