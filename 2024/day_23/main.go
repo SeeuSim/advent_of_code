@@ -36,7 +36,63 @@ func RunP1() {
 }
 
 func RunP2() {
-	// TODO: Implement Part 2
+	f := utils.OpenFile(23, false)
+	network, nodes := GetGame(f)
+	mc := MaxClique(make(map[string]struct{}), nodes, make(map[string]struct{}), network)
+	
+	// Format result
+	s := []string{}
+	for k := range mc {
+		s = append(s, k)
+	}
+	sort.Strings(s)
+	fmt.Println(strings.Join(s, ","))
+}
+
+func MaxClique(R, P, X map[string]struct{}, graph map[string]map[string]struct{}) map[string]struct{} {
+	if len(P) == 0 && len(X) == 0 {
+		return R
+	}
+
+	maxClique := make(map[string]struct{})
+	for n := range CopySet(P) {
+		c := MaxClique(Union(R, map[string]struct{}{n: {}}), Intersect(P, graph[n]), Intersect(X, graph[n]), graph)
+		if len(c) > len(maxClique) {
+			maxClique = CopySet(c)
+		}
+		delete(P, n)
+		X[n] = struct{}{}
+	}
+	return maxClique
+}
+
+func CopySet(s map[string]struct{}) map[string]struct{} {
+	out := make(map[string]struct{})
+	for k := range s {
+		out[k] = struct{}{}
+	}
+	return out
+}
+
+func Union(a, b map[string]struct{}) map[string]struct{} {
+	out := make(map[string]struct{})
+	for k := range a {
+		out[k] = struct{}{}
+	}
+	for k := range b {
+		out[k] = struct{}{}
+	}
+	return out
+}
+
+func Intersect(a, b map[string]struct{}) map[string]struct{} {
+	out := make(map[string]struct{})
+	for k := range a {
+		if _, e := b[k]; e {
+			out[k] = struct{}{}
+		}
+	}
+	return out
 }
 
 type Tuple struct {
