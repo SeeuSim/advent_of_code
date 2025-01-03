@@ -39,14 +39,14 @@ func RunP2() {
 	f := utils.OpenFile(23, false)
 	network, nodes := GetGame(f)
 	mc := MaxClique(make(map[string]struct{}), nodes, make(map[string]struct{}), network)
-	
+
 	// Format result
 	s := []string{}
 	for k := range mc {
 		s = append(s, k)
 	}
 	sort.Strings(s)
-	fmt.Println(strings.Join(s, ","))
+	fmt.Println("Password:", strings.Join(s, ","))
 }
 
 func MaxClique(R, P, X map[string]struct{}, graph map[string]map[string]struct{}) map[string]struct{} {
